@@ -111,7 +111,6 @@ const ReleaseItem = ({ content, contentComponent, links, trackList, previewHTML}
 ReleasePostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
   contentComponent: PropTypes.func,
-  description: PropTypes.string,
   title: PropTypes.string,
   helmet: PropTypes.object,
 }
@@ -123,7 +122,6 @@ const ReleasePost = ({ data }) => {
       <ReleasePostTemplate
         contentComponent={HTMLContent}
         content={post.html}
-        description={post.frontmatter.description}
         helmet={
           <Helmet
             titleTemplate="%s | Release"
@@ -159,7 +157,6 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         title
         artist
-        description
         releaseType
         links {
           label

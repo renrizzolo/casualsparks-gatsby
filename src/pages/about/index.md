@@ -1,6 +1,6 @@
 ---
-templateKey: 'about-page'
 path: about
+templateKey: about-page
 title: About
 ---
 Casual Sparks is a record label headed by Melbourne based producer Ren Riz.

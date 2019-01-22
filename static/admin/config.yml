@@ -13,8 +13,9 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     identifier_field: name
     fields: 
+      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "artist-page"}
       - { label: "Name", name: "name", widget: string, }
-      - { label: "About", name: "about", widget: text, }
+      - {label: "About", name: "about", widget: "markdown" }
       - { label: "Profile Image", name: "profileImage", widget: image, }
       - { label: "Soundcloud url", name: "soundCloudUrl", widget: string, }
       - { label: "Facebook url", name: "facebookUrl", widget: string, }
@@ -43,12 +44,14 @@ collections:
         label: "Home"
         name: "home"
         fields:
+          - {label: "Path", name: "path", widget: "hidden", default: "home"}
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "home-page"}
       - file: "src/pages/about/index.md"
         label: "About"
         name: "about"
         fields:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "about-page"}
+          - {label: "Path", name: "path", widget: "hidden", default: "about"}
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Body", name: "body", widget: "markdown"}
       - file: "src/pages/contact/index.md"
@@ -56,6 +59,7 @@ collections:
         name: "contact"
         fields:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "contact-page"}
+          - {label: "Path", name: "path", widget: "hidden", default: "contact"}
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Body", name: "body", widget: "markdown"}
           - {label: Links, name: links, widget: object, fields: [{label: Label, name: label, widget: string}, {label: Url, name: url, widget: string}, {label: Icon, name: icon, widget: string},]}

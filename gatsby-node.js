@@ -44,7 +44,7 @@ exports.createPages = ({ actions, graphql }) => {
         // additional data can be passed via context
         context: {
           id,
-          layout: path.match(/contact|about|home/) ? 'circle' : 'square'
+          layout: path && path.match(/contact|about|home/) ? 'circle' : 'square'
         },
       })
     })

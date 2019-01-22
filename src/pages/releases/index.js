@@ -69,7 +69,6 @@ export const pageQuery = graphql`
             templateKey
             date(formatString: "MMMM DD, YYYY")
             artist
-            description
             releaseType
             image {
               childImageSharp {
