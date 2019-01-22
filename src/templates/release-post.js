@@ -161,26 +161,7 @@ export const pageQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       id
       html
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        title
-        artist
-        releaseType
-        links {
-          label
-          url
-          icon
-        }
-        trackList
-        previewHTML
-        image {
-          childImageSharp {
-            fluid(maxWidth: 1000, quality: 80) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
+      ...ReleaseFrontmatter
     }
   }
 `
