@@ -1,12 +1,13 @@
 import React from 'react'
 import Layout from '../components/Layout'
-
+import CircleLayout from '../components/CircleLayout'
 const NotFoundPage = () => (
-  <Layout>
-    <div>
-      <h1>NOT FOUND</h1>
-      <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-    </div>
+	<Layout>
+		<CircleLayout>
+     	<div className="circle-text flex-center flex-container__column">
+    		Hmmm, there's nothing here :(
+			</div>
+		</CircleLayout>
   </Layout>
 )
 
