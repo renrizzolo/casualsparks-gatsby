@@ -10,7 +10,7 @@ collections:
     label: "Artists"
     folder: "src/pages/artists"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     identifier_field: name
     fields: 
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "artist-page"}
@@ -35,8 +35,13 @@ collections:
       - {label: Preview HTML/embed code, name: previewHTML, widget: "text"}
       - {label: "Description", name: "description", widget: "markdown" }
       - {label: "Type", name: "releaseType",  widget: "select",  options: [{ label: "Release", value: "release" }, { label: "Mix", value: "mix" }, { label: "Freebie", value: "freebie" },]}
-      - {label: Links, name: links, widget: object, fields: [{label: Label, name: label, widget: string}, {label: Url, name: url, widget: string}, {label: Icon, name: icon, widget: string},]}
-
+      - label: "Links"
+        name: "links"
+        widget: "list"
+        fields:
+          - {label: Label, name: label, widget: string}
+          - {label: Url, name: url, widget: string}
+          - {label: Icon, name: icon, widget: string}
   - name: "pages"
     label: "Pages"
     files:
