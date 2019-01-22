@@ -31,7 +31,6 @@ export const ReleasePostTemplate = ({
             <h2>{artist}</h2>
             <h1>{title}</h1>
           </div>
-
           <div className="flex-1 release-cover__container">
             <PreviewCompatibleImage imageInfo={image} />
           </div>
@@ -42,13 +41,13 @@ export const ReleasePostTemplate = ({
       {helmet || ''}
         <section className="flex-container__column">
           <div className="single-release">
-              <ReleaseItem
-                contentComponent={contentComponent}
-                content={content}
-                links={links}
-                trackList={trackList}
-                previewHTML={previewHTML}
-              />
+            <ReleaseItem
+              contentComponent={contentComponent}
+              content={content}
+              links={links}
+              trackList={trackList}
+              previewHTML={previewHTML}
+            />
           </div>
         </section> 
     </PageLayout>
@@ -64,7 +63,15 @@ const ReleaseItem = ({ content, contentComponent, links, trackList, previewHTML}
         <div className="item-info">
           <div className="link-container">
             {links && links.map((link) => (
-              <a key={link.label} target="_blank" rel="noopener" className="button light-blue shop-link" href={link.url}>{link.label}</a>
+              <a 
+                key={link.label} 
+                target="_blank" 
+                rel="noopener" 
+                className="button light-blue shop-link" 
+                href={link.url}
+              >
+                {link.label}
+              </a>
             ))
             }
           </div>
@@ -73,7 +80,7 @@ const ReleaseItem = ({ content, contentComponent, links, trackList, previewHTML}
       {content &&
         <div>
           <h2 className="heading heading-dark">Info</h2>
-        <PostContent content={content} />
+          <PostContent content={content} />
         </div>
       }
       {trackList &&
@@ -118,7 +125,8 @@ ReleasePostTemplate.propTypes = {
 
 const ReleasePost = ({ data }) => {
   const { markdownRemark: post } = data
-
+  console.log(post);
+  
   return (
       <ReleasePostTemplate
         contentComponent={HTMLContent}

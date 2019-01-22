@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const PageLayout = ({title, header, backgroundColor, children}) => {
 	return (
-    <div className={`background-cover background-${backgroundColor}`}>
+    <header className={`background-cover background-${backgroundColor}`}>
       {title &&
         <div className="page-header">
           <h1 className="jumbo-heading">{title}</h1>
@@ -13,7 +13,7 @@ const PageLayout = ({title, header, backgroundColor, children}) => {
       <main className="full-page-container flex-container__column">
         {children}
       </main>
-		</div>
+		</header>
 	);
 }
 
