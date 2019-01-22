@@ -7,6 +7,17 @@ import Navbar from '../components/Navbar'
 import '../styles/index.scss'
 
 class TemplateWrapper extends Component {
+  state = {
+    mounted: false,
+  }
+
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.setState({
+        mounted: true,
+      })
+    }, 1000);
+  }
   
   
   render() {
