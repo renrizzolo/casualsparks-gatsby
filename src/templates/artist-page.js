@@ -58,11 +58,12 @@ ArtistPageTemplate.propTypes = {
 
 const ArtistPage = ({ data }) => {
   const { markdownRemark: post } = data
-
+  
   return (
       <ArtistPageTemplate
+        contentComponent={HTMLContent}
         name={post.frontmatter.name}
-        content={post.frontmatter.html}
+        content={post.html}
         profileImage={post.frontmatter.profileImage}
         soundcloudUrl={post.frontmatter.soundcloudUrl}
         twitterUrl={post.frontmatter.twitterUrl}
