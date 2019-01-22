@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, graphql } from 'gatsby'
 import PageLayout from '../../components/PageLayout';
+import ReleaseItem from '../../components/ReleaseItem';
 
 const ReleasePageTemplate = ({ title, sections, children }) => {
   return (
@@ -19,24 +20,11 @@ export default class IndexPage extends React.Component {
       <ReleasePageTemplate backgroundColor="pearl">
         {posts
           .map(({ node: post }) => (
-            <div
-              className="post-item"
+            <ReleaseItem
               key={post.id}
-            >
-              <p>
-                <Link to={post.fields.slug}>
-                  {post.frontmatter.title}
-                </Link>
-                <span> &bull; </span>
-                <small>{post.frontmatter.date}</small>
-              </p>
-              <p>
-                {post.excerpt}
-              </p>
-                <Link className="button" to={post.fields.slug}>
-                  View →
-                </Link>
-            </div>
+              slug={post.fields.slug}
+              data={post.frontmatter}
+            />
         ))}
       </ReleasePageTemplate>
     )
@@ -51,6 +39,31 @@ IndexPage.propTypes = {
   }),
 }
 
+export const releaseFrontmatterFragment = graphql`
+  fragment ReleaseFrontmatter on MarkdownRemark {
+		frontmatter {
+						title
+						templateKey
+						date(formatString: "MMMM DD, YYYY")
+						artist
+						links {
+							label
+							url
+							icon
+						}
+						previewHTML
+						releaseType
+						image {
+							childImageSharp {
+								fluid(maxWidth: 2048, quality: 100) {
+									...GatsbyImageSharpFluid
+								}
+							}
+						}
+					}
+  }
+`
+
 export const pageQuery = graphql`
   query IndexQuery {
     allMarkdownRemark(
@@ -64,20 +77,7 @@ export const pageQuery = graphql`
           fields {
             slug
           }
-          frontmatter {
-            title
-            templateKey
-            date(formatString: "MMMM DD, YYYY")
-            artist
-            releaseType
-            image {
-              childImageSharp {
-                fluid(maxWidth: 2048, quality: 100) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-          }
+         ...ReleaseFrontmatter
         }
       }
     }
