@@ -1,80 +1,57 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import github from '../img/github-icon.svg'
-import logo from '../img/logo.svg'
+import { Location } from '@reach/router';
+import { SvgLogo, LogoSmall } from './logo';
+
+import { Zoom, FadeZoom, MenuTranslate } from '../animations';
+
 
 const Navbar = class extends React.Component {
+  state = {
+    showMenu: false,
+  }
+  handleMenu = () => {
+    this.setState(state => ({ 
+      showMenu: !state.showMenu 
+    }))
+  }
 
-  componentDidMount() {
-    // Get all "navbar-burger" elements
-   const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-    // Check if there are any navbar burgers
-   if ($navbarBurgers.length > 0) {
- 
-     // Add a click event on each of them
-     $navbarBurgers.forEach( el => {
-       el.addEventListener('click', () => {
- 
-         // Get the target from the "data-target" attribute
-         const target = el.dataset.target;
-         const $target = document.getElementById(target);
- 
-         // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-         el.classList.toggle('is-active');
-         $target.classList.toggle('is-active');
- 
-       });
-     });
-   }
- }
- 
+  stripSlash = (path) => {
+    return path.replace(/^\//, "");
+  } 
+
  render() {
-   return (
-  
-  <nav className="navbar is-transparent" role="navigation" aria-label="main-navigation">
-    <div className="container">
-      <div className="navbar-brand">
-        <Link to="/" className="navbar-item" title="Logo">
-          <img src={logo} alt="Kaldi" style={{ width: '88px' }} />
-        </Link>
-        {/* Hamburger menu */}
-        <div className="navbar-burger burger" data-target="navMenu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div id="navMenu" className="navbar-menu">
-      <div className="navbar-start has-text-centered">
-        <Link className="navbar-item" to="/about">
-          About
-        </Link>
-        <Link className="navbar-item" to="/products">
-          Products
-        </Link>
-        <Link className="navbar-item" to="/contact">
-          Contact
-        </Link>
-        <Link className="navbar-item" to="/contact/examples">
-          Form Examples
-        </Link>
-      </div>
-      <div className="navbar-end has-text-centered">
-        <a
-          className="navbar-item"
-          href="https://github.com/AustinGreen/gatsby-netlify-cms-boilerplate"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span className="icon">
-            <img src={github} alt="Github" />
+
+  return (
+     <Location>
+       {({ navigate, location: { pathname } }) => (
+         <React.Fragment>
+          <span className={this.state.showMenu ? `menu-button open ${this.stripSlash(pathname)}` : `menu-button ${this.stripSlash(pathname)}`}>
+            <a onClick={this.handleMenu}>{this.state.showMenu ? "close" : "menu"}</a>
           </span>
-        </a>
-      </div>
-      </div>
-    </div>
-  </nav>
+          <MenuTranslate key="nav" show={!this.state.showMenu}>
+            {style => <Menu style={style} className={`mobile ${this.stripSlash(pathname)}`} />}
+          </MenuTranslate>
+
+            <Menu className={`desktop ${this.stripSlash(pathname)}`} />
+            {!this.state.intro &&
+              <LogoSmall />
+            }
+        </React.Fragment>
+      )}
+    </Location>
   )}
+}
+
+const Menu = (props) => {
+  return (
+    <ul style={props.style} role="navigation" aria-label="Primary" className={`nav ${props.className}`}>
+      <li><Link to="/" activeClassName="active">Home</Link></li>
+      <li><Link to="/music" activeClassName="active">Music</Link></li>
+      <li><Link to="/about" activeClassName="active">About</Link></li>
+      <li><Link to="/contact" activeClassName="active">Contact</Link></li>
+    </ul>
+  );
 }
 
 export default Navbar
