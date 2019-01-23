@@ -26,8 +26,8 @@ export const ReleasePostTemplate = ({
   return (
     <PageLayout 
       header={
-        <div className="page-header flex-container">
-          <div className="flex-1">
+        <div className="page-header page-header__release flex-container">
+          <div className="flex-1 flex-container__column flex-end">
             <h2>{artist}</h2>
             <h1>{title}</h1>
           </div>
