@@ -3,7 +3,7 @@
 \*------------------------------------*/
 
 @import url('https://fonts.googleapis.com/css?family=Rozha+One');
-@import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
+@import url('https://fonts.googleapis.com/css?family=Muli:400,700');
 
 @import "variables";
 @import "config";
@@ -37,6 +37,8 @@ a{
 }
 input, textarea {
 	width: 100%;
+	padding: 0.25rem 0.45rem;
+	border: none;
 }
 img{
 	width: 100%;
@@ -44,8 +46,8 @@ img{
 }
 p{
 	font-size: 1.15em;
-	font-weight: 200;
-	letter-spacing: 1px;
+	font-weight: 400;
+	letter-spacing: 0.2px;
 	line-height: 1.46em;
 	font-family: $font-sans;
 	-webkit-font-smoothing: antialiased;
@@ -281,6 +283,9 @@ h2{
 
 	li{
 		list-style: none;
+		&:last-of-type {
+			margin-bottom: 1rem;
+		}
 		a{
 			line-height: 2.5em;
 		    margin: 0.33rem 1rem;
@@ -358,8 +363,13 @@ h2{
 	}
 }
 
+	.error{
+		color: $secondary;
+		border-color: $secondary;
+	}
 .notice {
 	background-color: $lightpearl;
+	color: $cs-darkblue;
 	padding: 0.75em;
 	&.error{
 		color: $secondary;
@@ -477,23 +487,30 @@ $colors_light: (
 	#BUTTON 
 \*------------------------------------*/
 
-$button-vertical-padding: 0.55em;
+$button-vertical-padding: 0.35em;
 $button-border-gap: 0.2em;
 $button-horizontal-padding: 0.75em;
 
 .button{
+	cursor: pointer;
 	transition: all 250ms ease;
 	display: inline-block;
   color: #ffffff;
-  font-size: 1em;
-	padding: $button-vertical-padding + $button-border-gap $button-horizontal-padding;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: $button-vertical-padding $button-horizontal-padding;
 	border-bottom: $button-border-gap solid transparent;
   text-decoration: none;
-  font-weight: bold;
   margin-right: 0.75rem;
-  margin-bottom: 0.75rem;
+	margin-bottom: 0.75rem;
+	border-top: none;
+  border-left: none;
+  border-right: none;
   &.light-blue{
   	background-color: $cs-lightblue;
+	}
+	  &.dark-blue{
+  	background-color: $cs-darkblue;
 	}
 	&.rounded{
   	border-radius: 4px;
@@ -896,7 +913,9 @@ $button-horizontal-padding: 0.75em;
 		fill: $cs-darkblue;
 	}
 }
-
+.social {
+	margin-bottom: 2rem;
+}
 .social-link{
 	color: #ffffff;
 	font-weight: 300;
