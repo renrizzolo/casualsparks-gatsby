@@ -18,7 +18,7 @@ class ToggleClass extends React.Component {
 		const { toggled } = this.state;
 		return(
 			<div className={toggled ? `${className} ${toggleClass}` : className}>
-				{this.props.children(this.toggle)}
+				{this.props.children(this.toggle, toggled)}
 			</div>
 		)
 	}
