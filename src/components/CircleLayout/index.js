@@ -16,11 +16,12 @@ const items = [
   }
 ]
 
-const CircleLayout = ({ children, show }) => (
+const CircleLayout = ({ children, show, zoom }) => (
   <Fade show={true}>
     {style => 
     <div style={style} className="flex-center flex-container__row viewport-half">
       <Zoom
+        zoom={zoom}
         show={show}
         className="cs-circle darker" id="cs-circle"
         style={{ backgroundImage: 'url(\'https://unsplash.it/700/?random\')', backgroundSize: 'cover', backgroundBlendMode: 'overlay' }}
