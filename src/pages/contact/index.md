@@ -12,7 +12,4 @@ links:
   - label: '/casualsparks'
     icon: soundcloud
     url: https://soundcloud.com/casualsparks
-  - label: 'casualsparksmusic@gmail.com'
-    icon: 
-    url:
 ---
