@@ -5,11 +5,10 @@ class WatchConnection extends React.Component {
 	online: true
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.setState({online: window.navigator.onLine});
 		window.addEventListener('online', this.watchConnection);
 		window.addEventListener('offline', this.watchConnection);
-
 	}
 	componentWillUnmount() {
 		window.removeEventListener('online', this.watchConnection);
