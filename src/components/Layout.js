@@ -56,12 +56,12 @@ class TemplateWrapper extends Component {
               <html lang="en" />
               <title>{data.site.siteMetadata.title}</title>
               <meta name="description" content={data.site.siteMetadata.description} />
-              <link rel="icon" type="image/png" href="/img/Casual-Sparks-light-blue-32.png" sizes="32x32">
+              <link rel="icon" type="image/png" href="/img/Casual-Sparks-light-blue-32.png" sizes="32x32" />
               <meta name="theme-color" content="#fff" />
               <meta property="og:type" content="business.business" />
               <meta property="og:title" content={data.site.siteMetadata.title} />
               <meta property="og:url" content="/" />
-                <meta property="og:image" content="/img/Casual-Sparks-light-blue-600.png" />
+              <meta property="og:image" content="/img/Casual-Sparks-light-blue-600.png" />
             </Helmet>
             <Navbar />
               {pageContext && pageContext.layout === 'circle' ?
