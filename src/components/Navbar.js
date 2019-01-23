@@ -34,9 +34,7 @@ const Navbar = class extends React.Component {
           </MenuTranslate>
 
             <Menu className={`desktop ${this.stripSlash(pathname)}`} />
-            {!this.state.intro &&
-              <LogoSmall />
-            }
+
         </React.Fragment>
       )}
     </Location>
@@ -46,6 +44,7 @@ const Navbar = class extends React.Component {
 const Menu = (props) => {
   return (
     <ul style={props.style} role="navigation" aria-label="Primary" className={`nav ${props.className}`}>
+        <LogoSmall />
       <li><Link to="/" activeClassName="active">Home</Link></li>
       <li><Link to="/music" activeClassName="active">Music</Link></li>
       <li><Link to="/about" activeClassName="active">About</Link></li>
