@@ -9,6 +9,7 @@ import '../styles/index.scss'
 class TemplateWrapper extends Component {
   state = {
     mounted: false,
+    zoom: false,
   }
 
   componentDidMount = () => {
@@ -19,7 +20,20 @@ class TemplateWrapper extends Component {
     }, 1000);
   }
   
-  
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.pageContext.layout === 'circle' && this.props.pageContext.layout === 'square') {
+  //     console.log('didupdate', this.props.pageContext);
+  //     this.setState({
+  //       zoom: true
+  //     })
+  //   }
+  //   if (nextProps.pageContext.layout === 'square' && this.props.pageContext.layout === 'circle') {
+  //     this.setState({
+  //       zoom: false
+  //     })
+  //   }
+  // }
+
   render() {
 
     const { children, pageContext } = this.props;
@@ -57,11 +71,11 @@ class TemplateWrapper extends Component {
             </Helmet>
             <Navbar />
               {pageContext && pageContext.layout === 'circle' ?
-                <CircleLayout show={!this.state.mounted}>
+                <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
                   {children}
                 </CircleLayout>
                 :
-                <Fade show={this.state.mounted}>
+                <Fade show={this.state.mounted} >
                   {style => <div style={style}>{children}</div>}
                 </Fade>
               }
