@@ -55,7 +55,7 @@ export const releaseFrontmatterFragment = graphql`
 						releaseType
 						image {
 							childImageSharp {
-								fluid(maxWidth: 2048, quality: 100) {
+								fluid(maxWidth: 1000, quality: 80) {
 									...GatsbyImageSharpFluid
 								}
 							}
