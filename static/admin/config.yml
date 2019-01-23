@@ -13,9 +13,9 @@ collections:
     slug: "{{slug}}"
     identifier_field: name
     fields: 
-      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "artist-page"}
+      - { label: "Template Key", name: "templateKey", widget: "hidden", default: "artist-page"}
       - { label: "Name", name: "name", widget: string, }
-      - {label: "About", name: "about", widget: "markdown" }
+      - { label: "About", name: "about", widget: "markdown" }
       - { label: "Profile Image", name: "profileImage", widget: image, }
       - { label: "Soundcloud url", name: "soundCloudUrl", widget: string, }
       - { label: "Facebook url", name: "facebookUrl", widget: string, }
