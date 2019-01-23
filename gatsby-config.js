@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Casual Sparks',
-    description: 'Casual Sparks website.',
+    description: 'Melbourne based record label.',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
