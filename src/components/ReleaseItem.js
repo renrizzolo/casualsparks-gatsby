@@ -2,15 +2,19 @@ import React from 'react'
 import ToggleClass from '../components/ToggleClass';
 import WatchConnection from '../components/WatchConnection';
 import OfflineError from '../components/OfflineError';
-import { Link } from 'gatsby'
+import { InFromBottom } from '../animations';
+import { Link } from 'gatsby';
+import { kebabCase } from 'lodash'
 
-const ReleaseItem = ({data, slug, description, backgroundColor}) => {
+const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
 
   return (
-    <div className={`item background-${backgroundColor}`}>
+    <div style={style} show={false} className={`item background-${backgroundColor}`}>
       <header>
         <div className="item-info">
-          <h1 className="item-heading">{data.artist}</h1>
+          <Link to={`/artists/${kebabCase(data.artist)}`}>
+            <h1 className="item-heading">{data.artist}</h1>
+          </Link>
           {slug ? <Link to={slug}><h2 className="item-sub-heading">{data.title}</h2></Link>
             :
             <h2 className="item-sub-heading">{data.title}</h2>
