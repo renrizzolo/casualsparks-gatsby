@@ -16,16 +16,14 @@ const getIcon = (icon) => {
 const SocialLink = (props) => {
 	const icon = getIcon(props.icon);
 	return (
-		<p>
-			{props.url ? 
+			props.url ? 
 			<a className="social-link" href={props.url} title={props.title}>
 				{icon}
 				{props.title}
 			</a>
 			:
-				props.title
-			}
-		</p>
+			<p>{props.title}</p>
+			
 	);
 }
 
