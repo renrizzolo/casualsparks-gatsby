@@ -13,6 +13,14 @@ class TemplateWrapper extends Component {
   }
 
   componentDidMount = () => {
+    
+    const scrollEl = document.getElementById('scroll-width');
+    const scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth;
+    const root = document.documentElement;
+    const originalOffset = getComputedStyle(root).getPropertyValue('--menu-offset');
+    
+    root.style.setProperty('--menu-offset', originalOffset - scrollbarWidth);
+    
     setTimeout(() => {
       this.setState({
         mounted: true,
@@ -63,6 +71,7 @@ class TemplateWrapper extends Component {
               <meta property="og:url" content="/" />
               <meta property="og:image" content="/img/Casual-Sparks-light-blue-600.png" />
             </Helmet>
+            <div class="scroll-width" id="scroll-width" />
             <Navbar />
               {pageContext && pageContext.layout === 'circle' ?
                 <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
