@@ -9,6 +9,10 @@
 @import "config";
 @import "typography";
 
+:root {
+  --menu-offset: 204;
+}
+
 *{
 	box-sizing: border-box;
 }
@@ -116,7 +120,7 @@ h2{
   	padding: $padding-small;
 	}
 	  @include minwidth(s) {
-  	margin-right: $menu-offset;
+  	margin-right: calc(var(--menu-offset) * 1px);
   }
 }
 .flex-container{
@@ -144,7 +148,9 @@ h2{
 	align-items: center;
 	justify-content: flex-start;
 }
-
+.flex-end{
+	justify-content: flex-end;
+}
 @for $i from 1 through 6 {
 	.flex-#{$i} {
 		flex:$i;
@@ -465,17 +471,23 @@ $colors_light: (
   font-size: 1.12rem;
   line-height: 1.475;
 }
-
+.page-header.page-header__release {
+	h1 {
+		font-size: 2em;
+		font-weight: 300;
+	}
+	h2 {
+		margin: 0;
+	}
+}
 .release-cover__container{
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  margin-right: 12rem;
+	margin-right: 12rem;
+	max-width: 300px;
   @include maxwidth(s) {
   	margin-right: 0rem;
-  }
-  img{
-  	max-width: 500px;
   }
 }
 
@@ -514,6 +526,10 @@ $button-horizontal-padding: 0.75em;
 	}
 	&.rounded{
   	border-radius: 4px;
+	}
+	&.full {
+		width: 100%;
+		margin: 0;
 	}
   &:hover{
   	// padding: $button-vertical-padding $button-horizontal-padding;
@@ -590,7 +606,7 @@ $button-horizontal-padding: 0.75em;
 
 .page-header {
 	@include minwidth(s) {
-		margin-right: $menu-offset;
+  	margin-right: calc(var(--menu-offset) * 1px);
 	}
   margin-top: 0;
   padding-left: $padding-default;
@@ -605,24 +621,22 @@ $button-horizontal-padding: 0.75em;
 	}
   h1{
   	font-family: $font-sans;
-  	font-weight: 100;
+		font-weight: 700;
     margin-top: 0;
     margin-bottom: 0.5em;
-		font-size: 6em;
-		line-height: 6rem;
+		font-size: 4.5em;
+		line-height: 1.4;
   	@include maxwidth(s) {
 			font-size: 3.5em;
-			line-height: 3.5rem;
   	}
   	&.jumbo-heading{
 			font-family: $font-serif;
 			font-size: 6em;
-			line-height: 6rem;
+			line-height: 1.4;
 			margin-top: 1em;
-			font-weight: 600;
+			font-weight: 700;
 			 @include maxwidth(s) {
 				 font-size: 3.5em;
-				line-height: 3.5rem;
 
   		}
 		}
@@ -630,7 +644,7 @@ $button-horizontal-padding: 0.75em;
   h2{
 		
 		font-size: 4em;
-		line-height: 4rem;
+		line-height: 1.4;
   	@include maxwidth(s) {
 			font-size: 2.25em;
 					line-height: 2.4rem;
@@ -969,4 +983,11 @@ $button-horizontal-padding: 0.75em;
 	.blue-circle{
 		fill: $cs-darkblue;
 	}
+}
+.scroll-width {
+	width: 100px;
+	height: 100px;
+	overflow: scroll;
+	position: absolute;
+	top: -9999px;
 }
