@@ -1,4 +1,5 @@
-import React from 'React';
+import React from 'react';
+
 const getIcon = (icon) => {
 	switch (icon) {
 		case 'facebook':
