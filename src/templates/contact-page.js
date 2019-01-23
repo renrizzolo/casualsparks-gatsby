@@ -5,7 +5,7 @@ import Layout from '../components/Layout'
 import SocialLink from '../components/SocialLink'
 import CircleLayout from '../components/CircleLayout';
 import { Fade } from '../animations/';
-
+import ContactForm from '../components/ContactForm';
 
 export const ContactPageTemplate = ({ title, links }) => {
 
@@ -18,7 +18,8 @@ export const ContactPageTemplate = ({ title, links }) => {
                 {links.map((item, i) => (
                   <SocialLink key={i} title={item.label} url={item.url} icon={item.icon} />
                 ))}
-              </div>			  
+              </div>
+              <ContactForm/>			  
           </div>
         }
       </Fade>
