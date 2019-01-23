@@ -14,6 +14,8 @@ export default class Contact extends React.Component {
       name: "",
       email: "",
       message: "",
+      success: false,
+      error: false
     };
   }
 
@@ -22,9 +24,19 @@ export default class Contact extends React.Component {
   };
 
   handleSubmit = e => {
+    this.setState({
+      success: false,
+      error: false,
+    })
+    const { name, email, message } = this.state;
     e.preventDefault();
     const form = e.target;
-    if (!this.state.name || !this.state.email || !this.state.message) {
+    console.log(name, email, message);
+    
+    if (!name || !email || !message) {
+      this.setState({
+        error: true
+      })
       return;
     }
     fetch('/', {
@@ -40,12 +52,14 @@ export default class Contact extends React.Component {
           email: "",
           name: "",
           message: "",
+          success: true,
         }) 
       })
       .catch(error => alert(error));
   };
 
   render() {
+    const { name, email, message, error, success } = this.state;
     return (
       <div>
         <form
@@ -66,22 +80,38 @@ export default class Contact extends React.Component {
           <p className="flex-container flex-container__row">
             <label for="name" style={{ marginRight: 10 }} className="flex-1">
               Name:<br />
-              <input id="name" type="text" name="name" value={this.state.name} onChange={this.handleChange} />
+              <input id="name" type="text" name="name" value={name} onChange={this.handleChange} />
             </label>
             <label for="email" className="flex-1">
               Email:  
-              <input id="email" type="email" name="email" value={this.state.email} onChange={this.handleChange} />
+              <input 
+                id="email" 
+                type="email" 
+                name="email" 
+                value={email} 
+                onChange={this.handleChange}
+              />
             </label>
           </p>
           <p>
             <label for="message">
               Message:<br />
-              <textarea id="message" name="message" value={this.state.message} onChange={this.handleChange} />
+              <textarea id="message" name="message" value={message} onChange={this.handleChange} />
             </label>
           </p>
           <p>
-            <button type="submit">Send</button>
+            <button type="submit" className="button light-blue">Send</button>
           </p>
+          {error && 
+            <div className="error notice">
+              Please fill in all the fields.
+            </div>
+          }
+          {success && 
+            <div className="notice">
+              Message sent successfully!
+            </div>
+          }
         </form>
       </div>
     );
