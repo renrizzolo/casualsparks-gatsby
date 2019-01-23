@@ -5,6 +5,7 @@ import OfflineError from '../components/OfflineError';
 import { InFromBottom } from '../animations';
 import { Link } from 'gatsby';
 import { kebabCase } from 'lodash'
+import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
 
 const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
 
@@ -36,7 +37,7 @@ const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
         </div>
       </header>
 
-      <WatchConnection render={online => (
+   {/*    <WatchConnection render={online => (
         online ?
           (data.previewHTML &&
             <div dangerouslySetInnerHTML={{ __html: data.previewHTML }} />
@@ -44,9 +45,10 @@ const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
           :
           <OfflineError />
       )}
-      />
+      /> */}
+        <PreviewCompatibleImage imageInfo={data.image} />
 
-      {data.trackList &&
+{/*       {data.trackList &&
         <aside>
           <ToggleClass className="track-list" toggleClass="expanded">
             {toggle => (
@@ -62,8 +64,8 @@ const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
             )}
           </ToggleClass>
         </aside>
-      }
-      <Link className="button" to={slug}>
+      } */}
+      <Link className="button full" style={{marginTop: 16}} to={slug}>
         View →
       </Link>
     </div>
