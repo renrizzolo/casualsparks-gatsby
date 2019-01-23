@@ -3,8 +3,11 @@
 \*------------------------------------*/
 
 @import url('https://fonts.googleapis.com/css?family=Rozha+One');
+@import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
+
 @import "variables";
 @import "config";
+@import "typography";
 
 *{
 	box-sizing: border-box;
@@ -22,7 +25,6 @@ a{
 	text-decoration: none;
 	color: $cs-darkblue;
 	transition: color 200ms ease;
-	text-decoration: underline;
 	&:hover{
 		color: $cs-lightblue;
 	}
@@ -33,15 +35,18 @@ a{
 		color: $cs-lightblue;
 	}
 }
+input, textarea {
+	width: 100%;
+}
 img{
 	width: 100%;
   height: auto;
 }
 p{
-	font-size: 1.25em;
+	font-size: 1.15em;
 	font-weight: 200;
 	letter-spacing: 1px;
-	line-height: 1.33em;
+	line-height: 1.46em;
 	font-family: $font-sans;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
@@ -77,7 +82,8 @@ h2{
 }
 .heading {
 	color: $lightpearl;
-	margin-bottom: 0.5em;
+	margin-bottom: 1em;
+	margin-top: 1em;
   @include maxwidth(xs) {
   	font-size: 2em;	
   }
@@ -94,7 +100,7 @@ h2{
   	}
 	padding: 0 30px;
   	color: white;
-  	z-index: -1;
+  	z-index: 1;
   	&.circle-text__home {
   		@include maxwidth(xs){
   			background-color: $cs-darkblue;
@@ -102,9 +108,13 @@ h2{
   	}
 }
 .full-page-container{
+
   padding: $padding-default;
   @include maxwidth(xs) {
   	padding: $padding-small;
+	}
+	  @include minwidth(s) {
+  	margin-right: $menu-offset;
   }
 }
 .flex-container{
@@ -163,7 +173,7 @@ h2{
 		&.open {
 			width: 100%;
 	    height: 100%;
-	    z-index: 0;
+	    z-index: 2;
 	    animation: mob-menu-in 500ms forwards;
 	    a{
 	    	color: $lightpearl;
@@ -179,7 +189,7 @@ h2{
 
 	    }
 	    &.music:not(.open) a {
-				background-color: $page-header-blue;
+				background-color: $dark-blue;
 		    }
 		a{
 		line-height: 2em;
@@ -230,24 +240,28 @@ h2{
 	text-align: right;
 	z-index: 2;
 	display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0 1rem;
-    justify-content: flex-end;
-    &.desktop{
-    		position: absolute;
-				right: 0;
-				top:0;
-	    	&.music {
-	    		background-color: $page-header-blue;
-	    		li a {
-		    	color: $lightpearl;
-		    }
-		  }
-    	@include maxwidth(s) {
-    		display: none;
-    	}
-    }
+	flex-direction: column;
+	margin: 0;
+	padding: 0 1rem;
+	justify-content: flex-end;
+	&.desktop{
+			position: absolute;
+			right: 0;
+			top:0;
+			bottom: 0;
+			border-left: 5px solid $dark-pearl;
+			background-color: $lightpearl;
+			&.music {
+				border-left: 5px solid $cs-darkblue;
+				background-color: $dark-blue;
+				li a {
+				color: $lightpearl;
+			}
+		}
+		@include maxwidth(s) {
+			display: none;
+		}
+	}
 
     &.mobile{
     	position: absolute;
@@ -349,7 +363,7 @@ h2{
 	padding: 0.75em;
 	&.error{
 		color: $secondary;
-		background-color: $page-header-pearl;
+		background-color: $dark-pearl;
 	}
 }
 
@@ -382,7 +396,7 @@ $colors_light: (
 		background-color: $color;
 		color: $lightpearl;
 		.page-header{
-			background-color: $page-header-blue;
+			background-color: $dark-blue;
 		}
 		a {
 			color: $cs-lightblue;
@@ -400,13 +414,13 @@ $colors_light: (
 		background-color: $color;
 		color: $cs-darkblue;
 		.page-header{
-			background-color: $page-header-pearl;
+			background-color: $dark-pearl;
 		}
 		a {
 			color:  $cs-darkblue;
 		}
 		.button {
-			color: $cs-darkblue;
+			color: $lightpearl;
 		}
 		p, h1, h2, h3, h4, h5, h6 {
 			color:  $cs-darkblue;
@@ -558,9 +572,12 @@ $button-horizontal-padding: 0.75em;
 \*------------------------------------*/
 
 .page-header {
+	@include minwidth(s) {
+		margin-right: $menu-offset;
+	}
   margin-top: 0;
   padding-left: $padding-default;
-  padding-top: 9rem;
+  padding-top: 7.5rem;
   padding-bottom: 0rem;
   @include maxwidth(xs) {
   	padding-right: $padding-small;
@@ -574,24 +591,33 @@ $button-horizontal-padding: 0.75em;
   	font-weight: 100;
     margin-top: 0;
     margin-bottom: 0.5em;
-  	font-size: 6em;
+		font-size: 6em;
+		line-height: 6rem;
   	@include maxwidth(s) {
 			font-size: 3.5em;
+			line-height: 3.5rem;
   	}
   	&.jumbo-heading{
 			font-family: $font-serif;
 			font-size: 6em;
+			line-height: 6rem;
 			margin-top: 1em;
 			font-weight: 600;
 			 @include maxwidth(s) {
-			 	font-size: 3.5em;
+				 font-size: 3.5em;
+				line-height: 3.5rem;
+
   		}
 		}
 	}
   h2{
-  font-size: 4em;
+		
+		font-size: 4em;
+		line-height: 4rem;
   	@include maxwidth(s) {
 			font-size: 2.25em;
+					line-height: 2.4rem;
+
   	}
 	}
 }
@@ -808,9 +834,9 @@ $button-horizontal-padding: 0.75em;
 }
 
 
-.cls-1 {
-	fill: $cs-lightblue;
-}
+// .cls-1 {
+// 	fill: $cs-lightblue;
+// }
 
 .cls-2 {
 	fill: none;
@@ -855,16 +881,19 @@ $button-horizontal-padding: 0.75em;
 	fill: #ffffff;
 }
 
-.logo-small{
-	left: 0;
-	top: 0;
+.logo-small {
+	fill: $cs-lightblue;
+	top: 3rem;
 	z-index:2;
-	margin: 1em $padding-default;
 	position: absolute;
 	display: flex;
+	align-self: center;
 	animation: logo-in 1s ease forwards;
 	.logo-small__svg{
 		width: 100px;
+	}
+	@include maxwidth(m) {
+		fill: $cs-darkblue;
 	}
 }
 
@@ -897,11 +926,12 @@ $button-horizontal-padding: 0.75em;
 		width: 80vw;
 	}
 }
-@include maxwidth(m) {
-	body{
-		font-size: 14px;
-	}
-}
+
+// @include maxwidth(m) {
+// 	body{
+// 		font-size: 14px;
+// 	}
+// }
 
 
 @include maxwidth(xs)  {
@@ -913,12 +943,7 @@ $button-horizontal-padding: 0.75em;
 	.cs-circle{
 		border-radius: 0;
 	}
-	.logo-small{
-    margin: 0.5rem;
-    .logo-small__svg{
-			width: 50px;
-		}
-	}
+
 	.logo__svg{
 		width: 100vw;
 	}
