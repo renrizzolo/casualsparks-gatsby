@@ -9,7 +9,7 @@ import PageLayout from '../components/PageLayout';
 import Releases from '../components/Releases';
 const MusicPageTemplate = ({title, sections}) => {
 	return (
-		<PageLayout title={title}  backgroundColor="blue">
+		<PageLayout title={title} backgroundColor="blue">
 			<Grid sections={sections}/>
 		</PageLayout>
 	);
