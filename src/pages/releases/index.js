@@ -45,7 +45,8 @@ export const releaseFrontmatterFragment = graphql`
 						title
 						templateKey
 						date(formatString: "MMMM DD, YYYY")
-						artist
+            artist
+            trackList
 						links {
 							label
 							url
