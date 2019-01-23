@@ -34,7 +34,7 @@ exports.createPages = ({ actions, graphql }) => {
 
     posts.forEach(({node}) => {
       const { id, frontmatter } = node;
-      const { path, templateKey } = frontmatter;
+      const { path, templateKey, title } = frontmatter;
       console.log(node)
       createPage({
         path: node.fields.slug,
@@ -44,7 +44,8 @@ exports.createPages = ({ actions, graphql }) => {
         // additional data can be passed via context
         context: {
           id,
-          layout: path.match(/contact|about|home/) ? 'circle' : 'square'
+          title,
+          layout: path && path.match(/contact|about|home/) ? 'circle' : 'square'
         },
       })
     })
