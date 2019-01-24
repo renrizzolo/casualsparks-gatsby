@@ -47,6 +47,7 @@ export const releaseFrontmatterFragment = graphql`
 						date(formatString: "MMMM DD, YYYY")
             artist
             trackList
+            soundcloudUrl
 						links {
 							label
 							url
