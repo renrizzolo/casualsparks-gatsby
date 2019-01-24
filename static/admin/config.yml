@@ -35,6 +35,7 @@ collections:
       - {label: Preview HTML/embed code, name: previewHTML, widget: "text", required: false}
       - {label: "Description", name: "description", widget: "markdown", required: false }
       - {label: "Type", name: "releaseType",  widget: "select",  options: [{ label: "Release", value: "release" }, { label: "Mix", value: "mix" }, { label: "Freebie", value: "freebie" },]}
+      - {label: "Soundcloud url (for site player)", name: "soundCloudUrl", widget: string, required: false }
       - label: "Links"
         name: "links"
         widget: "list"

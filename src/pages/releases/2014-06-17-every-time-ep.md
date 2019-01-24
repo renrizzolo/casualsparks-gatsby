@@ -9,6 +9,7 @@ trackList:
   - Nowhere
   - Get The Love
   - Aftertouch
+soundcloudUrl: https://soundcloud.com/renriz/sets/ren-riz-every-time-ep
 previewHTML: >-
   <iframe width='100%' height='300' scrolling='no' frameborder='no'
   src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/44054952&amp;color=%23168dec&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_teaser=false&amp;visual=true'></iframe>
