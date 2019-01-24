@@ -30,7 +30,7 @@ const Navbar = class extends React.Component {
             <a onClick={this.handleMenu}>{this.state.showMenu ? "close" : "menu"}</a>
           </span>
           <MenuTranslate key="nav" show={!this.state.showMenu}>
-            {style => <Menu style={style} className={`mobile ${this.stripSlash(pathname)}`} />}
+            {style => <Menu style={style} className={`mobile ${this.state.showMenu ? 'open' : 'closed' } ${this.stripSlash(pathname)}`} />}
           </MenuTranslate>
 
             <Menu className={`desktop ${this.stripSlash(pathname)}`} />
