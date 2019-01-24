@@ -6,7 +6,7 @@ import PauseIcon from '../../img/baseline-pause_circle_outline-24px.svg'
 
 export const SC = React.createContext();
 
-export default class SoundcloudPlayer extends Component {
+export default class SoundcloudPlayerProvider extends Component {
   state = {
     playing: false,
     paused: false,
@@ -19,7 +19,9 @@ export default class SoundcloudPlayer extends Component {
   }
   componentDidMount = () => {
     this.setState({
-      updateTrack: this.updateTrack
+      updateTrack: this.updateTrack,
+      play: this.play,
+      pause: this.pause
     })
     this.scPlayer = new SoundCloudAudio('a7c99e975fa37c393cb1a6d89d5c1e0b');
     this.start();
@@ -105,79 +107,90 @@ export default class SoundcloudPlayer extends Component {
   
 
   render() {
-
-    const { 
-      error, 
-      playing, 
-      paused,
-      currentTrack,
-      currentTrack: { title, user, id }, 
-      url,
-      tracks
-    } = this.state;
-
     const { children } = this.props;
-    const currentTime = this.scPlayer ? this.scPlayer.audio.currentTime.toFixed(0) : null;
+
     return (
       <SC.Provider value={this.state}>
           {children}
-        <SC.Consumer>
-          {SC => SC.url ?
-            <div className="sc-player">
-              <div className="track flex-container flex-container__row align-center">
-                <div className="sc-player__controls">
-                  <button className="sc-player__button play" disabled={!url || playing} onClick={this.play}>play</button>
-                  <button className="sc-player__button pause" disabled={!url || paused} onClick={this.pause}>pause</button>
-                </div>
-                <div className="sc-player__items">
-
-                  {title && 
-                    <span className="sc-player__item"> 
-                      <img className="sc-player__thumb" src={currentTrack.artwork_url}/>
-                      <span className="sc-player__text">{user.username} - {title}</span>
-                    </span>
-                  }
-                  {
-                    tracks && tracks.length > 1 && 
-                    <div>
-                      {tracks.map((track, i) => (
-                        <span key={track.id} className="sc-player__item">
-                          <span className="sc-player__text">
-                            {track.user.username} - {track.title}
-                          </span>
-                          <ControlButton 
-                            playing={playing} 
-                            play={this.play}
-                            pause={this.pause} 
-                            currentTrack={currentTrack}
-                            track={track} 
-                            url={url} 
-                            index={i}
-                          />
-                        </span>
-                        ))
-                      }
-                      </div>
-                  }
-                </div>
-                {error && <span className="error notice">Something went wrong...</span>}
-              </div>
-            </div>
-            :
-            null
-          }
-        </SC.Consumer>
       </SC.Provider>
     )
   }
 }
+export const SoundcloudPlayerUI = () => {
 
+  return (
+    <SC.Consumer>
+      {({
+        play,
+        pause,
+        error,
+        playing,
+        paused,
+        currentTrack,
+        currentTrack: { title, user, id },
+        url,
+        tracks,
+      }) => url ?
+        <div className="sc-player">
+          <div className="track flex-container flex-container__row align-center">
+            <div className="sc-player__items flex-1">
+
+              {title &&
+                <span className="sc-player__item">
+                <div>
+                  <img className="sc-player__thumb" src={currentTrack.artwork_url} />
+                  <span className="sc-player__text">{user.username} - {title}</span>
+                </div>
+                    <ControlButton
+                      playing={playing}
+                      play={play}
+                      pause={pause}
+                      currentTrack={currentTrack}
+                      track={currentTrack}
+                      url={url}
+                    // index={i}
+                    />
+                </span>
+              }
+              {
+                tracks && tracks.length > 1 &&
+                <div>
+                  {tracks.map((track, i) => (
+                    <span key={track.id} className="sc-player__item">
+                      <span className="sc-player__text">
+                        {track.user.username} - {track.title}
+                      </span>
+                      <ControlButton
+                        playing={playing}
+                        play={play}
+                        pause={pause}
+                        currentTrack={currentTrack}
+                        track={track}
+                        url={url}
+                        index={i}
+                      />
+                    </span>
+                  ))
+                  }
+                </div>
+              }
+            </div>
+            {error && <span className="error notice">Something went wrong...</span>}
+          </div>
+        </div>
+        :
+        null
+      }
+    </SC.Consumer>
+  );
+}
 const ControlButton = ({play, pause, playing, track, currentTrack, url, index = null}) => {
   const isPlaying = track.id === currentTrack.id && playing;
+  const playlistIndex = index ? { playlistIndex: index } : null;
   return (
     <button
       className="sc-player__button play" disabled={!url}
-      onClick={() => isPlaying ? pause() : play({ playlistIndex: index }, track)}
+      onClick={() => isPlaying ? pause() : play(playlistIndex, track)}
     >
      { isPlaying ? 
      <PauseIcon className="sc-player__icon play" /> 
