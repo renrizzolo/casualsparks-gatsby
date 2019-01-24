@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from "gatsby"
-import CircleLayout from './CircleLayout';
-import { Fade } from '../animations';
-import Navbar from '../components/Navbar'
+import CircleLayout from './CircleLayout'
+import { Fade } from '../animations'
+import Navbar from './Navbar'
 import '../styles/index.scss'
+import SoundcloudPlayer, { SC, updateTrack } from './SoundcloudPlayer'
 
 class TemplateWrapper extends Component {
   state = {
@@ -71,18 +72,20 @@ class TemplateWrapper extends Component {
               <meta property="og:url" content="/" />
               <meta property="og:image" content="/img/Casual-Sparks-light-blue-600.png" />
             </Helmet>
-            <div class="scroll-width" id="scroll-width" />
-            <Navbar />
-              {pageContext && pageContext.layout === 'circle' ?
-                <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
-                  {children}
-                </CircleLayout>
-                :
-                <Fade show={this.state.mounted} >
-                  {style => <div style={style}>{children}</div>}
-                </Fade>
-              }
-          </div>
+              <div className="scroll-width" id="scroll-width" />
+              <Navbar />
+                <SoundcloudPlayer>
+                {pageContext && pageContext.layout === 'circle' ?
+                  <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
+                    {children}
+                  </CircleLayout>
+                  :
+                  <Fade show={this.state.mounted} >
+                    {style => <div style={style}>{children}</div>}
+                  </Fade>
+                }
+                </SoundcloudPlayer>
+            </div>
         )}
       />
     )
