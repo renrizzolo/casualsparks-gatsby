@@ -5,7 +5,7 @@ import CircleLayout from './CircleLayout'
 import { Fade } from '../animations'
 import Navbar from './Navbar'
 import '../styles/index.scss'
-import SoundcloudPlayer, { SC, updateTrack } from './SoundcloudPlayer'
+import SoundcloudPlayerProvider, { SoundcloudPlayerUI } from './SoundcloudPlayer'
 
 class TemplateWrapper extends Component {
   state = {
@@ -74,17 +74,18 @@ class TemplateWrapper extends Component {
             </Helmet>
               <div className="scroll-width" id="scroll-width" />
               <Navbar />
-                <SoundcloudPlayer>
-                {pageContext && pageContext.layout === 'circle' ?
-                  <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
-                    {children}
-                  </CircleLayout>
-                  :
-                  <Fade show={this.state.mounted} >
-                    {style => <div style={style}>{children}</div>}
-                  </Fade>
-                }
-                </SoundcloudPlayer>
+                <SoundcloudPlayerProvider>
+                  {pageContext && pageContext.layout === 'circle' ?
+                    <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
+                      {children}
+                    </CircleLayout>
+                    :
+                    <Fade show={this.state.mounted} >
+                      {style => <div style={style}>{children}</div>}
+                    </Fade>
+                  }
+                  <SoundcloudPlayerUI/>
+                </SoundcloudPlayerProvider>
             </div>
         )}
       />
