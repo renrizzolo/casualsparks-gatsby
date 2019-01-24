@@ -6,6 +6,7 @@ import { InFromBottom } from '../animations';
 import { Link } from 'gatsby';
 import { kebabCase } from 'lodash'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
+import { SC } from '../components/SoundcloudPlayer'
 
 const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
 
@@ -68,6 +69,17 @@ const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
       <Link className="button full" style={{marginTop: 16}} to={slug}>
         View →
       </Link>
+      {
+        data.soundcloudUrl && 
+        <SC.Consumer>
+          {
+            ({ updateTrack }) => {            
+            return (
+              <button onClick={() => updateTrack(data.soundcloudUrl)} class="button blue">Play</button>
+            )}
+          }
+        </SC.Consumer>
+      }
     </div>
   )
 }
