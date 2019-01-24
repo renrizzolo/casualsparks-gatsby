@@ -8,8 +8,11 @@
 @import "variables";
 @import "config";
 @import "typography";
-
 :root {
+	// --menu-offset gets updated by js to add scrollbar width
+	// for absdolute elements I need the original width
+	// without scrollbar
+	--menu-width: 204;
   --menu-offset: 204;
 }
 
@@ -144,6 +147,12 @@ h2{
 	align-items: center;
 	justify-content: center;
 }
+.align-center {
+	align-items: center;
+}
+.justify-center {
+	justify-content: center;
+}
 .flex-start{
 	align-items: center;
 	justify-content: flex-start;
@@ -272,6 +281,10 @@ h2{
 	}
 
     &.mobile{
+			visibility: hidden;
+			&.open {
+				visibility: visible;
+			}
     	position: absolute;
     	z-index: 2;
     	width: auto;
@@ -290,7 +303,7 @@ h2{
 	li{
 		list-style: none;
 		&:last-of-type {
-			margin-bottom: 1rem;
+			margin-bottom: 4rem;
 		}
 		a{
 			line-height: 2.5em;
@@ -304,7 +317,7 @@ h2{
 				&:before{
 					opacity:1;
 					transform: scale(1, 0.15);
-									transform-origin: 0 100%;
+					transform-origin: 0 100%;
 
 				}
 
@@ -362,7 +375,9 @@ h2{
 	    	a {
 	    	color: $lightpearl;
 	    	&.active{
-	    		border-bottom-color:$cs-darkblue;
+					border-bottom-color:$lightpearl;
+					border-bottom-width: 2px;
+					border-bottom-style: solid;
 	    	}
 	    }
   	}
