@@ -17,7 +17,7 @@ const Navbar = class extends React.Component {
   }
 
   stripSlash = (path) => {
-    return path.replace(/^\//, "");
+    return path.replace(/\//g, "");
   } 
 
  render() {
