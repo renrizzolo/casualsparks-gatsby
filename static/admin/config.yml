@@ -38,6 +38,7 @@ collections:
       - label: "Links"
         name: "links"
         widget: "list"
+        required: false
         fields:
           - {label: Label, name: label, widget: string}
           - {label: Url, name: url, widget: string}
