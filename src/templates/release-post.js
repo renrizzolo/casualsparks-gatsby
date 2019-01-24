@@ -140,6 +140,7 @@ const ReleasePost = ({ data }) => {
         }
         title={post.frontmatter.title}
         artist={post.frontmatter.artist}
+        soundcloudUrl={post.frontmatter.soundcloudUrl}
         image={post.frontmatter.image}
         links={post.frontmatter.links}
         trackList={post.frontmatter.trackList}
