@@ -25,7 +25,7 @@ export default class SoundcloudPlayerProvider extends Component {
 
   
   componentDidMount = () => {
-    audio = document.createElement('audio');
+    this.audio = document.createElement('audio');
     this.setState({
       updateTrack: this.updateTrack,
       controls: {
