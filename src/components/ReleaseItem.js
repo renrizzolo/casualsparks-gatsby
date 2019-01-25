@@ -7,6 +7,8 @@ import { Link } from 'gatsby';
 import { kebabCase } from 'lodash'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
 import { SC } from '../components/SoundcloudPlayer'
+import { PlayIcon } from '../img/icons'
+
 
 const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
 
@@ -66,16 +68,20 @@ const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
           </ToggleClass>
         </aside>
       } */}
-      <Link className="button full" style={{marginTop: 16}} to={slug}>
+    {/*   <Link className="button full" style={{marginTop: 16}} to={slug}>
         View →
-      </Link>
+      </Link> */}
       {
         data.soundcloudUrl && 
         <SC.Consumer>
           {
-            ({ updateTrack }) => {            
+            ({ updateTrack, currentTrack }) => {            
             return (
-              <button onClick={() => updateTrack(data.soundcloudUrl)} class="button blue">Play</button>
+              <a className="button blue" onClick={() => updateTrack(data.soundcloudUrl)}>
+                <span className="flex-container flex-center"> 
+                  Play {data.soundcloudUrl === currentTrack.permalink_url && <PlayIcon/>}
+                </span>
+              </a>
             )}
           }
         </SC.Consumer>
