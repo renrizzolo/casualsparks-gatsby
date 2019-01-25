@@ -1,42 +1,96 @@
 import React, { Component } from 'react'
-import SoundCloudAudio from 'soundcloud-audio'
+import { Trail, Spring } from 'react-spring'
 import '../../styles/common/player.scss'
+import PrevIcon from '../../img/baseline-fast_rewind-24px.svg'
+import NextIcon from '../../img/baseline-fast_forward-24px.svg'
+import StopIcon from '../../img/baseline-stop-24px.svg'
 import PlayIcon from '../../img/baseline-play_circle_outline-24px.svg'
 import PauseIcon from '../../img/baseline-pause_circle_outline-24px.svg'
-import { appendQueryParam, fetchUrl, parseURL } from './utils';
+import CloseIcon from '../../img/baseline-close-24px.svg'
+import AlbumIcon from '../../img/baseline-album-24px.svg'
+
+import { appendQueryParam, fetchUrl, parseURL } from './utils'
+
 
 const SOUNDCLOUD_API_URL = 'https://api.soundcloud.com';
 export const SC = React.createContext();
 
 export default class SoundcloudPlayerProvider extends Component {
   state = {
+    show: false,
     playing: false,
     error: false,
     url: null,
+    currentTime: 0,
     currentTrack: {},
     tracks: [],
     updateTrack: () => { },
-    controls: {}
+    controls: {},
+    events: {},
   }
   track = null;
   playlist = null;
   playing = false;
   duration = 0;
-
+  playStarted = false;
   
   componentDidMount = () => {
     this.audio = document.createElement('audio');
     this.setState({
       updateTrack: this.updateTrack,
+      togglePlayer: this.togglePlayer,
       controls: {
         play: this.playTrack,
         pause: this.pause,
         previous: this.previous,
         next: this.next,
+        stop: this.stop,
+        seek: this.seek,
+      },
+      events: {
+        resetProspectiveSeek: this.resetProspectiveSeek,
+        waveFormHover: this.waveFormHover
       }
     })
     // this.scPlayer = new SoundCloudAudio('a7c99e975fa37c393cb1a6d89d5c1e0b');
+    this.audio.addEventListener("timeupdate", this.updateCurrentTime);
+    document.addEventListener("keydown", this.handleKeys);
+  }
 
+  componentWillUnmount = () => {
+    this.audio.removeEventListener("timeupdate", this.updateCurrentTime);
+    document.removeEventListener("keydown", this.handleKeys);
+  }
+
+  handleKeys = (e) => {
+    console.log(e.code);
+ 
+    const { playing, playlistIndex, url, show } = this.state;
+    if ( url ) {
+      if (e.code.toLowerCase() === 'space' ) {
+        console.log('playing', playing, playlistIndex);
+        if (playing) {
+          this.pause();
+        } else {
+          this.playTrack({playlistIndex: playlistIndex})
+          !show && this.togglePlayer();
+        }
+      }
+
+      if (e.code.toLowerCase() === 'escape') {
+        show && this.togglePlayer();
+      }
+    }
+  }
+
+  getOffsetPercet = () => {
+
+  }
+
+  updateCurrentTime = () => {
+    this.setState({
+      currentTime: this.audio.currentTime
+    })    
   }
 
   start = (url) => {
@@ -56,8 +110,16 @@ export default class SoundcloudPlayerProvider extends Component {
       })
     }
   }
+
+  togglePlayer = () => {
+    this.setState({
+      show: !this.state.show
+    })
+    console.log(!this.state.show);
+    
+  }
   
-  cleanData = () => {
+  resetData = () => {
     this.track = null;
     this.playlist = null;
   }
@@ -72,7 +134,7 @@ export default class SoundcloudPlayerProvider extends Component {
     const data = fetchUrl(resolveUrl);
     data.then(res => {
       
-      this.cleanData();
+      this.resetData();
       
       if (Array.isArray(res)) {
         res = { tracks: res };
@@ -103,19 +165,30 @@ export default class SoundcloudPlayerProvider extends Component {
     console.log('this.updateTrack', url);
     
     this.setState({
-      url
+      url,
+      show: true,
     })
     this.start(url);
   }
 
 
   playTrack = (index = null) => {
+    if (this.playStarted) {
+      console.log('play started, returning');
+      
+      return;
+    }
+    console.log('play started');
+
+    this.playStarted = true;
+    
     this.play(index)
     .then(() => {
       console.log('playing:', this.playing);
-      
+      this.playStarted = false;
+      console.log('play finished');
+
       this.setState({
-        playing: this.playing,
         paused: false,
         error: false
       })
@@ -125,6 +198,10 @@ export default class SoundcloudPlayerProvider extends Component {
     })
     .catch(err => { 
       console.log('err', err);
+      console.log('play errorerd');
+
+      this.playStarted = false;
+
       // this shit is firing
       // for unknon reasons
       // this.setState({
@@ -136,7 +213,6 @@ export default class SoundcloudPlayerProvider extends Component {
   play = async (options) => {
     options = options || {};
     let src;
-    console.log('options', options);
     const { playlistIndex } = this.state;
 
     if (options.streamUrl) {
@@ -177,8 +253,11 @@ export default class SoundcloudPlayerProvider extends Component {
 
     this.playing = src;
     console.log(src, playlistIndex);
-
+    
     const audio = await this.audio.play();
+      this.setState({
+        playing: true
+      })
     return audio;
   };
 
@@ -226,12 +305,14 @@ export default class SoundcloudPlayerProvider extends Component {
     })
   };
 
-  stop = () => { 
+  stop = () => {
     this.audio.pause();
     this.audio.currentTime = 0;
     this.setState({
       playing: false
     })
+    console.log('stopped playback');
+    
   };
 
 
@@ -277,6 +358,56 @@ export default class SoundcloudPlayerProvider extends Component {
       })
     }
   };
+
+  seek = (e) => {
+    if (!this.audio.readyState) {
+      return false;
+    }
+    const { target } = e;
+    console.log(target.offsetWidth, e.nativeEvent.offsetX);
+    
+    const percent =
+      e.nativeEvent.offsetX / e.target.offsetWidth;
+    console.log(percent);
+
+    console.log(percent * (this.audio.duration || 0));
+    
+    this.audio.currentTime = percent * (this.audio.duration || 0);
+    
+    if (!this.state.playing) {
+      this.playTrack({playlistIndex: this.state.playlistIndex});
+    }
+  };
+
+  waveFormHover = (e) => {
+    
+    const percent = e.nativeEvent.offsetX / e.target.offsetWidth;
+    
+    this.setState({
+      prospectiveSeek: percent * this.audio.duration,
+    })
+  }
+  resetProspectiveSeek = () => {
+    this.setState({
+      prospectiveSeek: 0
+    })
+  }
+  setVolume = (volumePercentage) => {
+    if (!this.audio.readyState) {
+      return;
+    }
+
+    this.audio.volume = volumePercentage;
+  };
+
+  setTime = (seconds) => {
+    if (!this.audio.readyState) {
+      return;
+    }
+
+    this.audio.currentTime = seconds;
+  };
+
   // play = (index = null, track) => {
   //   this.play(index)
   //   .then(() => {
@@ -330,7 +461,7 @@ export default class SoundcloudPlayerProvider extends Component {
 
   render() {
     const { children } = this.props;
-
+    
     return (
       <SC.Provider value={this.state}>
           {children}
@@ -344,86 +475,163 @@ export const SoundcloudPlayerUI = () => {
     <SC.Consumer>
       {({
         controls,
+        togglePlayer,
+        show,
         error,
         playing,
+        currentTime,
         currentTrack,
         currentTrack: { title, user, id },
         url,
         tracks,
+        prospectiveSeek,
+        events
       }) => url ?
-        <div className="sc-player">
-          <div className="track flex-container flex-container__row align-center">
-            <div className="sc-player__items flex-1">
+        <div>
+          <ControlButton className="open" icon={AlbumIcon} fn={togglePlayer} />
+          <Spring
+            from={{ transform: show ? 'translateY(100%)' : 'translateY(0)' }}
+            to={{ transform: show ? 'translateY(0)' : 'translateY(100%)' }}
+            config={{ tension: 105, friction: 12, }}
+          >
+            {props => 
+              <div className="sc-player" style={props}>
+                <div className="track">
+                  <div className="sc-player__items flex-1" style={{height: '100%'}}>
 
-            {tracks && tracks.length > 1 && 
-              <div>
-              <button onClick={controls.previous}>prev</button>
-              <button onClick={controls.next}>next</button>
+
+                  {title &&
+                    <div>
+
+                          <TrackItem
+                            togglePlayer={togglePlayer}
+                            hero
+                            events={events}
+                            prospectiveSeek={prospectiveSeek}
+                            currentTime={currentTime}
+                            isPlaylist={Boolean(tracks && tracks.length)}
+                            playing={playing}
+                            controls={controls}
+                            currentTrack={currentTrack}
+                            track={currentTrack}
+                            url={url}
+                            index={null}
+                          />
+                    </div>
+                    }
+                    {
+                      tracks && tracks.length > 0 &&
+                        <div>
+                            <Trail
+                              items={tracks} 
+                              keys={item => item.id}
+                              from={{ opacity: 0, }}
+                              to={{ opacity: 1, }}>
+                            {(track, i) => props =>
+                              <TrackItem
+                                style={props}
+                                playing={playing}
+                                controls={controls}
+                                currentTrack={currentTrack}
+                                track={track}
+                                url={url}
+                                index={i}
+                              />
+                            }
+                            </Trail>
+                      </div>
+                    }
+                  </div>
+                  {error && <span className="error notice">Something went wrong...</span>}
+                </div>
               </div>
             }
-            {title &&
-                    <TrackItem
-                      hero
-                      playing={playing}
-                      controls={controls}
-                      currentTrack={currentTrack}
-                      track={currentTrack}
-                      url={url}
-                      index={null}
-                    />
-              }
-              {
-                tracks && tracks.length &&
-                <div>
-                  {tracks.map((track, i) => {
-
-                    
-                    console.log('i', i);
-                    return(
-                    <TrackItem
-                        playing={playing}
-                        controls={controls}
-                        currentTrack={currentTrack}
-                        track={track}
-                        url={url}
-                        index={i}
-                      />
-                  )})
-                  }
-                </div>
-              }
-            </div>
-            {error && <span className="error notice">Something went wrong...</span>}
+          </Spring>
           </div>
-        </div>
         :
         null
       }
     </SC.Consumer>
   );
 }
-const TrackItem = ({ controls: { play, pause, previous, next }, hero, playing, track, currentTrack, url, index}) => {
-  
+const TrackItem = ({ 
+  controls: { play, pause, previous, next, stop, seek }, 
+  hero, 
+  playing, 
+  currentTrack,
+  track,
+  url, 
+  index,
+  style,
+  isPlaylist,
+  currentTime,
+  prospectiveSeek,
+  events,
+  togglePlayer,
+
+}) => {
+    
   const isPlaying = track.id === currentTrack.id && playing;
-  console.log(isPlaying && {index});
-  const playlistIndex = index ? { playlistIndex: index } : null;  
+  const playlistIndex = index !== null ? { playlistIndex: index } : null;  
   return (
-    <div key={track.id} className={`sc-player__item ${isPlaying && !hero && 'highlighted'}`} onClick={() => isPlaying ? pause() : play(playlistIndex, track)}>
-    <span className="sc-player__text">
-      {hero && <img className="sc-player__thumb" src={currentTrack.artwork_url} />}
-      {track.user.username} - {track.title}
-      </span>
-    <button
-      className="sc-player__button play" disabled={!url}
-      onClick={() => isPlaying ? pause() : play(playlistIndex, track)}
+    <div 
+      style={style} 
+      key={track.id} 
+      className={`sc-player__item ${hero && 'hero'} ${isPlaying && !hero && 'highlighted'}`} 
+      onClick={() => !hero ? (isPlaying ? pause() : play(playlistIndex)) : null}
     >
-     { isPlaying ? 
-     <PauseIcon className="sc-player__icon play" /> 
-     : 
-     <PlayIcon className="sc-player__icon pause" /> 
-     }
-    </button>
+
+    <div className="flex-container flex-center"> 
+       {hero && <ControlButton className="close" icon={CloseIcon} fn={togglePlayer} />}
+
+        {
+          hero && isPlaylist &&
+          <div>
+            <ControlButton className="previous" icon={PrevIcon} fn={previous} />
+            <ControlButton className="stop" icon={playing ? StopIcon : PlayIcon} fn={playing ? stop : play} />
+            <ControlButton className="next" icon={NextIcon} fn={next} />
+          </div>
+        }
+      <span className="sc-player__text">
+        {hero && <img className="sc-player__thumb" src={track.artwork_url} />}
+        {track.user.username} - {track.title}
+      </span>
+        <span className="sc-player__waveform" onClick={seek}>
+          {hero && currentTrack.waveform_url && 
+            <div onMouseOut={events.resetProspectiveSeek} onMouseMove={events.waveFormHover}>
+            <span 
+              className="sc-player__seek sc-player__prospective-seek" 
+              style={{ width: `${prospectiveSeek > 0 ? (prospectiveSeek / (currentTrack.duration / 1000) * 100) : currentTime / (currentTrack.duration / 1000) * 100}%` }}
+            >
+            </span>
+
+            <span className="sc-player__seek" style={{width: `${currentTime / (currentTrack.duration / 1000) * 100}%`}}></span>
+            <img src={currentTrack.waveform_url} />
+          </div>
+          }
+        </span>
+    </div>
+
+      <button
+        className="sc-player__button play" disabled={!url}
+        onClick={() => isPlaying ? pause() : play(playlistIndex)}
+      >
+        { isPlaying ? 
+          <PauseIcon className="sc-player__icon play" /> 
+          : 
+          <PlayIcon className="sc-player__icon pause" /> 
+        }
+      </button>
     </div>
 
   )
 }
+
+const ControlButton = ({className, fn, icon: Icon}) => (
+  <a
+    onClick={fn} 
+    className={`sc-player__button ${className}`}
+  >
+    <Icon className={`sc-player__icon ${className}`} />
+  </a>
+)

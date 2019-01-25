@@ -2,20 +2,27 @@
 @import "../variables";
 @import "../config";
 
+$item-bgc: $lightpearl;
+$item-highlight-bgc: $dark-pearl;
+$item-border: $dark-pearl;
+$item-text: $dark-blue;
+
 .sc-player { 
   z-index: 2;
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1rem;
-  background-color: $dark-pearl;
-  color: $dark-blue;
+  background-color: $item-bgc;
+  color: $item-text;
   border-top: 5px solid $lightpearl;
-  padding: 0.25rem 1rem;
   font-size: 80%;
+  .sc-player__items {
+    align-self: stretch;
+  }
   .sc-player__item {
     cursor: pointer;
+    padding: 0.25rem 1rem;
     transition: all 400ms ease;
     justify-content: space-between;
     white-space: nowrap;
@@ -23,8 +30,7 @@
     align-items: center;
     font-size: 0.95em;
     font-weight: bold;
-    padding: 0.1rem 0;
-    border-bottom: 1px solid $lightpearl;
+    border-bottom: 1px solid $item-border;
     .sc-player__text {
       max-width: 400px;
       white-space: nowrap;
@@ -32,18 +38,60 @@
 
     }
     &:hover, &.highlighted {
-      background-color: $lightpearl;
+      background-color: $item-highlight-bgc;
+    }
+    &.hero {
+      background-color: #ffffff;
     }
   }
   .sc-player__controls {
     margin-right: 0.5rem;
   }
-  .sc-player__button {
+ 
+  .sc-player__thumb {
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+    max-width: 50px;
+    margin: 0.5rem;
+  }
+  .sc-player__waveform {
+    position: relative;
+    flex: 1;
+    display: flex;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    img {
+      height: 40px;
+      background: #676462;
+      mix-blend-mode: hard-light;
+    }
+    .sc-player__seek {
+      transition: all 100ms ease;
+      position: absolute;
+      left: 0;
+      height: 40px;
+      background: #113d63;
+      top: 0;
+      opacity: 0.5;
+
+    }
+    .sc-player__prospective-seek {
+      transition: all 0ms;
+      opacity: 0.5;
+    }
+  }
+}
+
+ .sc-player__button {
+  //  &:focus, &:active {
+  //    border: 2 px solid blue;
+  //  }
     background: none;
     margin: 0;
     cursor: pointer;
     transition: all 250ms ease;
-    display: inline-block;
+    display: inline-flex;
     color: #ffffff;
     font-size: 1.1em;
     font-weight: bold;
@@ -53,21 +101,28 @@
     &:disabled {
       color: $cs-darkblue;
     }
+    &.open {
+      z-index: 1;
+      position: absolute;
+      bottom: 0;
+      background-color: #fff;
+    }
   }
   .sc-player__icon {
+    fill: $cs-darkblue;
+    &:hover {
+      fill: $cs-lightblue;
+    }
     &.play {
       fill: $cs-lightblue;
     }
     &.pause {
       fill: $cs-darkblue;
     }
+    &.open {
+      fill: $cs-darkblue;
+      width: 36px;
+      height: 36px;
+    }
   }
-  .sc-player__thumb {
-    width: 100%;
-    height: auto;
-    vertical-align: middle;
-    max-width: 50px;
-    margin-right: 1rem;
-  }
-}
 
