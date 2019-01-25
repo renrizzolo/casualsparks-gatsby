@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Trail, Spring } from 'react-spring'
+import { Trail, Spring, Transition, animated, config } from 'react-spring'
 import '../../styles/common/player.scss'
 import PrevIcon from '../../img/baseline-fast_rewind-24px.svg'
 import NextIcon from '../../img/baseline-fast_forward-24px.svg'
@@ -485,17 +485,18 @@ export const SoundcloudPlayerUI = () => {
         url,
         tracks,
         prospectiveSeek,
-        events
+        events,
       }) => url ?
         <div>
-          <ControlButton className="open" icon={AlbumIcon} fn={togglePlayer} />
+          {/* <ControlButton className="open" icon={AlbumIcon} fn={togglePlayer} /> */}
           <Spring
+            native
             from={{ transform: show ? 'translateY(100%)' : 'translateY(0)' }}
             to={{ transform: show ? 'translateY(0)' : 'translateY(100%)' }}
             config={{ tension: 105, friction: 12, }}
           >
             {props => 
-              <div className="sc-player" style={props}>
+              <animated.div className="sc-player" style={props}>
                 <div className="track">
                   <div className="sc-player__items flex-1" style={{height: '100%'}}>
 
@@ -515,6 +516,7 @@ export const SoundcloudPlayerUI = () => {
                             currentTrack={currentTrack}
                             track={currentTrack}
                             url={url}
+                            show={show}
                             index={null}
                           />
                     </div>
@@ -544,7 +546,7 @@ export const SoundcloudPlayerUI = () => {
                   </div>
                   {error && <span className="error notice">Something went wrong...</span>}
                 </div>
-              </div>
+              </animated.div>
             }
           </Spring>
           </div>
@@ -568,9 +570,8 @@ const TrackItem = ({
   prospectiveSeek,
   events,
   togglePlayer,
-
-}) => {
-    
+  show,
+}) => {      
   const isPlaying = track.id === currentTrack.id && playing;
   const playlistIndex = index !== null ? { playlistIndex: index } : null;  
   return (
@@ -581,17 +582,56 @@ const TrackItem = ({
       onClick={() => !hero ? (isPlaying ? pause() : play(playlistIndex)) : null}
     >
 
-    <div className="flex-container flex-center"> 
-       {hero && <ControlButton className="close" icon={CloseIcon} fn={togglePlayer} />}
-
-        {
-          hero && isPlaylist &&
-          <div>
-            <ControlButton className="previous" icon={PrevIcon} fn={previous} />
-            <ControlButton className="stop" icon={playing ? StopIcon : PlayIcon} fn={playing ? stop : play} />
-            <ControlButton className="next" icon={NextIcon} fn={next} />
-          </div>
+    <div className="flex-container flex-center flex-1"> 
+        <div className="flex-container flex-center">
+        {hero && 
+        <div className="flex-container flex-center">
+          <Transition
+            native
+            items={show}
+            from={{ opacity: 0, position: 'absolute', right: '1rem',transform: 'translateY(-5px)' }}
+            enter={{  opacity: 1, transform: 'translateY(0px)' }}
+            leave={{ opacity: 0, transform: 'translateY(-5px)' }}
+            config={{...config.slow, delay: 300}}
+          >
+            {show => props =>
+              show && ( 
+                <animated.div style={props}>
+                  <ControlButton className="toggle open" icon={CloseIcon} fn={togglePlayer} />
+                </animated.div>
+              )
+            }
+          </Transition>
+          <Transition
+            native
+            items={show}
+              from={{ position: 'absolute', right: '1rem', opacity: 1, transform: 'translateY(-25px) scale(1)' }}
+            enter={{  opacity: 1, transform: 'translateY(-75px) scale(1.5)' }}
+              leave={{ opacity: 0, transform: 'translateY(-25px), scale(1)' }}
+            config={{ ...config.slow, delay: 350 }}
+          >
+            {show => props =>
+              !show && (
+                <animated.div style={props}>
+                  <div className={playing && 'pulse'}>
+                    <ControlButton className={`toggle closed`} icon={AlbumIcon} fn={togglePlayer} />
+                  </div>
+                </animated.div>
+              )
+            }
+          </Transition>
+        </div>
         }
+
+          {
+            hero && isPlaylist &&
+            <React.Fragment>
+              <ControlButton className="previous" icon={PrevIcon} fn={previous} />
+              <ControlButton className="stop" icon={playing ? StopIcon : PlayIcon} fn={playing ? stop : play} />
+              <ControlButton className="next" icon={NextIcon} fn={next} />
+            </React.Fragment>
+          }
+        </div>
       <span className="sc-player__text">
         {hero && <img className="sc-player__thumb" src={track.artwork_url} />}
         {track.user.username} - {track.title}
@@ -610,9 +650,8 @@ const TrackItem = ({
           </div>
           }
         </span>
-    </div>
-
-      <button
+  {!hero && 
+      <a
         className="sc-player__button play" disabled={!url}
         onClick={() => isPlaying ? pause() : play(playlistIndex)}
       >
@@ -621,7 +660,9 @@ const TrackItem = ({
           : 
           <PlayIcon className="sc-player__icon pause" /> 
         }
-      </button>
+      </a>
+  }
+    </div>
     </div>
 
   )
