@@ -35,14 +35,34 @@ $item-text: $dark-blue;
       max-width: 400px;
       white-space: nowrap;
       overflow-x: auto;
-
     }
     &:hover, &.highlighted {
       background-color: $item-highlight-bgc;
     }
     &.hero {
       background-color: #ffffff;
+      @media screen and (max-width: 600px) {
+        > div {
+          flex-wrap: wrap;
+          > div, .sc-player__text, .sc-player__waveform {
+            width: 100%;
+            .sc-player__button {
+              &.close {
+                margin-left: auto;
+                order: 1;
+              }
+            }
+          }
+          .sc-player__waveform {
+            margin-left: 0.5rem;
+          }
+          .sc-player__text {
+            max-width: 100%;
+          }
+        }
+      }
     }
+
   }
   .sc-player__controls {
     margin-right: 0.5rem;
@@ -60,7 +80,7 @@ $item-text: $dark-blue;
     flex: 1;
     display: flex;
     margin-left: 1rem;
-    margin-right: 1rem;
+    margin-right: 2.5rem;
     img {
       height: 40px;
       background: #676462;
@@ -101,12 +121,7 @@ $item-text: $dark-blue;
     &:disabled {
       color: $cs-darkblue;
     }
-    &.open {
-      z-index: 1;
-      position: absolute;
-      bottom: 0;
-      background-color: #fff;
-    }
+
   }
   .sc-player__icon {
     fill: $cs-darkblue;
@@ -119,10 +134,32 @@ $item-text: $dark-blue;
     &.pause {
       fill: $cs-darkblue;
     }
-    &.open {
-      fill: $cs-darkblue;
-      width: 36px;
-      height: 36px;
+
+    &.toggle {
+      background-color: $cs-darkblue;
+      border-radius: 50%;
+      padding: 5px;
+      fill: $dark-pearl;
+      &.closed {
+        border-radius: 0%;
+        padding: 0;
+        fill: $lightpearl;
+        background-color: transparent;
+
+      }
+    }
+  }
+  .pulse {
+    svg {
+    animation: pulse 600ms ease-in 250ms infinite alternate-reverse;
+    }
+  }
+  @keyframes pulse {
+    from {
+      fill: $dark-pearl;
+    }
+    to {
+      fill: white
     }
   }
 
