@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { Trail, Spring, Transition, animated, config } from 'react-spring'
 import '../../styles/common/player.scss'
-import PrevIcon from '../../img/baseline-fast_rewind-24px.svg'
-import NextIcon from '../../img/baseline-fast_forward-24px.svg'
-import StopIcon from '../../img/baseline-stop-24px.svg'
-import PlayIcon from '../../img/baseline-play_circle_outline-24px.svg'
-import PauseIcon from '../../img/baseline-pause_circle_outline-24px.svg'
-import CloseIcon from '../../img/baseline-close-24px.svg'
-import AlbumIcon from '../../img/baseline-album-24px.svg'
+import {
+  PrevIcon,
+  NextIcon,
+  StopIcon,
+  PlayIcon,
+  PauseIcon,
+  CloseIcon,
+  AlbumIcon,
+} from '../../img/icons'
 
 import { appendQueryParam, fetchUrl, parseURL } from './utils'
 
@@ -54,11 +56,13 @@ export default class SoundcloudPlayerProvider extends Component {
     })
     // this.scPlayer = new SoundCloudAudio('a7c99e975fa37c393cb1a6d89d5c1e0b');
     this.audio.addEventListener("timeupdate", this.updateCurrentTime);
+    this.audio.addEventListener("ended", this.handleEnd);
     document.addEventListener("keydown", this.handleKeys);
   }
 
   componentWillUnmount = () => {
     this.audio.removeEventListener("timeupdate", this.updateCurrentTime);
+    this.audio.removeEventListener("ended", this.handleEnd);
     document.removeEventListener("keydown", this.handleKeys);
   }
 
@@ -83,16 +87,14 @@ export default class SoundcloudPlayerProvider extends Component {
     }
   }
 
-  getOffsetPercet = () => {
-
-  }
-
   updateCurrentTime = () => {
     this.setState({
       currentTime: this.audio.currentTime
-    })    
+    })
   }
-
+  handleEnd = () => {
+    this.stop();
+  }
   start = (url) => {
     if (url) {
       this.stop();
