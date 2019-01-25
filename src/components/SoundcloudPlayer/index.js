@@ -410,7 +410,6 @@ const TrackItem = ({ controls: { play, pause, previous, next }, hero, playing, t
   return (
     <div key={track.id} className={`sc-player__item ${isPlaying && !hero && 'highlighted'}`} onClick={() => isPlaying ? pause() : play(playlistIndex, track)}>
     <span className="sc-player__text">
-    {i}
       {hero && <img className="sc-player__thumb" src={currentTrack.artwork_url} />}
       {track.user.username} - {track.title}
       </span>
