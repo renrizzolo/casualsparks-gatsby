@@ -15,19 +15,24 @@
   padding: 0.25rem 1rem;
   font-size: 80%;
   .sc-player__item {
+    cursor: pointer;
+    transition: all 400ms ease;
     justify-content: space-between;
     white-space: nowrap;
     display: flex;
     align-items: center;
     font-size: 0.95em;
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    padding: 0.1rem 0;
     border-bottom: 1px solid $lightpearl;
     .sc-player__text {
       max-width: 400px;
       white-space: nowrap;
       overflow-x: auto;
 
+    }
+    &:hover, &.highlighted {
+      background-color: $lightpearl;
     }
   }
   .sc-player__controls {
@@ -62,6 +67,7 @@
     height: auto;
     vertical-align: middle;
     max-width: 50px;
+    margin-right: 1rem;
   }
 }
 
