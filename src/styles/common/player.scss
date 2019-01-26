@@ -21,7 +21,6 @@ $item-text: $dark-blue;
     align-self: stretch;
   }
   .sc-player__item {
-    cursor: pointer;
     padding: 0.25rem 1rem;
     transition: all 400ms ease;
     justify-content: space-between;
@@ -76,6 +75,8 @@ $item-text: $dark-blue;
     margin: 0.5rem;
   }
   .sc-player__waveform {
+    user-select: none;
+    cursor: pointer;
     position: relative;
     flex: 1;
     display: flex;
@@ -138,28 +139,47 @@ $item-text: $dark-blue;
     &.toggle {
       background-color: $cs-darkblue;
       border-radius: 50%;
-      padding: 5px;
+      padding: 0.25rem;
       fill: $dark-pearl;
       &.closed {
         border-radius: 0%;
         padding: 0;
-        fill: $lightpearl;
+        fill: $cs-darkblue;
         background-color: transparent;
-
+      }
+    }
+  }
+  .page.music {
+      .pulse {
+        svg {
+        animation: pulse-pearl 600ms ease-in 250ms infinite alternate-reverse;
+        }
+      }
+    .sc-player__icon {
+      &.closed {
+        fill: $lightpearl;
       }
     }
   }
   .pulse {
     svg {
-    animation: pulse 600ms ease-in 250ms infinite alternate-reverse;
+    animation: pulse-dark-blue 600ms ease-in 250ms infinite alternate-reverse;
     }
   }
-  @keyframes pulse {
+  @keyframes pulse-pearl {
     from {
       fill: $dark-pearl;
     }
     to {
       fill: white
+    }
+  }
+  @keyframes pulse-dark-blue {
+    from {
+      fill: $cs-darkblue;
+    }
+    to {
+      fill: lighten($cs-darkblue, 25%);
     }
   }
 
