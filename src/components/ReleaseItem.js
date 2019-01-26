@@ -81,7 +81,7 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
           {({ updateTrack, currentTrack }) => {
             return (
               <a
-                className="button blue"
+                className="button blue full"
                 onClick={() => updateTrack(data.soundcloudUrl)}
               >
                 <span className="flex-container flex-center">
