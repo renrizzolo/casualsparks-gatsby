@@ -122,7 +122,7 @@ $item-text: $dark-blue;
           right: 1.3rem;
 
     @include minwidth(s) {
-      right: 0.5rem;
+      right: 0rem;
     }
   }
  .sc-player__button {
@@ -167,6 +167,9 @@ $item-text: $dark-blue;
         padding: 0;
         fill: $cs-darkblue;
         background-color: transparent;
+        @include maxwidth(xs){
+          background-color:$cs-darkblue;
+        }
       }
     }
   }
