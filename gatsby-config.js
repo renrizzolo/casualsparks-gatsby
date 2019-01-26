@@ -9,16 +9,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-layout`,
       options: {
-        component: require.resolve(`./src/components/Layout.js`)
-      }
+        component: require.resolve(`./src/components/Layout.js`),
+      },
     },
     {
       resolve: 'gatsby-plugin-react-svg',
       options: {
         rule: {
-          include: /img/
-        }
-      }
+          include: /img/,
+        },
+      },
     },
     {
       // keep as first gatsby-source-filesystem plugin for gatsby image support
@@ -67,8 +67,8 @@ module.exports = {
             resolve: 'gatsby-remark-copy-linked-files',
             options: {
               destinationDir: 'static',
-            }
-          }
+            },
+          },
         ],
       },
     },

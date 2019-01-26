@@ -22,9 +22,8 @@ export const ReleasePostTemplate = ({
   releaseType,
   helmet,
 }) => {
-
   return (
-    <PageLayout 
+    <PageLayout
       header={
         <div className="page-header page-header__release flex-container">
           <div className="flex-1 flex-container__column flex-end">
@@ -35,26 +34,32 @@ export const ReleasePostTemplate = ({
             <PreviewCompatibleImage imageInfo={image} />
           </div>
         </div>
-      } 
+      }
       backgroundColor="pearl"
     >
       {helmet || ''}
-        <section className="flex-container__column">
-          <div className="single-release">
-            <ReleaseItem
-              contentComponent={contentComponent}
-              content={content}
-              links={links}
-              trackList={trackList}
-              previewHTML={previewHTML}
-            />
-          </div>
-        </section> 
+      <section className="flex-container__column">
+        <div className="single-release">
+          <ReleaseItem
+            contentComponent={contentComponent}
+            content={content}
+            links={links}
+            trackList={trackList}
+            previewHTML={previewHTML}
+          />
+        </div>
+      </section>
     </PageLayout>
   )
 }
 
-const ReleaseItem = ({ content, contentComponent, links, trackList, previewHTML}) => {
+const ReleaseItem = ({
+  content,
+  contentComponent,
+  links,
+  trackList,
+  previewHTML,
+}) => {
   const PostContent = contentComponent || Content
 
   return (
@@ -62,55 +67,59 @@ const ReleaseItem = ({ content, contentComponent, links, trackList, previewHTML}
       <header>
         <div className="item-info">
           <div className="link-container">
-            {links && links.map((link) => (
-              <a 
-                key={link.label} 
-                target="_blank" 
-                rel="noopener" 
-                className="button light-blue shop-link" 
-                href={link.url}
-              >
-                {link.label}
-              </a>
-            ))
-            }
+            {links &&
+              links.map(link => (
+                <a
+                  key={link.label}
+                  target="_blank"
+                  rel="noopener"
+                  className="button light-blue shop-link"
+                  href={link.url}
+                >
+                  {link.label}
+                </a>
+              ))}
           </div>
         </div>
       </header>
-      {content &&
+      {content && (
         <div>
           <h2 className="heading heading-dark">Info</h2>
           <PostContent content={content} />
         </div>
-      }
-      {trackList &&
+      )}
+      {trackList && (
         <aside>
           <ToggleClass className="track-list" toggleClass="expanded">
-            {toggle =>
+            {toggle => (
               <div>
-                <h2 onMouseUp={toggle}>Track list <span></span></h2>
+                <h2 onMouseUp={toggle}>
+                  Track list <span />
+                </h2>
                 <ol>
                   {trackList.map((track, i) => (
                     <li key={i}>{track}</li>
-                  ))
-                  }
+                  ))}
                 </ol>
               </div>
-            }
+            )}
           </ToggleClass>
         </aside>
-      }
-      {previewHTML &&
+      )}
+      {previewHTML && (
         <div>
           <h2 className="heading heading-dark">Preview</h2>
-          <WatchConnection render={online => (
-            online ?
-              <div dangerouslySetInnerHTML={{ __html: previewHTML }} />
-              :
-              <OfflineError />
-          )} />
+          <WatchConnection
+            render={online =>
+              online ? (
+                <div dangerouslySetInnerHTML={{ __html: previewHTML }} />
+              ) : (
+                <OfflineError />
+              )
+            }
+          />
         </div>
-      }
+      )}
     </div>
   )
 }
@@ -124,28 +133,29 @@ ReleasePostTemplate.propTypes = {
 
 const ReleasePost = ({ data }) => {
   const { markdownRemark: post } = data
-  console.log(post);
-  
+  console.log(post)
+
   return (
-      <ReleasePostTemplate
-        contentComponent={HTMLContent}
-        content={post.html}
-        helmet={
-          <Helmet
-            titleTemplate="%s | Release"
-          >
-            <title>{`${post.frontmatter.title}`}</title>
-            <meta name="description" content={`${post.frontmatter.artist} - ${post.frontmatter.title}`} />
-          </Helmet>
-        }
-        title={post.frontmatter.title}
-        artist={post.frontmatter.artist}
-        soundcloudUrl={post.frontmatter.soundcloudUrl}
-        image={post.frontmatter.image}
-        links={post.frontmatter.links}
-        trackList={post.frontmatter.trackList}
-        previewHTML={post.frontmatter.previewHTML}
-      />
+    <ReleasePostTemplate
+      contentComponent={HTMLContent}
+      content={post.html}
+      helmet={
+        <Helmet titleTemplate="%s | Release">
+          <title>{`${post.frontmatter.title}`}</title>
+          <meta
+            name="description"
+            content={`${post.frontmatter.artist} - ${post.frontmatter.title}`}
+          />
+        </Helmet>
+      }
+      title={post.frontmatter.title}
+      artist={post.frontmatter.artist}
+      soundcloudUrl={post.frontmatter.soundcloudUrl}
+      image={post.frontmatter.image}
+      links={post.frontmatter.links}
+      trackList={post.frontmatter.trackList}
+      previewHTML={post.frontmatter.previewHTML}
+    />
   )
 }
 

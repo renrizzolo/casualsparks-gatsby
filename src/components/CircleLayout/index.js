@@ -13,23 +13,31 @@ const items = [
   {
     key: 'cs-circle-3',
     className: 'cs-circle cs-circle__outer-3',
-  }
+  },
 ]
 
 const CircleLayout = ({ children, show, zoom }) => (
   <Fade show={true}>
-    {style => 
-    <div style={style} className="flex-center flex-container__row viewport-half">
-      <Zoom
-        zoom={zoom}
-        show={show}
-        className="cs-circle darker" id="cs-circle"
-        style={{ backgroundImage: 'url(\'https://unsplash.it/700/?random\')', backgroundSize: 'cover', backgroundBlendMode: 'overlay' }}
-      />
-      {children}
-      <FadeZoom items={items} />
-    </div>
-    }
+    {style => (
+      <div
+        style={style}
+        className="flex-center flex-container__row viewport-half"
+      >
+        <Zoom
+          zoom={zoom}
+          show={show}
+          className="cs-circle darker"
+          id="cs-circle"
+          style={{
+            backgroundImage: "url('https://unsplash.it/700/?random')",
+            backgroundSize: 'cover',
+            backgroundBlendMode: 'overlay',
+          }}
+        />
+        {children}
+        <FadeZoom items={items} />
+      </div>
+    )}
   </Fade>
 )
-export default CircleLayout;
+export default CircleLayout

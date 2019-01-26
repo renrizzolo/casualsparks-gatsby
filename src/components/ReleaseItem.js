@@ -1,46 +1,51 @@
 import React from 'react'
-import ToggleClass from '../components/ToggleClass';
-import WatchConnection from '../components/WatchConnection';
-import OfflineError from '../components/OfflineError';
-import { InFromBottom } from '../animations';
-import { Link } from 'gatsby';
+import ToggleClass from '../components/ToggleClass'
+import WatchConnection from '../components/WatchConnection'
+import OfflineError from '../components/OfflineError'
+import { InFromBottom } from '../animations'
+import { Link } from 'gatsby'
 import { kebabCase } from 'lodash'
-import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
+import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 import { SC } from '../components/SoundcloudPlayer'
-import { PlayIcon } from '../img/icons'
+import { Play, Icon } from '../img/icons'
 
-
-const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
-
+const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
   return (
-    <div style={style} show={false} className={`item background-${backgroundColor}`}>
+    <div
+      style={style}
+      show={false}
+      className={`item background-${backgroundColor}`}
+    >
       <header>
         <div className="item-info">
           <Link to={`/artists/${kebabCase(data.artist)}`}>
             <h1 className="item-heading">{data.artist}</h1>
           </Link>
-          {slug ? <Link to={slug}><h2 className="item-sub-heading">{data.title}</h2></Link>
-            :
+          {slug ? (
+            <Link to={slug}>
+              <h2 className="item-sub-heading">{data.title}</h2>
+            </Link>
+          ) : (
             <h2 className="item-sub-heading">{data.title}</h2>
-          }
+          )}
           <div className="link-container">
-            {data.links && data.links.map((link) => (
-              <a 
-                key={link.label}
-                target="_blank"
-                rel="noopener"
-                className="button light-blue shop-link"
-                href={link.url}
-              >
-                {link.label}
-              </a>
-            ))
-            }
+            {data.links &&
+              data.links.map(link => (
+                <a
+                  key={link.label}
+                  target="_blank"
+                  rel="noopener"
+                  className="button light-blue shop-link"
+                  href={link.url}
+                >
+                  {link.label}
+                </a>
+              ))}
           </div>
         </div>
       </header>
 
-   {/*    <WatchConnection render={online => (
+      {/*    <WatchConnection render={online => (
         online ?
           (data.previewHTML &&
             <div dangerouslySetInnerHTML={{ __html: data.previewHTML }} />
@@ -49,9 +54,9 @@ const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
           <OfflineError />
       )}
       /> */}
-        <PreviewCompatibleImage imageInfo={data.image} />
+      <PreviewCompatibleImage imageInfo={data.image} />
 
-{/*       {data.trackList &&
+      {/*       {data.trackList &&
         <aside>
           <ToggleClass className="track-list" toggleClass="expanded">
             {toggle => (
@@ -68,31 +73,35 @@ const ReleaseItem = ({style, data, slug, description, backgroundColor}) => {
           </ToggleClass>
         </aside>
       } */}
-    {/*   <Link className="button full" style={{marginTop: 16}} to={slug}>
+      {/*   <Link className="button full" style={{marginTop: 16}} to={slug}>
         View →
       </Link> */}
-      {
-        data.soundcloudUrl && 
+      {data.soundcloudUrl && (
         <SC.Consumer>
-          {
-            ({ updateTrack, currentTrack }) => {            
+          {({ updateTrack, currentTrack }) => {
             return (
-              <a className="button blue" onClick={() => updateTrack(data.soundcloudUrl)}>
-                <span className="flex-container flex-center"> 
-                  Play {data.soundcloudUrl === currentTrack.permalink_url && <PlayIcon/>}
+              <a
+                className="button blue"
+                onClick={() => updateTrack(data.soundcloudUrl)}
+              >
+                <span className="flex-container flex-center">
+                  Play{' '}
+                  {data.soundcloudUrl === currentTrack.permalink_url && (
+                    <Icon name="play" />
+                  )}
                 </span>
               </a>
-            )}
-          }
+            )
+          }}
         </SC.Consumer>
-      }
+      )}
     </div>
   )
 }
 
 ReleaseItem.defaultProps = {
   backgroundColor: 'pearl',
-  description: false
+  description: false,
 }
 
 export default ReleaseItem

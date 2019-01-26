@@ -1,9 +1,9 @@
 export const appendQueryParam = (url, param, value) => {
-  console.log(url, param, value);
-  
-  const U = parseURL(url);
-  const regex = /\?(?:.*)$/;
-  const chr = regex.test(U.search) ? '&' : '?';
+  console.log(url, param, value)
+
+  const U = parseURL(url)
+  const regex = /\?(?:.*)$/
+  const chr = regex.test(U.search) ? '&' : '?'
   const result =
     U.protocol +
     '//' +
@@ -15,35 +15,37 @@ export const appendQueryParam = (url, param, value) => {
     param +
     '=' +
     value +
-    U.hash;
+    U.hash
 
-  return result;
+  return result
 }
-let anchor;
-export const parseURL = (url) => {
-  const keys = 'protocol hostname host pathname port search hash href'.split(' ');
+let anchor
+export const parseURL = url => {
+  const keys = 'protocol hostname host pathname port search hash href'.split(
+    ' '
+  )
   if (!anchor) {
-    anchor = document.createElement('a');
+    anchor = document.createElement('a')
   }
 
-  let result = {};
+  let result = {}
 
-  anchor.href = url || '';
+  anchor.href = url || ''
 
   for (let i = 0, len = keys.length; i < len; i++) {
-    let key = keys[i];
-    result[key] = anchor[key];
+    let key = keys[i]
+    result[key] = anchor[key]
   }
 
-  return result;
+  return result
 }
 
-export const fetchUrl = async (url) => {
+export const fetchUrl = async url => {
   try {
-    const data = await fetch(url);
-    const res = await data.json();
-    return res;
+    const data = await fetch(url)
+    const res = await data.json()
+    return res
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }

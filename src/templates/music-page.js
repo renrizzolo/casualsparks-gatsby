@@ -1,34 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
-import { Fade } from '../animations';
-import { Link } from '@reach/router';
-import '../styles/common/item-grid.scss';
-import ReleaseItem from '../components/ReleaseItem';
-import PageLayout from '../components/PageLayout';
-import Releases from '../components/Releases';
-const MusicPageTemplate = ({title, sections}) => {
-	return (
-		<PageLayout title={title} backgroundColor="blue">
-			<Grid sections={sections}/>
-		</PageLayout>
-	);
+import { Fade } from '../animations'
+import { Link } from '@reach/router'
+import '../styles/common/item-grid.scss'
+import ReleaseItem from '../components/ReleaseItem'
+import PageLayout from '../components/PageLayout'
+import Releases from '../components/Releases'
+const MusicPageTemplate = ({ title, sections }) => {
+  return (
+    <PageLayout title={title} backgroundColor="blue">
+      <Grid sections={sections} />
+    </PageLayout>
+  )
 }
 
-const Grid = ({sections}) => {
-		return (
-				sections.map(section => (
-					<section className="item-grid">
-						<h1 className="heading item-grid__heading"><span className="dark-blue-bkg">{section.title}</span></h1>
-						<Releases section={section}/>
-				</section>
-
-				))
-				
-		);
+const Grid = ({ sections }) => {
+  return sections.map(section => (
+    <section className="item-grid">
+      <h1 className="heading item-grid__heading">
+        <span className="dark-blue-bkg">{section.title}</span>
+      </h1>
+      <Releases section={section} />
+    </section>
+  ))
 }
-
-
 
 // MusicPageTemplate.propTypes = {
 // 	image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
@@ -55,25 +51,24 @@ const Grid = ({sections}) => {
 // }
 
 const MusicPage = ({ data }) => {
-	const { frontmatter } = data.markdownRemark
+  const { frontmatter } = data.markdownRemark
 
-	return (
-			<MusicPageTemplate
-				title={frontmatter.title}
-				sections={frontmatter.sections}
-			/>
-	)
+  return (
+    <MusicPageTemplate
+      title={frontmatter.title}
+      sections={frontmatter.sections}
+    />
+  )
 }
 MusicPage.propTypes = {
-	data: PropTypes.shape({
-		markdownRemark: PropTypes.shape({
-			frontmatter: PropTypes.object,
-		}),
-	}),
+  data: PropTypes.shape({
+    markdownRemark: PropTypes.shape({
+      frontmatter: PropTypes.object,
+    }),
+  }),
 }
 
-export default MusicPage;
-
+export default MusicPage
 
 export const musicPageQuery = graphql`
   query MusicPage($id: String!) {
@@ -81,9 +76,9 @@ export const musicPageQuery = graphql`
       frontmatter {
         title
         sections {
-					title
-					type
-        }  
+          title
+          type
+        }
       }
     }
   }

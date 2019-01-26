@@ -20,7 +20,7 @@ export const ArtistPageTemplate = ({
   const PostContent = contentComponent || Content
 
   return (
-    <PageLayout 
+    <PageLayout
       header={
         <div className="page-header flex-container">
           <div className="flex-1">
@@ -30,24 +30,23 @@ export const ArtistPageTemplate = ({
             <PreviewCompatibleImage imageInfo={profileImage} />
           </div>
         </div>
-      } 
+      }
       backgroundColor="pearl"
     >
       {helmet || ''}
-        <section className="flex-container__column">
-          <div className="single-artist">
-          {content &&
+      <section className="flex-container__column">
+        <div className="single-artist">
+          {content && (
             <div>
               <h2 className="heading heading-dark">About</h2>
               <PostContent content={content} />
             </div>
-          }
-          </div>
-        </section> 
+          )}
+        </div>
+      </section>
     </PageLayout>
   )
 }
-
 
 ArtistPageTemplate.propTypes = {
   content: PropTypes.node.isRequired,
@@ -58,17 +57,17 @@ ArtistPageTemplate.propTypes = {
 
 const ArtistPage = ({ data }) => {
   const { markdownRemark: post } = data
-  
+
   return (
-      <ArtistPageTemplate
-        contentComponent={HTMLContent}
-        name={post.frontmatter.name}
-        content={post.html}
-        profileImage={post.frontmatter.profileImage}
-        soundcloudUrl={post.frontmatter.soundcloudUrl}
-        twitterUrl={post.frontmatter.twitterUrl}
-        facebookUrl={post.frontmatter.facebookUrl}
-      />
+    <ArtistPageTemplate
+      contentComponent={HTMLContent}
+      name={post.frontmatter.name}
+      content={post.html}
+      profileImage={post.frontmatter.profileImage}
+      soundcloudUrl={post.frontmatter.soundcloudUrl}
+      twitterUrl={post.frontmatter.twitterUrl}
+      facebookUrl={post.frontmatter.facebookUrl}
+    />
   )
 }
 

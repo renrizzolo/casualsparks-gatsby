@@ -32,20 +32,19 @@ exports.createPages = ({ actions, graphql }) => {
 
     const posts = result.data.allMarkdownRemark.edges
 
-    posts.forEach(({node}) => {
-      const { id, frontmatter } = node;
-      const { path, templateKey, title } = frontmatter;
+    posts.forEach(({ node }) => {
+      const { id, frontmatter } = node
+      const { path, templateKey, title } = frontmatter
       console.log(node)
       createPage({
         path: node.fields.slug,
-        component: nodePath.resolve(
-          `src/templates/${String(templateKey)}.js`
-        ),
+        component: nodePath.resolve(`src/templates/${String(templateKey)}.js`),
         // additional data can be passed via context
         context: {
           id,
           title,
-          layout: path && path.match(/contact|about|home/) ? 'circle' : 'square'
+          layout:
+            path && path.match(/contact|about|home/) ? 'circle' : 'square',
         },
       })
     })

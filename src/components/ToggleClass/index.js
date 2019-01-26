@@ -1,26 +1,25 @@
-import React from 'react';
+import React from 'react'
 
 class ToggleClass extends React.Component {
-	state = {
-	toggled: false
-	}
+  state = {
+    toggled: false,
+  }
 
-	toggle = () => {
-		this.setState(state => ({
-				toggled: !state.toggled
-			})
-		);
-	}
+  toggle = () => {
+    this.setState(state => ({
+      toggled: !state.toggled,
+    }))
+  }
 
-	render() {
-		const { className, toggleClass } = this.props;
+  render() {
+    const { className, toggleClass } = this.props
 
-		const { toggled } = this.state;
-		return(
-			<div className={toggled ? `${className} ${toggleClass}` : className}>
-				{this.props.children(this.toggle, toggled)}
-			</div>
-		)
-	}
+    const { toggled } = this.state
+    return (
+      <div className={toggled ? `${className} ${toggleClass}` : className}>
+        {this.props.children(this.toggle, toggled)}
+      </div>
+    )
+  }
 }
-export default ToggleClass;
+export default ToggleClass

@@ -3,10 +3,8 @@ import PropTypes from 'prop-types'
 import { ReleasePostTemplate } from '../../templates/release-post'
 
 const ReleasePostPreview = ({ entry, getAsset }) => {
-
-  const entryLinks = entry.getIn(['data',  'Links'])
+  const entryLinks = entry.getIn(['data', 'Links'])
   const links = entryLinks ? entryLinks.toJS() : []
-
 
   return (
     <ReleasePostTemplate
