@@ -16,7 +16,7 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
       show={false}
       className={`item background-${backgroundColor}`}
     >
-      <header>
+      <header className="flex-1">
         <div className="item-info">
           <Link to={`/artists/${kebabCase(data.artist)}`}>
             <h1 className="item-heading">{data.artist}</h1>
@@ -54,7 +54,8 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
           <OfflineError />
       )}
       /> */}
-      <PreviewCompatibleImage imageInfo={data.image} />
+      <div className="item__image flex-1">
+        <PreviewCompatibleImage imageInfo={data.image} />
 
       {/*       {data.trackList &&
         <aside>
@@ -95,6 +96,7 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
           }}
         </SC.Consumer>
       )}
+      </div>
     </div>
   )
 }
