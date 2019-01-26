@@ -550,7 +550,7 @@ export const SoundcloudPlayerUI = () => {
                           >
                             {(track, i) => props => (
                               <TrackItem
-                                style={props}
+                                style={{...props, cursor: 'pointer'}}
                                 playing={playing}
                                 controls={controls}
                                 currentTrack={currentTrack}
@@ -691,11 +691,17 @@ const TrackItem = ({
             </React.Fragment>
           )}
         </div>
-        <span className="sc-player__text">
+        <div className="sc-player__text">
           {hero && <img className="sc-player__thumb" src={track.artwork_url} />}
-          {track.user.username} - {track.title}
-        </span>
-        <span className="sc-player__waveform" onClick={seek}>
+          { hero ? 
+            <a href={track.permalink_url} target="_blank" rel="noopener">
+              {track.user.username} - {track.title}
+            </a>
+            :
+            <span>{ track.user.username } - { track.title }</span>
+          }
+        </div>
+        <div className="sc-player__waveform" onClick={seek}>
           {hero && currentTrack.waveform_url && (
             <div
               onMouseOut={events.resetProspectiveSeek}
@@ -722,7 +728,7 @@ const TrackItem = ({
               <img src={currentTrack.waveform_url} />
             </div>
           )}
-        </span>
+        </div>
         {!hero && (
           <a
             className="sc-player__button play"
