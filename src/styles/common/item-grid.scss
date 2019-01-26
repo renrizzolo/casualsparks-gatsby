@@ -87,6 +87,8 @@
 		--item-spacing: 1rem;
 	}
 	@include maxwidth(xs){
+		  grid-gap: $padding-default / 2;
+
 		--item-spacing: 0.75rem;
 	}
 	.link-container {
@@ -154,6 +156,10 @@
   }
 
 	.item{
+		@include maxwidth(s){
+			display: flex;
+			font-size: 90%;
+		}
 		width: 100%;
 		//border-bottom: 4px solid $cs-lightblue;
 	  // padding: var(--item-spacing);
@@ -176,7 +182,7 @@
 			margin-right: 0.25rem;
 			margin-bottom: 0.25rem;
 			padding: 0.25rem 0.5rem;
-			font-size: 1rem;
+			font-size: 1em;
 			border: none;
 			text-align: center;
 			&:hover {
