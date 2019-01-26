@@ -162,7 +162,7 @@ export default class SoundcloudPlayerProvider extends Component {
     this.start(url)
   }
 
-  playTrack = async (index = null) => {
+  playTrack = async (options = null) => {
     if (this.playStarted) {
       console.log('play started, returning')
 
@@ -172,7 +172,7 @@ export default class SoundcloudPlayerProvider extends Component {
 
     this.playStarted = true
 
-    return this.play(index)
+    return this.play(options)
       .then(() => {
         console.log('playing:', this.playing)
         this.playStarted = false
@@ -182,10 +182,10 @@ export default class SoundcloudPlayerProvider extends Component {
           paused: false,
           error: false,
         })
-        index &&
-          index.playlistIndex &&
+        options &&
+          options.playlistIndex &&
           this.setState({
-            currentTrack: this.playlist.tracks[index.playlistIndex],
+          currentTrack: this.playlist.tracks[options.playlistIndex],
           })
       })
       .catch(err => {
@@ -208,6 +208,9 @@ export default class SoundcloudPlayerProvider extends Component {
     const { playlistIndex } = this.state
 
     if (options.streamUrl) {
+      // this won't really work
+      // (it'll play the track but there won't be any track
+      // data to show the UI)
       src = options.streamUrl
     } else if (this.playlist) {
       src = await this.getPlaylistSrc(options)
@@ -605,7 +608,7 @@ const TrackItem = ({
       }
     >
       <div className="flex-container flex-center flex-1">
-        <div className="flex-container flex-center">
+        <div className="sc-player__controls flex-container flex-center">
           {hero && (
             <div className="flex-container flex-center">
               <Transition
@@ -637,8 +640,8 @@ const TrackItem = ({
                 items={show}
                 from={{
                   position: 'absolute',
-                  right: '1rem',
                   opacity: 1,
+                  zIndex: -1,
                   transform: 'translateY(-25px) scale(1)',
                 }}
                 enter={{
@@ -650,7 +653,7 @@ const TrackItem = ({
               >
                 {show => props =>
                   !show && (
-                    <animated.div style={props}>
+                    <animated.div className="sc-player__open-container" style={props}>
                       <div className={playing && 'pulse'}>
                         <ControlButton
                           className={`toggle closed`}
