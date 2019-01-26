@@ -6,7 +6,7 @@ const PreviewCompatibleImage = ({ imageInfo }) => {
   const imageStyle = {
     width: '100%',
     height: 'auto',
-    maxWidth: 500 
+    maxWidth: 500,
   }
   const { alt = '', childImageSharp, image } = imageInfo
 
