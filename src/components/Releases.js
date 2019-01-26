@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import ReleaseItem from './ReleaseItem'
-import { Trail } from 'react-spring'
+import { Trail, config } from 'react-spring'
 
 const Releases = ({ section }) => {
   console.log(section)
@@ -36,8 +36,9 @@ const Releases = ({ section }) => {
               ({ node: post }) => post.frontmatter.releaseType === section.type
             )}
             keys={item => item.key}
-            from={{ transform: 'translate3d(0,-40px,0)' }}
+            from={{ transform: 'translate3d(0,-20px,0)' }}
             to={{ transform: 'translate3d(0,0px,0)' }}
+            config={config.slow}
           >
             {({ node: post }) => props => (
               <ReleaseItem
