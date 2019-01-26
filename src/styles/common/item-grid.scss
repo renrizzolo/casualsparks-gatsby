@@ -8,15 +8,19 @@
 
 .item-heading{
 	font-family: $font-serif;
-	font-size: 1.9rem;
+	font-size: 1.75em;
 	margin-top: 0;
+	line-height: 1.2;
 	margin-bottom: 0rem;
 }
 .item-sub-heading{
 	font-family: $font-sans;
 	// text-transform: uppercase;
 	margin-top: 0;
-	font-size: 1.15rem;
+	margin-bottom: 1rem;
+	font-size: 1em;
+		line-height: 1.4;
+
 	font-weight: 400;
 }
   .track-list{
@@ -78,12 +82,12 @@
  	grid-template-columns: repeat(3, 1fr);
   grid-gap: $padding-default;
   margin-bottom: $padding-default * 2;
-  	--item-spacing: 1.25rem;
+  	--item-spacing: 1rem;
 	@include maxwidth(s){
-		--item-spacing: 1.25rem;
+		--item-spacing: 1rem;
 	}
 	@include maxwidth(xs){
-		--item-spacing: 1.25rem;
+		--item-spacing: 0.75rem;
 	}
 	.link-container {
 		display: flex;
@@ -152,18 +156,42 @@
 	.item{
 		width: 100%;
 		//border-bottom: 4px solid $cs-lightblue;
-	  padding: var(--item-spacing);
+	  // padding: var(--item-spacing);
 		box-shadow: 0 15px 30px 0 rgba(0,0,0,.11), 0 5px 15px 0 rgba(0,0,0,.08);
 		transition: all 250ms ease;
 		&:hover{
 			box-shadow: 0 5px 15px 0 rgba(0,0,0,.11), 0 15px 30px 0 rgba(0,0,0,.08);
 		}
+		a {
+			&:hover {
+				color: $cs-lightblue;
+				> h1, > h2 {
+					color: $cs-lightblue;
+				}
+			}
+		}
 		.button {
 			color: $cs-darkblue;
 			background-color: $dark-pearl;
+			margin-right: 0.25rem;
+			margin-bottom: 0.25rem;
+			padding: 0.25rem 0.5rem;
+			font-size: 1rem;
+			border: none;
+			text-align: center;
+			&:hover {
+			background-color: $cs-lightblue;
+			color: $lightpearl;
+			}
+			&.full {
+				margin: 0;
+			}
+			@include maxwidth(s) {
+				flex: 1;
+			}
 		}
 		header{
-				margin: 0 0 var(--item-spacing) 0;
+				padding:var(--item-spacing);
 				display: flex;
 				align-items:flex-start;
 				flex-direction: row;
