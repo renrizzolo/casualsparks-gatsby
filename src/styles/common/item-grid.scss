@@ -5,6 +5,9 @@
 @import "../variables";
 @import "../config";
 
+$column-count-default: 4;
+$column-count-large: 3;
+$column-count-small: 1;
 
 .item-heading{
 	font-family: $font-serif;
@@ -79,9 +82,12 @@
 	display: grid;
 	grid-template-rows: auto;
 	justify-items: start;
- 	grid-template-columns: repeat(3, 1fr);
+ 	grid-template-columns: repeat($column-count-default, 1fr);
   grid-gap: $padding-default;
-  margin-bottom: $padding-default * 2;
+	margin-bottom: $padding-default * 2;
+	@include maxwidth(l) {
+ 	grid-template-columns: repeat($column-count-large, 1fr);
+	}
   	--item-spacing: 1rem;
 	@include maxwidth(s){
 		--item-spacing: 1rem;
@@ -101,10 +107,13 @@
   	@include maxwidth(s){
   		font-size: 2em;
   	}
-    grid-column-start: 3;
-    width: 300%;
-    margin: 0;
-    margin-left: calc(-200% - #{$padding-default} * 2);
+  	width: calc(100% + 2rem);
+    /* margin-left: 0rem; */
+		grid-column-end: $column-count-default + 1;
+		@include maxwidth(l) {
+			grid-column-end: $column-count-large + 1;
+		}
+    grid-column-start: 1;
     text-align: left;
     line-height: 1.5;
 		z-index: 0;
@@ -120,7 +129,7 @@
     	animation: headline-in 850ms cubic-bezier(1, 0.01, 0.3, 1) 850ms forwards;
     	content: "";
     	height: 4px;
-    	width: calc(100% + #{$padding-default} * 3);
+    	width: 100%;
     	position: absolute;
     	top: calc(50% - 2px);
     	left: -$padding-default;
@@ -133,30 +142,33 @@
     // 		background-color: $cs-darkblue;
     // 		width: 100%;
     // 		height: 100%;
-    // }
-  }
-  @media screen and (max-width: 1400px){
-		grid-template-columns: repeat(2, 1fr);
-		.item-grid__heading{
-			width: 200%;
-    		margin-left: calc(-100% - #{$padding-default});
-			grid-column-start: 2;
-			&:before{
- 	    	width: calc(100% + #{$padding-default} * 2);
-			}
+		// }
+		@include maxwidth(m){
+			grid-column-end: 1;
 		}
-  }
+	}
+	
+  // @media screen and (max-width: 1400px){
+	// 	grid-template-columns: repeat(2, 1fr);
+	// 	.item-grid__heading{
+	// 		width: 200%;
+  //   		margin-left: calc(-100% - #{$padding-default});
+	// 		grid-column-start: 2;
+	// 		&:before{
+ 	//     	width: calc(100% + #{$padding-default} * 2);
+	// 		}
+	// 	}
+  // }
   @include maxwidth(m){
 		grid-template-columns: 1fr;
 		.item-grid__heading{
-			width:99%;
 			grid-column-start: 1;
 			margin-left: 0;
 		}
   }
 
 	.item{
-		@include maxwidth(s){
+		@include maxwidth(m){
 			display: flex;
 			font-size: 90%;
 		}
