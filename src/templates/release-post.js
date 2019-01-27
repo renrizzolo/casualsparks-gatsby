@@ -9,6 +9,7 @@ import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 import WatchConnection from '../components/WatchConnection'
 import OfflineError from '../components/OfflineError'
 import ToggleClass from '../components/ToggleClass'
+import PlayButton from '../components/PlayButton'
 
 export const ReleasePostTemplate = ({
   contentComponent,
@@ -20,6 +21,7 @@ export const ReleasePostTemplate = ({
   trackList,
   previewHTML,
   releaseType,
+  soundcloudUrl,
   helmet,
 }) => {
   return (
@@ -31,7 +33,7 @@ export const ReleasePostTemplate = ({
             <h1>{title}</h1>
           </div>
           <div className="flex-1 release-cover__container">
-            <PreviewCompatibleImage imageInfo={image} />
+      {image && <PreviewCompatibleImage imageInfo={{image}} /> }
           </div>
         </div>
       }
@@ -46,6 +48,7 @@ export const ReleasePostTemplate = ({
             links={links}
             trackList={trackList}
             previewHTML={previewHTML}
+            soundcloudUrl={soundcloudUrl}
           />
         </div>
       </section>
@@ -59,14 +62,19 @@ const ReleaseItem = ({
   links,
   trackList,
   previewHTML,
+  soundcloudUrl
 }) => {
   const PostContent = contentComponent || Content
 
   return (
     <div className="item">
+      
       <header>
+        
         <div className="item-info">
           <div className="link-container">
+            <PlayButton soundcloudUrl={soundcloudUrl} />
+
             {links &&
               links.map(link => (
                 <a
@@ -106,20 +114,6 @@ const ReleaseItem = ({
           </ToggleClass>
         </aside>
       )}
-      {previewHTML && (
-        <div>
-          <h2 className="heading heading-dark">Preview</h2>
-          <WatchConnection
-            render={online =>
-              online ? (
-                <div dangerouslySetInnerHTML={{ __html: previewHTML }} />
-              ) : (
-                <OfflineError />
-              )
-            }
-          />
-        </div>
-      )}
     </div>
   )
 }
@@ -127,9 +121,15 @@ const ReleaseItem = ({
 ReleasePostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
   contentComponent: PropTypes.func,
-  description: PropTypes.string,
-  title: PropTypes.string,
   helmet: PropTypes.object,
+  title: PropTypes.string,
+  artist: PropTypes.string,
+  soundcloudUrl: PropTypes.string,
+  image: PropTypes.object,
+  links: PropTypes.array,
+  trackList: PropTypes.array,
+  previewHTM: PropTypes.string,
+  soundcloudUrl: PropTypes.string,
 }
 
 const ReleasePost = ({ data }) => {
@@ -156,6 +156,7 @@ const ReleasePost = ({ data }) => {
       links={post.frontmatter.links}
       trackList={post.frontmatter.trackList}
       previewHTML={post.frontmatter.previewHTML}
+      soundcloudUrl={post.frontmatter.soundcloudUrl}
     />
   )
 }
