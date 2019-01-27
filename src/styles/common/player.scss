@@ -33,16 +33,21 @@ $item-text: $dark-blue;
     font-size: 0.95em;
     font-weight: bold;
     border-bottom: 1px solid $item-border;
+    min-height: 47px;
     .sc-player__text {
       max-width: 50%;
       white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;
+      img {
+        max-width: 50px;
+      }
     }
     &:hover, &.highlighted {
       background-color: $item-highlight-bgc;
     }
     &.hero {
+      min-height: 78px;
       background-color: #ffffff;
       @media screen and (max-width: 600px) {
         > div {
@@ -161,33 +166,34 @@ $item-text: $dark-blue;
       background-color: $cs-darkblue;
       border-radius: 50%;
       padding: 0.25rem;
-      fill: $dark-pearl;
-      &.closed {
-        border-radius: 0%;
-        padding: 0;
-        fill: $cs-darkblue;
-        background-color: transparent;
-        @include maxwidth(xs){
-          background-color:$cs-darkblue;
-        }
-      }
+      // fill: $dark-pearl;
+      // &.closed {
+        // border-radius: 0%;
+        // padding: 0;
+        fill: $lightpearl;
+        // background-color: transparent;
+        // @include maxwidth(xs){
+        //   background-color:$cs-darkblue;
+        // }
+      // }
     }
   }
   .page.music {
       .pulse {
         svg {
-        animation: pulse-pearl 600ms ease-in 250ms infinite alternate-reverse;
+        animation: pulse-dark-blue 600ms ease-in 250ms infinite alternate-reverse;
         }
       }
     .sc-player__icon {
-      &.closed {
-        fill: $lightpearl;
+      &.toggle {
+        background-color:$lightpearl;
+        fill: $cs-darkblue;
       }
     }
   }
   .pulse {
     svg {
-    animation: pulse-dark-blue 600ms ease-in 250ms infinite alternate-reverse;
+    animation: pulse-pearl 600ms ease-in 250ms infinite alternate-reverse;
     }
   }
   @keyframes pulse-pearl {
