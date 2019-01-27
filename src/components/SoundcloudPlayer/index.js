@@ -12,7 +12,7 @@ export default class SoundcloudPlayerProvider extends Component {
   state = {
     show: false,
     playing: false,
-    error: false,
+    error: null,
     url: null,
     currentTime: 0,
     currentTrack: {},
@@ -115,8 +115,11 @@ export default class SoundcloudPlayerProvider extends Component {
     this.playlist = null
   }
 
-  resolve = (url, callback) => {
+  resolve = async (url, callback) => {
     const { clientId } = this.props
+    this.setState({
+      error: null,
+    })
     if (!clientId) {
       console.warn('No client id present. Please supply the cilentId prop')
       return
@@ -124,32 +127,44 @@ export default class SoundcloudPlayerProvider extends Component {
     const resolveUrl = `${SOUNDCLOUD_API_URL}/resolve.json?url=${encodeURIComponent(
       url
     )}&client_id=${clientId}`
-    const data = fetchUrl(resolveUrl)
-    data
-      .then(res => {
-        this.resetData()
 
-        if (Array.isArray(res)) {
-          res = { tracks: res }
-        }
-
-        if (res.tracks) {
-          this.playlist = res
-        } else {
-          this.track = res
-
-          // save timings
-          const U = parseURL(url)
-          this.track.stream_url += U.hash
-        }
-
-        this.duration =
-          res.duration && !isNaN(res.duration)
-            ? res.duration / 1000 // convert to seconds
-            : 0 // no duration is zero
-        callback(res)
+    const res = await fetchUrl(resolveUrl)
+    if (!res) {
+      if (res.errors) {
+        this.setState({
+          error: 'Soundcloud Server errror, probably.',
+        })
+        return;
+      }
+    }
+    if (res.errors) {
+      this.setState({
+        error: res.errors[0].error_message,
       })
-      .catch(err => console.log(err))
+      return;
+    }
+    this.resetData()
+
+    if (Array.isArray(res)) {
+      res = { tracks: res }
+    }
+
+    if (res.tracks) {
+      this.playlist = res
+    } else {
+      this.track = res
+
+      // save timings
+      const U = parseURL(url)
+      this.track.stream_url += U.hash
+    }
+
+    this.duration =
+      res.duration && !isNaN(res.duration)
+        ? res.duration / 1000 // convert to seconds
+        : 0 // no duration is zero
+    callback(res)
+    
   }
 
   updateTrack = url => {
@@ -180,7 +195,7 @@ export default class SoundcloudPlayerProvider extends Component {
 
         this.setState({
           paused: false,
-          error: false,
+          error: null,
         })
         options &&
           options.playlistIndex &&
@@ -206,7 +221,9 @@ export default class SoundcloudPlayerProvider extends Component {
     options = options || {}
     let src
     const { playlistIndex } = this.state
-
+    this.setState({
+      error: null
+    })
     if (options.streamUrl) {
       // this won't really work
       // (it'll play the track but there won't be any track
@@ -228,6 +245,9 @@ export default class SoundcloudPlayerProvider extends Component {
     console.log(src)
 
     if (!src) {
+      this.setState({
+        error: 'no track source supplied'
+      })
       console.error('No track source.')
       return
     }
@@ -301,6 +321,8 @@ export default class SoundcloudPlayerProvider extends Component {
     this.audio.currentTime = 0
     this.setState({
       playing: false,
+      // not sure about this
+      // currentTrack: [],
     })
     console.log('stopped playback')
   }
@@ -499,7 +521,7 @@ export const SoundcloudPlayerUI = () => {
       }) =>
         url ? (
           <div>
-            {/* <ControlButton className="open" icon={AlbumIcon} fn={togglePlayer} /> */}
+            
             <Spring
               native
               from={{ transform: show ? 'translateY(100%)' : 'translateY(0)' }}
@@ -513,7 +535,36 @@ export const SoundcloudPlayerUI = () => {
                       className="sc-player__items flex-1"
                       style={{ height: '100%' }}
                     >
-                      {title && (
+                     
+                       <PlayerToggle
+                        playing={playing}
+                        show={show}
+                        togglePlayer={togglePlayer}
+                       />
+                      <div className="sc-player__items flex-1">
+                        {tracks && tracks.length > 0 && (
+                          <div>
+                            <Trail
+                              items={tracks}
+                              keys={item => item.id}
+                              from={{ opacity: 0 }}
+                              to={{ opacity: 1 }}
+                            >
+                              {(track, i) => props => (
+                                <TrackItem
+                                  style={{ ...props, cursor: 'pointer' }}
+                                  playing={playing}
+                                  controls={controls}
+                                  currentTrack={currentTrack}
+                                  track={track}
+                                  url={url}
+                                  index={i}
+                                />
+                              )}
+                            </Trail>
+                          </div>
+                        )}
+                      </div>
                         <Spring
                           native
                           from={{ opacity: 0 }}
@@ -521,7 +572,9 @@ export const SoundcloudPlayerUI = () => {
                         >
                           {props => (
                             <animated.div style={props}>
+                           
                               <TrackItem
+                                error={error}
                                 togglePlayer={togglePlayer}
                                 hero
                                 events={events}
@@ -539,35 +592,9 @@ export const SoundcloudPlayerUI = () => {
                             </animated.div>
                           )}
                         </Spring>
-                      )}
-                      {tracks && tracks.length > 0 && (
-                        <div>
-                          <Trail
-                            items={tracks}
-                            keys={item => item.id}
-                            from={{ opacity: 0 }}
-                            to={{ opacity: 1 }}
-                          >
-                            {(track, i) => props => (
-                              <TrackItem
-                                style={{...props, cursor: 'pointer'}}
-                                playing={playing}
-                                controls={controls}
-                                currentTrack={currentTrack}
-                                track={track}
-                                url={url}
-                                index={i}
-                              />
-                            )}
-                          </Trail>
-                        </div>
-                      )}
+                      
                     </div>
-                    {error && (
-                      <span className="error notice">
-                        Something went wrong...
-                      </span>
-                    )}
+ 
                   </div>
                 </animated.div>
               )}
@@ -581,6 +608,7 @@ export const SoundcloudPlayerUI = () => {
 const TrackItem = ({
   controls: { play, pause, previous, next, stop, seek },
   hero,
+  error,
   playing,
   currentTrack,
   track,
@@ -591,7 +619,6 @@ const TrackItem = ({
   currentTime,
   prospectiveSeek,
   events,
-  togglePlayer,
   show,
 }) => {
   const isPlaying = track.id === currentTrack.id && playing
@@ -600,73 +627,16 @@ const TrackItem = ({
     <div
       style={style}
       key={track.id}
-      className={`sc-player__item ${hero && 'hero'} ${isPlaying &&
-        !hero &&
-        'highlighted'}`}
+      className={`sc-player__item ${hero ? 'hero' : undefined } ${isPlaying &&
+        !hero ?
+        'highlighted' : undefined }`}
       onClick={() =>
         !hero ? (isPlaying ? pause() : play(playlistIndex)) : null
       }
     >
       <div className="flex-container flex-center flex-1">
         <div className="sc-player__controls flex-container flex-center">
-          {hero && (
-            <div className="flex-container flex-center">
-              <Transition
-                native
-                items={show}
-                from={{
-                  opacity: 0,
-                  position: 'absolute',
-                  right: '1rem',
-                  transform: 'translateY(-5px)',
-                }}
-                enter={{ opacity: 1, transform: 'translateY(0px)' }}
-                leave={{ opacity: 0, transform: 'translateY(-5px)' }}
-                config={{ ...config.slow, delay: 300 }}
-              >
-                {show => props =>
-                  show && (
-                    <animated.div style={props}>
-                      <ControlButton
-                        className="toggle open"
-                        icon="close"
-                        fn={togglePlayer}
-                      />
-                    </animated.div>
-                  )}
-              </Transition>
-              <Transition
-                native
-                items={show}
-                from={{
-                  position: 'absolute',
-                  opacity: 1,
-                  zIndex: -1,
-                  transform: 'translateY(-25px) scale(1)',
-                }}
-                enter={{
-                  opacity: 1,
-                  transform: 'translateY(-75px) scale(1.5)',
-                }}
-                leave={{ opacity: 0, transform: 'translateY(-25px), scale(1)' }}
-                config={{ ...config.slow, delay: 350 }}
-              >
-                {show => props =>
-                  !show && (
-                    <animated.div className="sc-player__open-container" style={props}>
-                      <div className={playing && 'pulse'}>
-                        <ControlButton
-                          className={`toggle closed`}
-                          icon="music"
-                          fn={togglePlayer}
-                        />
-                      </div>
-                    </animated.div>
-                  )}
-              </Transition>
-            </div>
-          )}
-
+        
           {hero &&  (
             <React.Fragment>
               {isPlaylist && 
@@ -688,17 +658,22 @@ const TrackItem = ({
                   fn={next} 
                 />
               }
+              {error && (
+                <span className="error notice">
+                  {error.toString()}
+                </span>
+              )}
             </React.Fragment>
           )}
         </div>
         <div className="sc-player__text">
-          {hero && <img className="sc-player__thumb" src={track.artwork_url} />}
-          { hero ? 
+          {hero && track && <img className="sc-player__thumb" src={track.artwork_url} />}
+          {hero && track && track.user ? 
             <a href={track.permalink_url} target="_blank" rel="noopener">
               {track.user.username} - {track.title}
             </a>
             :
-            <span>{ track.user.username } - { track.title }</span>
+            <span>{track && track.user && track.user.username} - {track &&  track.title }</span>
           }
         </div>
         <div className="sc-player__waveform" onClick={seek}>
@@ -747,8 +722,70 @@ const TrackItem = ({
   )
 }
 
-const ControlButton = ({ className, fn, icon }) => (
+const ControlButton = ({ className, fn, icon, size }) => (
   <a onClick={fn} className={`sc-player__button ${className}`}>
-    <Icon name={icon} className={`sc-player__icon ${className}`} />
+    <Icon name={icon} size={size} className={`sc-player__icon ${className}`} />
   </a>
+)
+
+const PlayerToggle = ({ togglePlayer, playing, show }) => (
+  <div className=" sc-player__toggle flex-container flex-center">
+    <Transition
+      native
+      items={show}
+      from={{
+        opacity: 0,
+        position: 'absolute',
+        right: '1rem',
+        transform: 'translateY(-2rem)',
+      }}
+      enter={{ opacity: 1, transform: 'translateY(-2rem)' }}
+      leave={{ opacity: 0, transform: 'translateY(0)' }}
+      config={{ ...config.slow }}
+    >
+      {show => props =>
+        show && (
+          <animated.div style={props}>
+            <ControlButton
+              size={30}
+              className="toggle open"
+              icon="close"
+              fn={togglePlayer}
+            />
+          </animated.div>
+        )}
+    </Transition>
+    <Transition
+      native
+      items={show}
+      from={{
+        position: 'absolute',
+        right: '1rem',
+
+        opacity: 1,
+        zIndex: -1,
+        transform: 'translateY(-25px) scale(0.5)',
+      }}
+      enter={{
+        opacity: 1,
+        transform: 'translateY(-75px) scale(1)',
+      }}
+      leave={{ opacity: 0, transform: 'translateY(-25px), scale(0.5)' }}
+      config={{ ...config.slow, delay: 350 }}
+    >
+      {show => props =>
+        !show && (
+          <animated.div className="sc-player__open-container" style={props}>
+            <div className={playing && 'pulse'}>
+              <ControlButton
+                size={30}
+                className={`toggle closed`}
+                icon="music"
+                fn={togglePlayer}
+              />
+            </div>
+          </animated.div>
+        )}
+    </Transition>
+  </div>
 )
