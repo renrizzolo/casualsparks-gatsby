@@ -185,10 +185,16 @@
 			font-size: 1em;
 			border: none;
 			text-align: center;
-			&:hover {
-			background-color: $cs-lightblue;
-			color: $lightpearl;
-			}
+				svg {
+					fill: $cs-darkblue;
+				}
+				&:hover {
+				background-color: $cs-lightblue;
+				color: $lightpearl;
+					svg {
+						fill: $lightpearl;
+					}
+				}
 			&.full {
 				margin: 0;
 			}
@@ -206,6 +212,7 @@
 				}
 			.item-info{
 					flex-direction:row;
+					width: 100%;
 			}
 
 			img{
