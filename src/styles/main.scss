@@ -533,11 +533,17 @@ $button-horizontal-padding: 0.75em;
 	border-top: none;
   border-left: none;
   border-right: none;
-  &.light-blue{
-  	background-color: $cs-lightblue;
+  &.light-blue {
+		background-color: $cs-lightblue;
+		svg {
+			fill: $lightpearl;
+		}
 	}
-	  &.dark-blue{
-  	background-color: $cs-darkblue;
+	&.dark-blue {
+		background-color: $cs-darkblue;
+		svg {
+			fill: $lightpearl;
+		}
 	}
 	&.rounded{
   	border-radius: 4px;
@@ -547,10 +553,7 @@ $button-horizontal-padding: 0.75em;
 		margin: 0;
 	}
   &:hover{
-  	// padding: $button-vertical-padding $button-horizontal-padding;
-  	border-bottom: $button-border-gap solid $cs-lightblue;
-  	color: $cs-darkblue;
-  	background-color: lighten($cs-lightblue, 35%);
+  	background-color: lighten($cs-darkblue, 35%);
   }
 }
 
