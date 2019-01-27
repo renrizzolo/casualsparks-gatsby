@@ -6,8 +6,7 @@ import { InFromBottom } from '../animations'
 import { Link } from 'gatsby'
 import { kebabCase } from 'lodash'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
-import { SC } from '../components/SoundcloudPlayer'
-import { Play, Icon } from '../img/icons'
+import PlayButton from './PlayButton'
 
 const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
   return (
@@ -29,6 +28,8 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
             <h2 className="item-sub-heading">{data.title}</h2>
           )}
           <div className="link-container">
+            <PlayButton soundcloudUrl={data.soundcloudUrl} />
+
             {data.links &&
               data.links.map(link => (
                 <a
@@ -77,25 +78,6 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
       {/*   <Link className="button full" style={{marginTop: 16}} to={slug}>
         View →
       </Link> */}
-      {data.soundcloudUrl && (
-        <SC.Consumer>
-          {({ updateTrack, currentTrack }) => {
-            return (
-              <a
-                className="button blue full"
-                onClick={() => updateTrack(data.soundcloudUrl)}
-              >
-                <span className="flex-container flex-center">
-                  Play{' '}
-                  {data.soundcloudUrl === currentTrack.permalink_url && (
-                    <Icon name="play" />
-                  )}
-                </span>
-              </a>
-            )
-          }}
-        </SC.Consumer>
-      )}
       </div>
     </div>
   )
