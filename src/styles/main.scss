@@ -536,12 +536,14 @@ $button-horizontal-padding: 0.75em;
   &.light-blue {
 		background-color: $cs-lightblue;
 		svg {
+			transition: all 250ms ease;
 			fill: $lightpearl;
 		}
 	}
 	&.dark-blue {
 		background-color: $cs-darkblue;
 		svg {
+			transition: all 250ms ease;
 			fill: $lightpearl;
 		}
 	}
