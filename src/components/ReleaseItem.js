@@ -7,6 +7,7 @@ import { Link } from 'gatsby'
 import { kebabCase } from 'lodash'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 import PlayButton from './PlayButton'
+import { Icon } from '../img/icons'
 import { SoundcloudPlayerLite } from '../components/SoundcloudPlayer'
 
 const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
@@ -62,6 +63,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
                   className="item-button item-button__small light-blue shop-link"
                   href={link.url}
                 >
+                  <Icon style={{marginRight: 6}} size={16} name={link.label.toLowerCase()} /> 
                   {link.label}
                 </a>
               ))}
