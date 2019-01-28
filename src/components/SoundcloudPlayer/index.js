@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Trail, Spring,  animated } from 'react-spring'
 import '../../styles/common/player.scss'
-import {TrackItem, ControlButton, PlayerToggle } from './components'
+import {TrackItem, ControlButton, PlayerToggle, Waveform, Controls } from './components'
 import { appendQueryParam, fetchUrl, parseURL } from './utils'
 
 const SOUNDCLOUD_API_URL = 'https://api.soundcloud.com'
@@ -85,6 +85,7 @@ export default class SoundcloudPlayerProvider extends Component {
   }
   handleEnd = () => {
     this.stop()
+    this.playlist && this.next();
   }
   start = url => {
     if (url) {
@@ -172,6 +173,7 @@ export default class SoundcloudPlayerProvider extends Component {
 
     this.setState({
       url,
+      reallyPlaying: false,
       show: true,
     })
     this.start(url)
@@ -194,6 +196,7 @@ export default class SoundcloudPlayerProvider extends Component {
         console.log('play finished')
 
         this.setState({
+          reallyPlaying: true,
           paused: false,
           error: null,
         })
@@ -206,14 +209,9 @@ export default class SoundcloudPlayerProvider extends Component {
       .catch(err => {
         console.log('err', err)
         console.log('play errorerd')
-
+        // silent fail - most likely my fault
         this.playStarted = false
 
-        // this shit is firing
-        // for unknon reasons
-        // this.setState({
-        //   error: true
-        // })
       })
   }
 
@@ -222,7 +220,7 @@ export default class SoundcloudPlayerProvider extends Component {
     let src
     const { playlistIndex } = this.state
     this.setState({
-      error: null
+      error: null,
     })
     if (options.streamUrl) {
       // this won't really work
@@ -232,11 +230,14 @@ export default class SoundcloudPlayerProvider extends Component {
     } else if (this.playlist) {
       src = await this.getPlaylistSrc(options)
       this.setState({
+        currentPlaylistUrl: this.playlist.permalink_url,
         currentTrack: this.playlist.tracks[this.state.playlistIndex],
       })
       console.log('awatied', src)
     } else if (this.track) {
       this.setState({
+        currentPlaylistUrl: null,
+
         currentTrack: this.track,
       })
       src = this.track.stream_url
@@ -330,22 +331,21 @@ export default class SoundcloudPlayerProvider extends Component {
   next = options => {
     const { playlistIndex } = this.state
     options = options || {}
-    var tracksLength = this.playlist.tracks.length
+    const tracksLength = this.playlist.tracks.length
     if (this.skipping) {
       console.log('play started, returning')
       return
     }
 
-    // if (playlistIndex >= tracksLength - 1) {
-    //   if (options.loop) {
-    //     this.setState({
-    //       playlistIndex: -1,
-    //     })
-    //     this.skipping = true;
-    //   } else {
-    //     return
-    //   }
-    // }
+    if (playlistIndex >= tracksLength - 1) {
+      // if (options.loop) {
+      //   this.setState({
+      //     playlistIndex: -1,
+      //   })
+      //   this.skipping = true;
+      // } else {
+        return
+    }
 
     if (this.playlist && tracksLength) {
       this.skipping = true;
@@ -419,18 +419,19 @@ export default class SoundcloudPlayerProvider extends Component {
     }
   }
 
-  waveFormHover = e => {
-    const percent = e.nativeEvent.offsetX / e.target.offsetWidth
+  // waveFormHover = e => {
+  //   const percent = e.nativeEvent.offsetX / e.target.offsetWidth
+  //   this.setState({
+  //     prospectiveSeek: percent * this.audio.duration,
+  //   })
+  // }
 
-    this.setState({
-      prospectiveSeek: percent * this.audio.duration,
-    })
-  }
-  resetProspectiveSeek = () => {
-    this.setState({
-      prospectiveSeek: 0,
-    })
-  }
+  // resetProspectiveSeek = () => {
+  //   this.setState({
+  //     prospectiveSeek: 0,
+  //   })
+  // }
+
   setVolume = volumePercentage => {
     if (!this.audio.readyState) {
       return
@@ -447,55 +448,6 @@ export default class SoundcloudPlayerProvider extends Component {
     this.audio.currentTime = seconds
   }
 
-  // play = (index = null, track) => {
-  //   this.play(index)
-  //   .then(() => {
-  //     this.setState({
-  //       playing: this.scPlayer.playing,
-  //       paused: false,
-  //       error: false
-  //     })
-  //     track && this.setState({
-  //       currentTrack: track
-  //     })
-  //   })
-  //   .catch(err => {
-  //     console.log('err', err);
-  //     // this shit is firing
-  //     // for unknon reasons
-  //     // this.setState({
-  //     //   error: true
-  //     // })
-  //   })
-  // }
-
-  // pause = (params) => {
-  //   console.log(this.scPlayer.playing);
-
-  //   this.scPlayer.pause()
-  //     // .then(() =>
-  //       this.setState({
-  //         playing: this.scPlayer.playing,
-  //         paused: true,
-  //         error: false
-  //       })
-  //     // )
-  //     // .catch(
-  //     //   this.setState({
-  //     //     error: true
-  //     //   })
-  //     // )
-  // }
-
-  // stop = (params) => {
-  //   this.scPlayer.stop()
-  //   this.setState({
-  //     playing: this.scPlayer.playing,
-  //     paused: false,
-  //     error: false
-  //   })
-  // }
-
   render() {
     const { children } = this.props
  
@@ -505,8 +457,69 @@ export default class SoundcloudPlayerProvider extends Component {
 
 
 
+export const SoundcloudPlayerLite = ({ soundcloudUrl, className }) => {
+  return (
+    <SC.Consumer>
+      {({
+        controls,
+        togglePlayer,
+        show,
+        error,
+        playing,
+        currentTime,
+        currentPlaylistUrl,
+        currentTrack,
+        currentTrack: { title, user, id },
+        url,
+        tracks,
+        prospectiveSeek,
+        events,
+      }) => {
+        console.log('pliayin', currentPlaylistUrl);
+        return (
+          (soundcloudUrl === currentTrack.permalink_url && playing
+            || currentPlaylistUrl && currentPlaylistUrl.split('://')[1] === soundcloudUrl.split('://')[1] && playing ) ? (
+            <Spring
+              native
+              from={{ opacity: 0 }}
+              to={{ opacity: 1 }}
+            >
+              {props => (
+                  <animated.div style={props} className={`sc-player__item lite ${className}`}>
+                    <div className="sc-player__item-content">
+                        <div className="sc-player__controls flex-container flex-center">
+                        <Controls
+                          controls={controls}
+                          playing={playing} 
+                          isPlaylist={Boolean(tracks && tracks.length)}
+                          showPlay={false}
+                        />
+                            {error && (
+                              <span className="error notice">
+                                {error.toString()}
+                              </span>
+                            )}
+                        </div>
+                    <Waveform
+                      events={events}
+                      seek={controls.seek}
+                      prospectiveSeek={prospectiveSeek}
+                      currentTime={currentTime}
+                      currentTrack={currentTrack}
+                    />
+                  </div>
+                 
+                </animated.div>
+              )}
+            </Spring>
+          ) : null
+        )}
+      }
+    </SC.Consumer>
+    )
+  }
 
-export const SoundcloudPlayerUI = () => {
+export const SoundcloudPlayerUI = ({soundcloudUrl, lite}) => {
   return (
     <SC.Consumer>
       {({
@@ -521,15 +534,46 @@ export const SoundcloudPlayerUI = () => {
         url,
         tracks,
         prospectiveSeek,
+        reallyPlaying,
         events,
-      }) =>
-        url ? (
-          <div>
+      }) => {
+        const loading = show && !reallyPlaying;
 
+       return (
+        soundcloudUrl === currentTrack.permalink_url && lite ? (
+          <Spring
+            native
+            from={{ opacity: 0 }}
+            to={{ opacity: 1 }}
+          >
+            {props => (
+              <animated.div style={props}>
+                <TrackItem
+                  error={error}
+                  togglePlayer={togglePlayer}
+                  hero
+                  events={events}
+                  prospectiveSeek={prospectiveSeek}
+                  currentTime={currentTime}
+                  isPlaylist={Boolean(tracks && tracks.length)}
+                  playing={playing}
+                  controls={controls}
+                  currentTrack={currentTrack}
+                  track={currentTrack}
+                  url={url}
+                  show={show}
+                  index={null}
+                />
+              </animated.div>
+            )}
+          </Spring>
+        ) :
+        !lite && url ? (
+          <div>
             <Spring
               native
               from={{ transform: show ? 'translateY(100%)' : 'translateY(0)' }}
-              to={{ transform: show ? 'translateY(0)' : 'translateY(100%)' }}
+              to={{ transform: show && reallyPlaying ? 'translateY(0)' : 'translateY(100%)' }}
               config={{ tension: 105, friction: 12 }}
             >
               {props => (
@@ -539,8 +583,8 @@ export const SoundcloudPlayerUI = () => {
                       className="sc-player__items flex-1"
                       style={{ height: '100%' }}
                     >
-
                       <PlayerToggle
+                        loading={loading}
                         playing={playing}
                         show={show}
                         togglePlayer={togglePlayer}
@@ -556,6 +600,7 @@ export const SoundcloudPlayerUI = () => {
                             >
                               {(track, i) => props => (
                                 <TrackItem
+                                  key={i}
                                   style={{ ...props, cursor: 'pointer' }}
                                   playing={playing}
                                   controls={controls}
@@ -576,7 +621,6 @@ export const SoundcloudPlayerUI = () => {
                       >
                         {props => (
                           <animated.div style={props}>
-
                             <TrackItem
                               error={error}
                               togglePlayer={togglePlayer}
@@ -605,6 +649,7 @@ export const SoundcloudPlayerUI = () => {
             </Spring>
           </div>
         ) : null
+      )}
       }
     </SC.Consumer>
   )
