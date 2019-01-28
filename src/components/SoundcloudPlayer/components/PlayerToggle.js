@@ -3,19 +3,20 @@ import { Trail, Spring, Transition, animated, config } from 'react-spring'
 import { ControlButton } from './'
 import { Icon } from '../../../img/icons'
 
-const PlayerToggle = ({ togglePlayer, playing, show }) => (
+const PlayerToggle = ({ togglePlayer, playing, show, loading }) => (
   <div className="sc-player__toggle flex-container flex-center">
     <Transition
       native
       items={show}
       from={{
-        opacity: 0,
+        opacity: 1,
+        zIndex: -1,
         position: 'absolute',
         right: '1rem',
-        transform: 'translateY(-2rem)',
+        transform: 'translateY(5rem)',
       }}
       enter={{ opacity: 1, transform: 'translateY(-2rem)' }}
-      leave={{ opacity: 0, transform: 'translateY(0)' }}
+      leave={{ opacity: 1, transform: 'translateY(5rem)' }}
       config={{ ...config.slow }}
     >
       {show => props =>
@@ -23,8 +24,9 @@ const PlayerToggle = ({ togglePlayer, playing, show }) => (
           <animated.div style={props}>
             <ControlButton
               size={30}
-              className="toggle open"
-              icon="close"
+              disabled={loading}
+              className={`toggle open ${loading ? 'loading' : ''}`}
+              icon={loading ? "album" : "close"}
               fn={togglePlayer}
             />
           </animated.div>
@@ -54,8 +56,8 @@ const PlayerToggle = ({ togglePlayer, playing, show }) => (
             <div className={playing ? 'pulse' : undefined}>
               <ControlButton
                 size={30}
-                className={`toggle closed`}
-                icon="music"
+                className={`toggle closed ${loading ? 'loading' : ''}`}
+                icon={loading ? "album" : "music"}
                 fn={togglePlayer}
               />
             </div>
