@@ -35,7 +35,7 @@ const Releases = ({ section }) => {
             items={data.allMarkdownRemark.edges.filter(
               ({ node: post }) => post.frontmatter.releaseType === section.type
             )}
-            keys={item => item.key}
+            keys={({ node: post }) => post.id}
             from={{ transform: 'translate3d(0,-20px,0)' }}
             to={{ transform: 'translate3d(0,0px,0)' }}
             config={config.slow}
@@ -43,7 +43,6 @@ const Releases = ({ section }) => {
             {({ node: post }) => props => (
               <ReleaseItem
                 style={props}
-                key={post.id}
                 slug={post.fields.slug}
                 data={post.frontmatter}
               />
