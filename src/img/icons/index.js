@@ -31,6 +31,7 @@ const components = {
   twitter: Twitter,
   soundcloud: Soundcloud,
   apple: Apple,
+  itunes: Apple,
   spotify: Spotify,
   beatport: Beatport,
 
