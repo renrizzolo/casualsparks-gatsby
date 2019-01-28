@@ -37,7 +37,7 @@ export const ArtistPageTemplate = ({
       {helmet || ''}
       <section className="flex-container__column">
       {
-        links && links.map(link, i) => (
+        links && links.map((link, i) => (
           <a className="button item-link" href={link.url}>{link.label}</a>
         ))
       }
