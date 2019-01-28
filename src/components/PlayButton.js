@@ -1,22 +1,20 @@
 import React from 'react'
 import { SC } from './SoundcloudPlayer'
 import { Icon } from '../img/icons'
-
+import '../styles/common/play-button.scss'
 const PlayButton = ({ soundcloudUrl, full }) => {
     return (
       soundcloudUrl ? (
         <SC.Consumer>
-            {({ updateTrack, currentTrack }) => {
-            const isPlaying = soundcloudUrl === currentTrack.permalink_url;            
+          {({ updateTrack, currentTrack, currentPlaylistUrl, playing, controls: { stop } }) => {
+            const isPlaying = soundcloudUrl === currentTrack.permalink_url
+              && playing || currentPlaylistUrl && currentPlaylistUrl.split('://')[1] === soundcloudUrl.split('://')[1] && playing;            
               return (
                 <a
-                  className={`flex-1 button dark-blue ${full && 'full'}`}
-                  onClick={() => updateTrack(soundcloudUrl)}
+                  className={`flex-container flex-center play-button ${full ? ' full' : ''}`}
+                  onClick={() => isPlaying ? stop() : updateTrack(soundcloudUrl)}
         >
-                  <span className="flex-container flex-center">
-                    Play&nbsp;
-                      <Icon name={'play'} />
-                  </span>
+                    <Icon size={32} name={ isPlaying ? 'stop' : 'play_arrow'} />
                 </a>
               )
             }}
