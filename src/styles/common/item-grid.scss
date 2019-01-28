@@ -207,6 +207,8 @@ $column-count-small: 1;
 			}
 		}
 		.item-button {
+			display: flex;
+			align-items: center;
 			color: $cs-darkblue;
 			background-color: $dark-pearl;
 			margin-right: 0.25rem;
