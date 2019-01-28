@@ -3,7 +3,7 @@
 \*------------------------------------*/
 
 @import url('https://fonts.googleapis.com/css?family=Rozha+One');
-@import url('https://fonts.googleapis.com/css?family=Muli:400,700');
+@import url('https://fonts.googleapis.com/css?family=Muli:400,800');
 
 @import "variables";
 @import "config";
@@ -150,15 +150,24 @@ h2{
 .align-center {
 	align-items: center;
 }
+.align-start {
+	align-items: start;
+}
+.align-end {
+	align-items: end;
+}
 .justify-center {
 	justify-content: center;
+}
+.justify-end{
+	justify-content: flex-end;
+}
+.justify-start{
+	justify-content: flex-start;
 }
 .flex-start{
 	align-items: center;
 	justify-content: flex-start;
-}
-.flex-end{
-	justify-content: flex-end;
 }
 @for $i from 1 through 6 {
 	.flex-#{$i} {
@@ -653,7 +662,7 @@ $button-horizontal-padding: 0.75em;
 			font-family: $font-serif;
 			font-size: 6em;
 			line-height: 1.4;
-			margin-top: 1em;
+			margin: 0;
 			font-weight: 700;
 			 @include maxwidth(s) {
 				 font-size: 3.5em;
