@@ -14,6 +14,7 @@ export const ArtistPageTemplate = ({
   contentComponent,
   content,
   name,
+  links,
   helmet,
   profileImage,
 }) => {
@@ -35,6 +36,11 @@ export const ArtistPageTemplate = ({
     >
       {helmet || ''}
       <section className="flex-container__column">
+      {
+        links && links.map(link, i) => (
+          <a className="button item-link" href={link.url}>{link.label}</a>
+        ))
+      }
         <div className="single-artist">
           {content && (
             <div>
@@ -52,6 +58,8 @@ ArtistPageTemplate.propTypes = {
   content: PropTypes.node.isRequired,
   contentComponent: PropTypes.func,
   title: PropTypes.string,
+  links: PropTypes.array,
+  name: PropTypes.string,
   helmet: PropTypes.object,
 }
 
@@ -64,9 +72,7 @@ const ArtistPage = ({ data }) => {
       name={post.frontmatter.name}
       content={post.html}
       profileImage={post.frontmatter.profileImage}
-      soundcloudUrl={post.frontmatter.soundcloudUrl}
-      twitterUrl={post.frontmatter.twitterUrl}
-      facebookUrl={post.frontmatter.facebookUrl}
+      links={post.frontmatter.links}
     />
   )
 }
@@ -86,9 +92,11 @@ export const pageQuery = graphql`
       html
       frontmatter {
         name
-        twitterUrl
-        soundCloudUrl
-        facebookUrl
+        links {
+          label
+          url
+          icon
+        }
         profileImage {
           childImageSharp {
             fluid(maxWidth: 1000, quality: 80) {

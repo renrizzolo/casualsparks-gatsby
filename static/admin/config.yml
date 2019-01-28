@@ -17,9 +17,14 @@ collections:
       - { label: "Name", name: "name", widget: string, }
       - { label: "About", name: "about", widget: "markdown" }
       - { label: "Profile Image", name: "profileImage", widget: image, }
-      - { label: "Soundcloud url", name: "soundCloudUrl", widget: string, }
-      - { label: "Facebook url", name: "facebookUrl", widget: string, }
-      - { label: "Twitter url", name: "twitterUrl", widget: string, }
+      - label: "Links"
+        name: "links"
+        widget: "list"
+        required: false
+        fields:
+          - {label: Label, name: label, widget: string}
+          - {label: Url, name: url, widget: string}
+          - {label: Icon, name: icon, widget: string}
   - name: "releases"
     label: "Releases"
     folder: "src/pages/releases"
