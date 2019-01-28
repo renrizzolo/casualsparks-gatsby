@@ -7,7 +7,9 @@ import ReleaseItem from '../../components/ReleaseItem'
 const ReleasePageTemplate = ({ title, sections, children }) => {
   return (
     <PageLayout title={'Latest Releases'} backgroundColor="pearl">
+    <div className="item-grid">
       {children}
+      </div>
     </PageLayout>
   )
 }
@@ -43,7 +45,8 @@ export const releaseFrontmatterFragment = graphql`
     frontmatter {
       title
       templateKey
-      date(formatString: "MMMM DD, YYYY")
+      date(formatString: "MMM DD, YYYY")
+      datenum: date
       artist
       trackList
       soundcloudUrl
