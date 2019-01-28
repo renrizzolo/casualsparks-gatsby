@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from '../../../img/icons'
-import { ControlButton } from './'
+import { ControlButton, Waveform } from './'
 
 const TrackItem = ({
   controls: { play, pause, previous, next, stop, seek },
@@ -17,6 +17,7 @@ const TrackItem = ({
   prospectiveSeek,
   events,
   show,
+  lite,
 }) => {
   const isPlaying = track.id === currentTrack.id && playing
   const playlistIndex = index !== null ? { playlistIndex: index } : null
@@ -24,17 +25,18 @@ const TrackItem = ({
     <div
       style={style}
       key={track.id}
-      className={`sc-player__item ${hero ? 'hero' : undefined} ${isPlaying &&
-        !hero ?
-        'highlighted' : undefined}`}
+      className={`sc-player__item
+      ${lite ? ' lite' : ''} 
+      ${hero ? ' hero' : ''} 
+      ${isPlaying && !hero ? ' highlighted' : ''}
+      `}
       onClick={() =>
         !hero ? (isPlaying ? pause() : play(playlistIndex)) : null
       }
     >
-      <div className="flex-container flex-center flex-1">
-        <div className="sc-player__controls flex-container flex-center">
-
-          {hero && (
+      <div className="sc-player__item-content">
+        {hero && (
+          <div className="sc-player__controls flex-container flex-center">
             <React.Fragment>
               {isPlaylist &&
                 <ControlButton
@@ -61,9 +63,9 @@ const TrackItem = ({
                 </span>
               )}
             </React.Fragment>
-          )}
-        </div>
-        <div className="sc-player__text">
+          </div>
+        )}
+       { !lite && <div className="sc-player__text">
           {hero && track && <img className="sc-player__thumb" src={track.artwork_url} />}
           {hero && track && track.user ?
             <a href={track.permalink_url} target="_blank" rel="noopener">
@@ -72,35 +74,16 @@ const TrackItem = ({
             :
             <span>{track && track.user && track.user.username} - {track && track.title}</span>
           }
-        </div>
-        <div className="sc-player__waveform" onClick={seek}>
-          {hero && currentTrack.waveform_url && (
-            <div
-              onMouseOut={events.resetProspectiveSeek}
-              onMouseMove={events.waveFormHover}
-            >
-              <span
-                className="sc-player__seek sc-player__prospective-seek"
-                style={{
-                  width: `${
-                    prospectiveSeek > 0
-                      ? (prospectiveSeek / (currentTrack.duration / 1000)) * 100
-                      : (currentTime / (currentTrack.duration / 1000)) * 100
-                    }%`,
-                }}
-              />
-
-              <span
-                className="sc-player__seek"
-                style={{
-                  width: `${(currentTime / (currentTrack.duration / 1000)) *
-                    100}%`,
-                }}
-              />
-              <img src={currentTrack.waveform_url} />
-            </div>
-          )}
-        </div>
+        </div>}
+        {hero && currentTrack.waveform_url && (
+          <Waveform 
+            events={events} 
+            seek={seek} 
+            prospectiveSeek={prospectiveSeek} 
+            currentTime={currentTime} 
+            currentTrack={currentTrack}
+          />
+        )}
         {!hero && (
           <a
             className="sc-player__button play"
