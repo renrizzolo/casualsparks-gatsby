@@ -17,7 +17,7 @@ const MusicPageTemplate = ({ title, sections }) => {
 
 const Grid = ({ sections }) => {
   return sections.map(section => (
-    <section className="item-grid">
+    <section key={section.title} className="item-grid">
       <h1 className="heading item-grid__heading">
         <span className="dark-blue-bkg">{section.title}</span>
       </h1>
