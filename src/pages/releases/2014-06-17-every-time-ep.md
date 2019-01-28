@@ -17,10 +17,13 @@ description: asdf
 releaseType: release
 links:
   - label: iTunes
+    icon: apple
     url: https://itunes.apple.com/au/album/every-time-ep/id892096132
   - label: Spotify
+    icon: spotify
     url: https://open.spotify.com/album/2UlNv3QKvo5xSHwCxtiuPj
   - label: beatport
+    icon: beatport
     url: https://www.beatport.com/release/every-time-ep/1331503
 ---
 _Every Time_ is the brand new EP from Melbourne electronic producer Ren Riz, the follow up to his highly praised 2012 Daydream EP, and the first to come from his own recently founded label, Casual Sparks.
