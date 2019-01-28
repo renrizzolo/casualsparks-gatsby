@@ -9,6 +9,13 @@ import { default as Pause } from './baseline-pause_circle_outline-24px.svg'
 import { default as Close } from './baseline-close-24px.svg'
 import { default as Album } from './baseline-album-24px.svg'
 import { default as Music } from './baseline-queue_music-24px.svg'
+import { default as Facebook } from './facebook.svg'
+import { default as Twitter } from './twitter.svg'
+import { default as Soundcloud } from './soundcloud.svg'
+import { default as Apple } from './apple.svg'
+import { default as Spotify } from './spotify.svg'
+import { default as Beatport } from './beatport.svg'
+
 
 const components = {
   play: Play,
@@ -20,15 +27,23 @@ const components = {
   close: Close,
   album: Album,
   music: Music,
+  facebook: Facebook,
+  twitter: Twitter,
+  soundcloud: Soundcloud,
+  apple: Apple,
+  spotify: Spotify,
+  beatport: Beatport,
+
 };
 
 export const Icon = ({ name, style, className, size, children }) => {  
   const IconComponent = components[name]
-  return ( 
+  return IconComponent ? (
     <IconComponent width={size} height={size} style={style} className={className}>
       {children}
     </IconComponent>
   )
+  : null
 }
 
 Icon.defaultProps = {
