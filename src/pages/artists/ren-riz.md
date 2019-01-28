@@ -13,8 +13,12 @@ about: >-
   EPs on various labels, with 2014 seeing him establish his own imprint Casual
   Sparks.
 profileImage: /img/rr_2014.jpg
-soundCloudUrl: 'https://soundcloud.com/renriz'
-facebookUrl: 'https://facebook.com/renriz'
-twitterUrl: 'https://twitter.com/ren_riz'
+links:
+  - label: iTunes
+    url: https://itunes.apple.com/au/album/every-time-ep/id892096132
+  - label: Spotify
+    url: https://open.spotify.com/album/2UlNv3QKvo5xSHwCxtiuPj
+  - label: beatport
+    url: https://www.beatport.com/release/every-time-ep/1331503
 ---
 
