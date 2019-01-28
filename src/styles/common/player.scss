@@ -18,198 +18,262 @@ $item-text: $dark-blue;
   right: 0;
   background-color: $item-bgc;
   color: $item-text;
-  border-top: 5px solid $lightpearl;
+  border-top: 5px solid $dark-pearl;
   font-size: 80%;
-  .sc-player__items {
-    align-self: stretch;
-  }
-  .sc-player__item {
-    padding: 0.25rem 1rem;
-    transition: all 400ms ease;
-    justify-content: space-between;
-    white-space: nowrap;
+}
+.sc-player__items {
+  align-self: stretch;
+}
+.sc-player__item {
+  padding: 0.25rem 1rem;
+  transition: all 400ms ease;
+  justify-content: space-between;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-size: 0.95em;
+  font-weight: bold;
+  border-bottom: 1px solid $item-border;
+  min-height: 47px;
+  .sc-player__item-content {
     display: flex;
+    flex: 1;
+    justify-content: space-between;
     align-items: center;
-    font-size: 0.95em;
-    font-weight: bold;
-    border-bottom: 1px solid $item-border;
-    min-height: 47px;
-    .sc-player__text {
-      max-width: 50%;
-      white-space: nowrap;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
-      img {
-        max-width: 50px;
+    width: 100%;
+  }
+  .sc-player__text {
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    img {
+      max-width: 50px;
+    }
+  }
+  &:hover, &.highlighted {
+    background-color: $item-highlight-bgc;
+  }
+    &.lite {
+      background-color: white;
+
+      .sc-player__waveform {
+        margin: 0;
       }
     }
-    &:hover, &.highlighted {
-      background-color: $item-highlight-bgc;
+    &.item-grid__player {
+      position: absolute;
+      bottom: 0;
+      z-index: 2;
     }
-    &.hero {
-      min-height: 78px;
-      background-color: #ffffff;
-      @media screen and (max-width: 600px) {
-        > div {
-          flex-wrap: wrap;
-          > div, .sc-player__text, .sc-player__waveform {
-            width: 100%;
-            .sc-player__button {
-              &.close {
-                margin-left: auto;
-                order: 1;
-              }
+  &.hero {
+    min-height: 78px;
+    background-color: #ffffff;
+
+    @media screen and (max-width: 600px) {
+      > div {
+        flex-wrap: wrap;
+        > div, .sc-player__text, .sc-player__waveform {
+          width: 100%;
+          .sc-player__button {
+            &.close {
+              margin-left: auto;
+              order: 1;
             }
           }
-          .sc-player__waveform {
-            flex: none;
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
+        }
+        .sc-player__waveform {
+          flex: none;
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+        }
+        .sc-player__text {
+          font-size: 0.85em;
+          margin-right: 2rem;
+          flex: 3;
+          max-width: 100%;
+          img {
+            max-width: 25px;
           }
-          .sc-player__text {
-            font-size: 0.85em;
-            margin-right: 2rem;
-            flex: 3;
-            max-width: 100%;
-            img {
-              max-width: 25px;
-            }
-          }
-          .sc-player__controls {
-            flex: 0;
-          }
+        }
+        .sc-player__controls {
+          flex: 0;
         }
       }
     }
+  }
+
+}
+.sc-player__controls {
+  margin-right: 0.5rem;
+}
+
+.sc-player__thumb {
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+  max-width: 50px;
+  margin: 0.5rem;
+}
+.sc-player__waveform {
+  user-select: none;
+  cursor: pointer;
+  position: relative;
+  flex: 1;
+  display: flex;
+  margin-left: 1rem;
+  margin-right: 2.5rem;
+  align-items: center;
+  img {
+    animation: fade-in 250ms ease-in forwards;
+    height: 40px;
+    background: #676462;
+    mix-blend-mode: hard-light;
+  }
+  .sc-player__seek {
+    transition: all 100ms ease;
+    position: absolute;
+    left: 0;
+    height: 40px;
+    background: #113d63;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
 
   }
-  .sc-player__controls {
-    margin-right: 0.5rem;
+  .sc-player__prospective-seek {
+    transition: all 0ms;
+    opacity: 0.5;
   }
- 
-  .sc-player__thumb {
-    width: 100%;
-    height: auto;
-    vertical-align: middle;
-    max-width: 50px;
-    margin: 0.5rem;
-  }
-  .sc-player__waveform {
-    user-select: none;
-    cursor: pointer;
-    position: relative;
-    flex: 1;
-    display: flex;
-    margin-left: 1rem;
-    margin-right: 2.5rem;
-    img {
-      height: 40px;
-      background: #676462;
-      mix-blend-mode: hard-light;
-    }
-    .sc-player__seek {
-      transition: all 100ms ease;
-      position: absolute;
-      left: 0;
-      height: 40px;
-      background: #113d63;
-      top: 0;
-      opacity: 0.5;
+}
+.sc-player__open-container {
+        right: 1.3rem;
 
+  @include minwidth(s) {
+    right: 0rem;
+  }
+}
+.sc-player__button {
+//  &:focus, &:active {
+//    border: 2 px solid blue;
+//  }
+  background: none;
+  margin: 0;
+  cursor: pointer;
+  transition: all 250ms ease;
+  display: inline-flex;
+  color: #ffffff;
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 0.25rem;
+  outline: none;
+  border: none;
+  &:disabled {
+    color: $cs-darkblue;
+  }
+    &.open {
+      background: #eeebe9;
+      margin-top: 2rem;
+      height: 2rem;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+      top: -10px;
+      z-index: -1;
     }
-    .sc-player__prospective-seek {
-      transition: all 0ms;
-      opacity: 0.5;
+    &.toggle.open {
+      background: $dark-pearl;
+    }
+}
+.sc-player__icon {
+  fill: $cs-darkblue;
+  &:hover {
+    fill: $cs-lightblue;
+  }
+  &.play {
+    fill: $cs-lightblue;
+  }
+  &.pause {
+    fill: $cs-darkblue;
+  }
+
+  &.toggle {
+    background-color: $dark-pearl;
+    border-radius: 50%;
+    padding: 0.25rem;
+    fill: $cs-darkblue;
+
+    // fill: $dark-pearl;
+    // &.closed {
+      // border-radius: 0%;
+      // padding: 0;
+      // background-color: transparent;
+      // @include maxwidth(xs){
+      //   background-color:$cs-darkblue;
+      // }
+    // }
+  }
+}
+.page.music {
+    .sc-player {
+      border-top: 5px solid $lightpearl;
+    }
+    .pulse {
+      svg {
+      animation: pulse-dark-blue 600ms ease-in 250ms infinite alternate-reverse;
+      }
+    }
+  .sc-player__button {
+    &.toggle.open {
+      background-color:$lightpearl;
+    }
+  }
+  .sc-player__icon {
+    &.toggle {
+      background-color:$lightpearl;
+      fill: $cs-darkblue;
     }
   }
 }
-  .sc-player__open-container {
-          right: 1.3rem;
-
-    @include minwidth(s) {
-      right: 0rem;
-    }
+.loading {
+  >svg {
+    animation: scale-loop 350ms ease infinite alternate-reverse;
   }
- .sc-player__button {
-  //  &:focus, &:active {
-  //    border: 2 px solid blue;
-  //  }
-    background: none;
-    margin: 0;
-    cursor: pointer;
-    transition: all 250ms ease;
-    display: inline-flex;
-    color: #ffffff;
-    font-size: 1.1em;
-    font-weight: bold;
-    padding: 0.25rem;
-    outline: none;
-    border: none;
-    &:disabled {
-      color: $cs-darkblue;
-    }
-
+}
+.pulse {
+  svg {
+  animation: pulse-pearl 600ms ease-in 250ms infinite alternate-reverse;
   }
-  .sc-player__icon {
+}
+@keyframes pulse-pearl {
+  from {
+    fill: $dark-pearl;
+  }
+  to {
+    fill: white
+  }
+}
+@keyframes pulse-dark-blue {
+  from {
     fill: $cs-darkblue;
-    &:hover {
-      fill: $cs-lightblue;
-    }
-    &.play {
-      fill: $cs-lightblue;
-    }
-    &.pause {
-      fill: $cs-darkblue;
-    }
+  }
+  to {
+    fill: lighten($cs-darkblue, 25%);
+  }
+}
 
-    &.toggle {
-      background-color: $cs-darkblue;
-      border-radius: 50%;
-      padding: 0.25rem;
-      // fill: $dark-pearl;
-      // &.closed {
-        // border-radius: 0%;
-        // padding: 0;
-        fill: $lightpearl;
-        // background-color: transparent;
-        // @include maxwidth(xs){
-        //   background-color:$cs-darkblue;
-        // }
-      // }
-    }
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
-  .page.music {
-      .pulse {
-        svg {
-        animation: pulse-dark-blue 600ms ease-in 250ms infinite alternate-reverse;
-        }
-      }
-    .sc-player__icon {
-      &.toggle {
-        background-color:$lightpearl;
-        fill: $cs-darkblue;
-      }
-    }
+  to {
+    opacity: 1;
   }
-  .pulse {
-    svg {
-    animation: pulse-pearl 600ms ease-in 250ms infinite alternate-reverse;
-    }
-  }
-  @keyframes pulse-pearl {
-    from {
-      fill: $dark-pearl;
-    }
-    to {
-      fill: white
-    }
-  }
-  @keyframes pulse-dark-blue {
-    from {
-      fill: $cs-darkblue;
-    }
-    to {
-      fill: lighten($cs-darkblue, 25%);
-    }
-  }
+}
 
+@keyframes scale-loop {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
