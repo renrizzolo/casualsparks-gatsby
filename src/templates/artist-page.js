@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { kebabCase } from 'lodash'
 import Helmet from 'react-helmet'
 import { graphql, Link } from 'gatsby'
-import Content, { HTMLContent } from '../components/Content'
+import Content, { HTMLContent, MarkdownContent } from '../components/Content'
+import SocialLink from '../components/SocialLink'
 import PageLayout from '../components/PageLayout'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 import WatchConnection from '../components/WatchConnection'
@@ -14,12 +15,14 @@ export const ArtistPageTemplate = ({
   contentComponent,
   content,
   name,
+  about,
   links,
   helmet,
   profileImage,
 }) => {
   const PostContent = contentComponent || Content
-
+  console.log(about);
+  
   return (
     <PageLayout
       header={
@@ -35,17 +38,17 @@ export const ArtistPageTemplate = ({
       backgroundColor="pearl"
     >
       {helmet || ''}
-      <section className="flex-container__column">
+      <section className="flog  lex-container__column">
       {
         links && links.map((link, i) => (
-          <a className="button item-link" href={link.url}>{link.label}</a>
+            <SocialLink title={link.label} url={link.url} icon={link.icon} />
         ))
       }
         <div className="single-artist">
+        <PostContent content={about} />
           {content && (
             <div>
               <h2 className="heading heading-dark">About</h2>
-              <PostContent content={content} />
             </div>
           )}
         </div>
@@ -68,11 +71,12 @@ const ArtistPage = ({ data }) => {
 
   return (
     <ArtistPageTemplate
-      contentComponent={HTMLContent}
+      contentComponent={MarkdownContent}
       name={post.frontmatter.name}
       content={post.html}
       profileImage={post.frontmatter.profileImage}
       links={post.frontmatter.links}
+      about={post.frontmatter.about}
     />
   )
 }
@@ -97,6 +101,7 @@ export const pageQuery = graphql`
           url
           icon
         }
+        about
         profileImage {
           childImageSharp {
             fluid(maxWidth: 1000, quality: 80) {
