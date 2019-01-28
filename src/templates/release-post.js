@@ -28,12 +28,14 @@ export const ReleasePostTemplate = ({
     <PageLayout
       header={
         <div className="page-header page-header__release flex-container">
-          <div className="flex-1 flex-container__column flex-end">
+
+          <div className="flex-1 flex-container__column justify-end align-start">
+          <PlayButton soundcloudUrl={soundcloudUrl} />
             <h2>{artist}</h2>
             <h1>{title}</h1>
           </div>
           <div className="flex-1 release-cover__container">
-      {image && <PreviewCompatibleImage imageInfo={{image}} /> }
+              {image && <PreviewCompatibleImage imageInfo={image} /> }
           </div>
         </div>
       }
@@ -73,8 +75,6 @@ const ReleaseItem = ({
         
         <div className="item-info">
           <div className="link-container">
-            <PlayButton soundcloudUrl={soundcloudUrl} />
-
             {links &&
               links.map(link => (
                 <a
