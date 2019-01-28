@@ -7,28 +7,51 @@ import { Link } from 'gatsby'
 import { kebabCase } from 'lodash'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 import PlayButton from './PlayButton'
+import { SoundcloudPlayerLite } from '../components/SoundcloudPlayer'
 
-const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
+const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
+  const now = new Date();
+  const releaseDate = new Date(data.datenum);
+  const forthcoming = releaseDate > now;
+
   return (
+    <div className="item-outer flex-container flex-container__column">
+      <div className="item-meta-container">
+        {forthcoming && 
+        <span className="item-forthcoming">forthcoming </span>} 
+        {data.date && 
+        <div className="item-date">{data.date}</div>}
+      </div>
     <div
       style={style}
-      show={false}
       className={`item background-${backgroundColor}`}
     >
-      <header className="flex-1">
-        <div className="item-info">
-          <Link to={`/artists/${kebabCase(data.artist)}`}>
-            <h1 className="item-heading">{data.artist}</h1>
-          </Link>
-          {slug ? (
-            <Link to={slug}>
-              <h2 className="item-sub-heading">{data.title}</h2>
-            </Link>
-          ) : (
-            <h2 className="item-sub-heading">{data.title}</h2>
-          )}
-          <div className="link-container">
+      {/* <SoundcloudPlayerLite 
+        className="item-grid__player" 
+        soundcloudUrl={data.soundcloudUrl}
+      /> */}
+      <header className="item-grid__header flex-1">
+        <div>
+          <div className="item-info flex-container align-center">
             <PlayButton soundcloudUrl={data.soundcloudUrl} />
+            <div>
+              <h1 className="item-heading">
+                <Link to={`/artists/${kebabCase(data.artist)}`}>
+                  {data.artist}
+                </Link>
+              </h1>
+              {slug ? (
+                <h2 className="item-sub-heading">
+                <Link to={slug}>
+                  {data.title}
+                </Link>
+                </h2>
+              ) : (
+                <h2 className="item-sub-heading">{data.title}</h2>
+              )}
+            </div>
+          </div>
+          <div className="link-container">
 
             {data.links &&
               data.links.map(link => (
@@ -36,7 +59,7 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
                   key={link.label}
                   target="_blank"
                   rel="noopener"
-                  className="button light-blue shop-link"
+                  className="item-button item-button__small light-blue shop-link"
                   href={link.url}
                 >
                   {link.label}
@@ -55,7 +78,7 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
           <OfflineError />
       )}
       /> */}
-      <div className="item__image flex-1">
+      <div className="item-image flex-1">
         <PreviewCompatibleImage imageInfo={data.image} />
 
       {/*       {data.trackList &&
@@ -79,6 +102,7 @@ const ReleaseItem = ({ style, data, slug, description, backgroundColor }) => {
         View →
       </Link> */}
       </div>
+    </div>
     </div>
   )
 }
