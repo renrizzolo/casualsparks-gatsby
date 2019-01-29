@@ -40,10 +40,6 @@ export default class SoundcloudPlayerProvider extends Component {
         stop: this.stop,
         seek: this.seek,
       },
-      events: {
-        resetProspectiveSeek: this.resetProspectiveSeek,
-        waveFormHover: this.waveFormHover,
-      },
     })
     // this.scPlayer = new SoundCloudAudio('a7c99e975fa37c393cb1a6d89d5c1e0b');
     this.audio.addEventListener('timeupdate', this.updateCurrentTime)

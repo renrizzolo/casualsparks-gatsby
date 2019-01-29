@@ -31,7 +31,7 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "Artist", name: "artist", widget: "relation", collection: "artists", searchFields: ["name"], valueField: "name",  displayFields: ["name", "soundCloudUrl"]}
+      - {label: "Artist", name: "artist", widget: "relation", collection: "artists", searchFields: ["name"], valueField: "name",  displayFields: ["name",]}
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "release-post"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Release Date", name: "date", widget: "datetime"}
@@ -40,7 +40,7 @@ collections:
       - {label: Preview HTML/embed code, name: previewHTML, widget: "text", required: false}
       - {label: "Description", name: "description", widget: "markdown", required: false }
       - {label: "Type", name: "releaseType",  widget: "select",  options: [{ label: "Release", value: "release" }, { label: "Mix", value: "mix" }, { label: "Freebie", value: "freebie" },]}
-      - {label: "Soundcloud url (for site player)", name: "soundCloudUrl", widget: string, required: false }
+      - {label: "Soundcloud url (for site player)", name: "soundcloudUrl", widget: string, required: false }
       - label: "Links"
         name: "links"
         widget: "list"
