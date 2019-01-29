@@ -5,14 +5,16 @@ import showdown from 'showdown'
 const converter = new showdown.Converter()
 
 export const MarkdownContent = ({ content, className }) => (
-  <div className={className} dangerouslySetInnerHTML={{ __html: converter.makeHtml(content) }} />
+  <div
+    className={className}
+    dangerouslySetInnerHTML={{ __html: converter.makeHtml(content) }}
+  />
 )
 
 MarkdownContent.propTypes = {
   content: PropTypes.string,
   className: PropTypes.string,
 }
-
 
 export const HTMLContent = ({ content, className }) => (
   <div className={className} dangerouslySetInnerHTML={{ __html: content }} />

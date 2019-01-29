@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
-import { Trail, Spring,  animated } from 'react-spring'
+import { Trail, Spring, animated } from 'react-spring'
 import '../../styles/common/player.scss'
-import {TrackItem, ControlButton, PlayerToggle, Waveform, Controls } from './components'
+import {
+  TrackItem,
+  ControlButton,
+  PlayerToggle,
+  Waveform,
+  Controls,
+} from './components'
 import { appendQueryParam, fetchUrl, parseURL } from './utils'
 
 const SOUNDCLOUD_API_URL = 'https://api.soundcloud.com'
@@ -81,7 +87,7 @@ export default class SoundcloudPlayerProvider extends Component {
   }
   handleEnd = () => {
     this.stop()
-    this.playlist && this.next();
+    this.playlist && this.next()
   }
   start = url => {
     if (url) {
@@ -131,14 +137,14 @@ export default class SoundcloudPlayerProvider extends Component {
         this.setState({
           error: 'Soundcloud Server errror, probably.',
         })
-        return;
+        return
       }
     }
     if (res.errors) {
       this.setState({
         error: res.errors[0].error_message,
       })
-      return;
+      return
     }
     this.resetData()
 
@@ -161,7 +167,6 @@ export default class SoundcloudPlayerProvider extends Component {
         ? res.duration / 1000 // convert to seconds
         : 0 // no duration is zero
     callback(res)
-    
   }
 
   updateTrack = url => {
@@ -199,7 +204,7 @@ export default class SoundcloudPlayerProvider extends Component {
         options &&
           options.playlistIndex &&
           this.setState({
-          currentTrack: this.playlist.tracks[options.playlistIndex],
+            currentTrack: this.playlist.tracks[options.playlistIndex],
           })
       })
       .catch(err => {
@@ -207,7 +212,6 @@ export default class SoundcloudPlayerProvider extends Component {
         console.log('play errorerd')
         // silent fail - most likely my fault
         this.playStarted = false
-
       })
   }
 
@@ -243,7 +247,7 @@ export default class SoundcloudPlayerProvider extends Component {
 
     if (!src) {
       this.setState({
-        error: 'no track source supplied'
+        error: 'no track source supplied',
       })
       console.error('No track source.')
       return
@@ -340,11 +344,11 @@ export default class SoundcloudPlayerProvider extends Component {
       //   })
       //   this.skipping = true;
       // } else {
-        return
+      return
     }
 
     if (this.playlist && tracksLength) {
-      this.skipping = true;
+      this.skipping = true
 
       this.setState(
         state => ({
@@ -354,19 +358,18 @@ export default class SoundcloudPlayerProvider extends Component {
           console.log('playing next', this.state.playlistIndex)
 
           this.playTrack({ playlistIndex: this.state.playlistIndex })
-          .then(() => {
-            this.skipping = false;
-          })
-          .catch(() => {
-            this.skipping = false;
-          })
+            .then(() => {
+              this.skipping = false
+            })
+            .catch(() => {
+              this.skipping = false
+            })
         }
       )
     }
   }
 
   previous = () => {
-
     const { playlistIndex } = this.state
     if (playlistIndex <= 0) {
       return
@@ -376,21 +379,21 @@ export default class SoundcloudPlayerProvider extends Component {
       return
     }
     if (this.playlist && this.playlist.tracks.length) {
-      this.skipping = true;
+      this.skipping = true
       this.setState(
         state => ({
           playlistIndex: state.playlistIndex - 1,
         }),
         () => {
           console.log('playing prev', this.state.playlistIndex)
-          
+
           this.playTrack({ playlistIndex: this.state.playlistIndex })
-          .then(() => {
-            this.skipping = false;
-          })
-          .catch(() => {
-            this.skipping = false;
-          })
+            .then(() => {
+              this.skipping = false
+            })
+            .catch(() => {
+              this.skipping = false
+            })
         }
       )
     }
@@ -446,12 +449,10 @@ export default class SoundcloudPlayerProvider extends Component {
 
   render() {
     const { children } = this.props
- 
+
     return <SC.Provider value={this.state}>{children}</SC.Provider>
   }
 }
-
-
 
 export const SoundcloudPlayerLite = ({ soundcloudUrl, className }) => {
   return (
@@ -471,51 +472,48 @@ export const SoundcloudPlayerLite = ({ soundcloudUrl, className }) => {
         prospectiveSeek,
         events,
       }) => {
-        console.log('pliayin', currentPlaylistUrl);
-        return (
-          (soundcloudUrl === currentTrack.permalink_url && playing
-            || currentPlaylistUrl && currentPlaylistUrl.split('://')[1] === soundcloudUrl.split('://')[1] && playing ) ? (
-            <Spring
-              native
-              from={{ opacity: 0 }}
-              to={{ opacity: 1 }}
-            >
-              {props => (
-                  <animated.div style={props} className={`sc-player__item lite ${className}`}>
-                    <div className="sc-player__item-content">
-                        <div className="sc-player__controls flex-container flex-center">
-                        <Controls
-                          controls={controls}
-                          playing={playing} 
-                          isPlaylist={Boolean(tracks && tracks.length)}
-                          showPlay={false}
-                        />
-                            {error && (
-                              <span className="error notice">
-                                {error.toString()}
-                              </span>
-                            )}
-                        </div>
-                    <Waveform
-                      events={events}
-                      seek={controls.seek}
-                      prospectiveSeek={prospectiveSeek}
-                      currentTime={currentTime}
-                      currentTrack={currentTrack}
+        console.log('pliayin', currentPlaylistUrl)
+        return (soundcloudUrl === currentTrack.permalink_url && playing) ||
+          (currentPlaylistUrl &&
+            currentPlaylistUrl.split('://')[1] ===
+              soundcloudUrl.split('://')[1] &&
+            playing) ? (
+          <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
+            {props => (
+              <animated.div
+                style={props}
+                className={`sc-player__item lite ${className}`}
+              >
+                <div className="sc-player__item-content">
+                  <div className="sc-player__controls flex-container flex-center">
+                    <Controls
+                      controls={controls}
+                      playing={playing}
+                      isPlaylist={Boolean(tracks && tracks.length)}
+                      showPlay={false}
                     />
+                    {error && (
+                      <span className="error notice">{error.toString()}</span>
+                    )}
                   </div>
-                 
-                </animated.div>
-              )}
-            </Spring>
-          ) : null
-        )}
-      }
+                  <Waveform
+                    events={events}
+                    seek={controls.seek}
+                    prospectiveSeek={prospectiveSeek}
+                    currentTime={currentTime}
+                    currentTrack={currentTrack}
+                  />
+                </div>
+              </animated.div>
+            )}
+          </Spring>
+        ) : null
+      }}
     </SC.Consumer>
-    )
-  }
+  )
+}
 
-export const SoundcloudPlayerUI = ({soundcloudUrl, lite}) => {
+export const SoundcloudPlayerUI = ({ soundcloudUrl, lite }) => {
   return (
     <SC.Consumer>
       {({
@@ -533,15 +531,10 @@ export const SoundcloudPlayerUI = ({soundcloudUrl, lite}) => {
         reallyPlaying,
         events,
       }) => {
-        const loading = show && !reallyPlaying;
+        const loading = show && !reallyPlaying
 
-       return (
-        soundcloudUrl === currentTrack.permalink_url && lite ? (
-          <Spring
-            native
-            from={{ opacity: 0 }}
-            to={{ opacity: 1 }}
-          >
+        return soundcloudUrl === currentTrack.permalink_url && lite ? (
+          <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
             {props => (
               <animated.div style={props}>
                 <TrackItem
@@ -563,13 +556,15 @@ export const SoundcloudPlayerUI = ({soundcloudUrl, lite}) => {
               </animated.div>
             )}
           </Spring>
-        ) :
-        !lite && url ? (
+        ) : !lite && url ? (
           <div>
             <Spring
               native
               from={{ transform: show ? 'translateY(100%)' : 'translateY(0)' }}
-              to={{ transform: show && reallyPlaying ? 'translateY(0)' : 'translateY(100%)' }}
+              to={{
+                transform:
+                  show && reallyPlaying ? 'translateY(0)' : 'translateY(100%)',
+              }}
               config={{ tension: 105, friction: 12 }}
             >
               {props => (
@@ -610,11 +605,7 @@ export const SoundcloudPlayerUI = ({soundcloudUrl, lite}) => {
                           </div>
                         )}
                       </div>
-                      <Spring
-                        native
-                        from={{ opacity: 0 }}
-                        to={{ opacity: 1 }}
-                      >
+                      <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
                         {props => (
                           <animated.div style={props}>
                             <TrackItem
@@ -636,17 +627,14 @@ export const SoundcloudPlayerUI = ({soundcloudUrl, lite}) => {
                           </animated.div>
                         )}
                       </Spring>
-
                     </div>
-
                   </div>
                 </animated.div>
               )}
             </Spring>
           </div>
         ) : null
-      )}
-      }
+      }}
     </SC.Consumer>
   )
 }

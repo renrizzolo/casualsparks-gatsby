@@ -26,7 +26,7 @@ const PlayerToggle = ({ togglePlayer, playing, show, loading }) => (
               size={30}
               disabled={loading}
               className={`toggle open ${loading ? 'loading' : ''}`}
-              icon={loading ? "album" : "close"}
+              icon={loading ? 'album' : 'close'}
               fn={togglePlayer}
             />
           </animated.div>
@@ -57,7 +57,7 @@ const PlayerToggle = ({ togglePlayer, playing, show, loading }) => (
               <ControlButton
                 size={30}
                 className={`toggle closed ${loading ? 'loading' : ''}`}
-                icon={loading ? "album" : "music"}
+                icon={loading ? 'album' : 'music'}
                 fn={togglePlayer}
               />
             </div>

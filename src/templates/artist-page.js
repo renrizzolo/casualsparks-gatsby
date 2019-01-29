@@ -21,8 +21,8 @@ export const ArtistPageTemplate = ({
   profileImage,
 }) => {
   const PostContent = contentComponent || Content
-  console.log(about);
-  
+  console.log(about)
+
   return (
     <PageLayout
       header={
@@ -39,13 +39,12 @@ export const ArtistPageTemplate = ({
     >
       {helmet || ''}
       <section className="flog  lex-container__column">
-      {
-        links && links.map((link, i) => (
+        {links &&
+          links.map((link, i) => (
             <SocialLink title={link.label} url={link.url} icon={link.icon} />
-        ))
-      }
+          ))}
         <div className="single-artist">
-        <PostContent content={about} />
+          <PostContent content={about} />
           {content && (
             <div>
               <h2 className="heading heading-dark">About</h2>

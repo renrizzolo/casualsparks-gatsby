@@ -8,7 +8,7 @@ const PreviewCompatibleImage = ({ imageInfo }) => {
     height: 'auto',
     // maxWidth: 500,
   }
-  
+
   const { alt = '', childImageSharp, image } = imageInfo
 
   if (!!image && !!image.childImageSharp) {
