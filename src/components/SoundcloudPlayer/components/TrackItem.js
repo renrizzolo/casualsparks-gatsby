@@ -38,49 +38,46 @@ const TrackItem = ({
         {hero && (
           <div className="sc-player__controls flex-container flex-center">
             <React.Fragment>
-              {isPlaylist &&
-                <ControlButton
-                  className="previous"
-                  icon="prev"
-                  fn={previous}
-                />
-              }
+              {isPlaylist && (
+                <ControlButton className="previous" icon="prev" fn={previous} />
+              )}
               <ControlButton
                 className="stop"
                 icon={playing ? 'stop' : 'play'}
                 fn={playing ? stop : play}
               />
-              {isPlaylist &&
-                <ControlButton
-                  className="next"
-                  icon="next"
-                  fn={next}
-                />
-              }
+              {isPlaylist && (
+                <ControlButton className="next" icon="next" fn={next} />
+              )}
               {error && (
-                <span className="error notice">
-                  {error.toString()}
-                </span>
+                <span className="error notice">{error.toString()}</span>
               )}
             </React.Fragment>
           </div>
         )}
-       { !lite && <div className="sc-player__text">
-          {hero && track && <img className="sc-player__thumb" src={track.artwork_url} />}
-          {hero && track && track.user ?
-            <a href={track.permalink_url} target="_blank" rel="noopener">
-              {track.user.username} - {track.title}
-            </a>
-            :
-            <span>{track && track.user && track.user.username} - {track && track.title}</span>
-          }
-        </div>}
+        {!lite && (
+          <div className="sc-player__text">
+            {hero && track && (
+              <img className="sc-player__thumb" src={track.artwork_url} />
+            )}
+            {hero && track && track.user ? (
+              <a href={track.permalink_url} target="_blank" rel="noopener">
+                {track.user.username} - {track.title}
+              </a>
+            ) : (
+              <span>
+                {track && track.user && track.user.username} -{' '}
+                {track && track.title}
+              </span>
+            )}
+          </div>
+        )}
         {hero && currentTrack.waveform_url && (
-          <Waveform 
-            events={events} 
-            seek={seek} 
-            prospectiveSeek={prospectiveSeek} 
-            currentTime={currentTime} 
+          <Waveform
+            events={events}
+            seek={seek}
+            prospectiveSeek={prospectiveSeek}
+            currentTime={currentTime}
             currentTrack={currentTrack}
           />
         )}
@@ -93,8 +90,8 @@ const TrackItem = ({
             {isPlaying ? (
               <Icon name="pause" className="sc-player__icon play" size={28} />
             ) : (
-                <Icon name="play" className="sc-player__icon pause" size={28} />
-              )}
+              <Icon name="play" className="sc-player__icon pause" size={28} />
+            )}
           </a>
         )}
       </div>

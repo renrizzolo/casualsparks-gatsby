@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon } from '../../img/icons'
 
-const SocialLink = ({url, title, icon}) => {
+const SocialLink = ({ url, title, icon }) => {
   return url ? (
     <a className="social-link" href={url} title={title}>
-      {icon && <Icon name={icon}/>}
+      {icon && <Icon name={icon} />}
       {title}
     </a>
   ) : (

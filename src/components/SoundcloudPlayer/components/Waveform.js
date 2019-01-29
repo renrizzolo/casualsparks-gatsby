@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 
 class Waveform extends PureComponent {
   state = {
-    prospectiveSeek: 0
+    prospectiveSeek: 0,
   }
 
   waveFormHover = (e, duration) => {
@@ -10,8 +10,7 @@ class Waveform extends PureComponent {
     this.setState({
       prospectiveSeek: percent * duration,
     })
-    console.log(percent, duration,  this.state.prospectiveSeek);
-    
+    console.log(percent, duration, this.state.prospectiveSeek)
   }
   resetProspectiveSeek = () => {
     this.setState({
@@ -19,38 +18,32 @@ class Waveform extends PureComponent {
     })
   }
 
-  render () {
-  const {
-      seek,
-      currentTrack,
-      currentTime
-  } = this.props;
-  const { prospectiveSeek } =  this.state;
-    const duration = currentTrack.duration / 1000;
+  render() {
+    const { seek, currentTrack, currentTime } = this.props
+    const { prospectiveSeek } = this.state
+    const duration = currentTrack.duration / 1000
     return (
-      <div 
-        className="sc-player__waveform" 
-        onClick={seek} 
+      <div
+        className="sc-player__waveform"
+        onClick={seek}
         onMouseOut={this.resetProspectiveSeek}
-        onMouseMove={(e) => this.waveFormHover(e, duration)}
+        onMouseMove={e => this.waveFormHover(e, duration)}
       >
-
         <span
           className="sc-player__seek sc-player__prospective-seek"
           style={{
             width: `${
               prospectiveSeek > 0
-                ? (prospectiveSeek / (duration)) * 100
-                : (currentTime / (duration)) * 100
-              }%`,
+                ? (prospectiveSeek / duration) * 100
+                : (currentTime / duration) * 100
+            }%`,
           }}
         />
 
         <span
           className="sc-player__seek"
           style={{
-            width: `${(currentTime / (duration)) *
-              100}%`,
+            width: `${(currentTime / duration) * 100}%`,
           }}
         />
         <img src={currentTrack.waveform_url} />

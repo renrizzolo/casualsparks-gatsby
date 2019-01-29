@@ -16,7 +16,6 @@ import { default as Apple } from './apple.svg'
 import { default as Spotify } from './spotify.svg'
 import { default as Beatport } from './beatport.svg'
 
-
 const components = {
   play: Play,
   play_arrow: PlayArrow,
@@ -34,17 +33,20 @@ const components = {
   itunes: Apple,
   spotify: Spotify,
   beatport: Beatport,
+}
 
-};
-
-export const Icon = ({ name, style, className, size, children }) => {  
+export const Icon = ({ name, style, className, size, children }) => {
   const IconComponent = components[name]
   return IconComponent ? (
-    <IconComponent width={size} height={size} style={style} className={className}>
+    <IconComponent
+      width={size}
+      height={size}
+      style={style}
+      className={className}
+    >
       {children}
     </IconComponent>
-  )
-  : null
+  ) : null
 }
 
 Icon.defaultProps = {

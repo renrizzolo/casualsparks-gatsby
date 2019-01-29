@@ -7,9 +7,7 @@ import ReleaseItem from '../../components/ReleaseItem'
 const ReleasePageTemplate = ({ title, sections, children }) => {
   return (
     <PageLayout title={'Latest Releases'} backgroundColor="pearl">
-    <div className="item-grid">
-      {children}
-      </div>
+      <div className="item-grid">{children}</div>
     </PageLayout>
   )
 }

@@ -90,10 +90,17 @@ class TemplateWrapper extends Component {
             </Helmet>
             <div className="scroll-width" id="scroll-width" />
             <Navbar />
-            <div className={`page ${pageContext && pageContext.title && pageContext.title.toLowerCase()}`}>
+            <div
+              className={`page ${pageContext &&
+                pageContext.title &&
+                pageContext.title.toLowerCase()}`}
+            >
               <SoundcloudPlayerProvider clientId="a7c99e975fa37c393cb1a6d89d5c1e0b">
                 {pageContext && pageContext.layout === 'circle' ? (
-                  <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
+                  <CircleLayout
+                    show={!this.state.mounted}
+                    zoom={this.state.zoom}
+                  >
                     {children}
                   </CircleLayout>
                 ) : (
