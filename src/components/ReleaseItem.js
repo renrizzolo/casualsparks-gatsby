@@ -3,6 +3,7 @@ import ToggleClass from '../components/ToggleClass'
 import WatchConnection from '../components/WatchConnection'
 import OfflineError from '../components/OfflineError'
 import { InFromBottom } from '../animations'
+import { animated } from 'react-spring'
 import { Link } from 'gatsby'
 import { kebabCase } from 'lodash'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
@@ -21,7 +22,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
         {forthcoming && <span className="item-forthcoming">forthcoming </span>}
         {data.date && <div className="item-date">{data.date}</div>}
       </div>
-      <div style={style} className={`item background-${backgroundColor}`}>
+      <animated.div style={style} className={`item background-${backgroundColor}`}>
         {/* <SoundcloudPlayerLite 
         className="item-grid__player" 
         soundcloudUrl={data.soundcloudUrl}
@@ -63,6 +64,21 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
                     {link.label}
                   </a>
                 ))}
+                {data.soundcloudUrl && 
+                <a
+                  target="_blank"
+                  rel="noopener"
+                  className="item-button item-button__small light-blue shop-link"
+                  href={data.soundcloudUrl}
+                >
+                  <Icon
+                    style={{ fill: '#f50', marginRight: 6}}
+                    size={16}
+                    name="soundcloud"
+                  />
+                  SoundCloud
+                </a>
+                }
             </div>
           </div>
         </header>
@@ -77,8 +93,10 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
       )}
       /> */}
         <div className="item-image flex-1">
-          <PreviewCompatibleImage imageInfo={data.image} />
+          <Link to={slug}>
 
+          <PreviewCompatibleImage imageInfo={data.image} />
+          </Link>
           {/*       {data.trackList &&
         <aside>
           <ToggleClass className="track-list" toggleClass="expanded">
@@ -100,7 +118,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
         View →
       </Link> */}
         </div>
-      </div>
+      </animated.div>
     </div>
   )
 }
