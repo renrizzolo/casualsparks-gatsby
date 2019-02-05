@@ -4,12 +4,14 @@ import { kebabCase } from 'lodash'
 import Helmet from 'react-helmet'
 import { graphql, Link } from 'gatsby'
 import Content, { HTMLContent } from '../components/Content'
+import {Icon} from '../img/icons'
 import PageLayout from '../components/PageLayout'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 import WatchConnection from '../components/WatchConnection'
 import OfflineError from '../components/OfflineError'
 import ToggleClass from '../components/ToggleClass'
 import PlayButton from '../components/PlayButton'
+import ItemButton from "../components/ItemButton";
 
 export const ReleasePostTemplate = ({
   contentComponent,
@@ -27,13 +29,13 @@ export const ReleasePostTemplate = ({
   return (
     <PageLayout
       header={
-        <div className="page-header page-header__release flex-container">
+        <div className="page-header page-header__page flex-container">
           <div className="flex-1 flex-container__column justify-end align-start">
             <PlayButton soundcloudUrl={soundcloudUrl} />
             <h2>{artist}</h2>
             <h1>{title}</h1>
           </div>
-          <div className="flex-1 release-cover__container">
+          <div className="flex-1 page-cover__container">
             {image && <PreviewCompatibleImage imageInfo={image} />}
           </div>
         </div>
@@ -42,7 +44,7 @@ export const ReleasePostTemplate = ({
     >
       {helmet || ''}
       <section className="flex-container__column">
-        <div className="single-release">
+        <div className="single-page">
           <ReleaseItem
             contentComponent={contentComponent}
             content={content}
@@ -74,16 +76,24 @@ const ReleaseItem = ({
           <div className="link-container">
             {links &&
               links.map(link => (
-                <a
+                <ItemButton
+                  small
                   key={link.label}
-                  target="_blank"
-                  rel="noopener"
-                  className="button light-blue shop-link"
+                  label={link.label}
                   href={link.url}
-                >
-                  {link.label}
-                </a>
+                  iconName={link.label.toLowerCase()}
+                />
+
               ))}
+            {soundcloudUrl && (
+              <ItemButton
+                small
+                label="SoundCloud"
+                href={soundcloudUrl}
+                iconName="soundcloud"
+                iconStyle={{ fill: "#f50", marginRight: 6 }}
+              />
+            )}
           </div>
         </div>
       </header>
@@ -93,7 +103,7 @@ const ReleaseItem = ({
           <PostContent content={content} />
         </div>
       )}
-      {trackList && (
+      {/* trackList && (
         <aside>
           <ToggleClass className="track-list" toggleClass="expanded">
             {toggle => (
@@ -110,7 +120,7 @@ const ReleaseItem = ({
             )}
           </ToggleClass>
         </aside>
-      )}
+      ) */}
     </div>
   )
 }
