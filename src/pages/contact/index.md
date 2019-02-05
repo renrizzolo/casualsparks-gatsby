@@ -13,4 +13,4 @@ links:
     icon: soundcloud
     url: https://soundcloud.com/casualsparks
 ---
-Website designed & developed by [Ren Rizzolo](https://github.com/renrizzolo)
+<sub>Website designed & developed by [Ren Rizzolo](https://github.com/renrizzolo) ([Source](https://github.com/renrizzolo/casualsparks-gatsby))</sub>
