@@ -38,7 +38,7 @@ export const ArtistPageTemplate = ({
       backgroundColor="pearl"
     >
       {helmet || ''}
-      <section className="flog  lex-container__column">
+      <section className="flex-container__column">
         {links &&
           links.map((link, i) => (
             <SocialLink title={link.label} url={link.url} icon={link.icon} />
