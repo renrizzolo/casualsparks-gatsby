@@ -32,13 +32,14 @@ const Releases = ({ section }) => {
       {data =>
         data && data.allMarkdownRemark && data.allMarkdownRemark.edges ? (
           <Trail
+          native
             items={data.allMarkdownRemark.edges.filter(
               ({ node: post }) => post.frontmatter.releaseType === section.type
             )}
             keys={({ node: post }) => post.id}
-            from={{ transform: 'translate3d(0,-20px,0)' }}
-            to={{ transform: 'translate3d(0,0px,0)' }}
-            config={config.slow}
+            from={{ opacity: 0 }}
+            to={{ opacity: 1 }}
+            config={config.gentle}
           >
             {({ node: post }) => props => (
               <ReleaseItem
