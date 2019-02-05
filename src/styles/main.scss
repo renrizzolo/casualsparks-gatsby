@@ -52,9 +52,9 @@ img{
   height: auto;
 }
 p{
-	font-size: 1.15em;
+	font-size: 1.05em;
 	font-weight: 400;
-	letter-spacing: 0.2px;
+	letter-spacing: 0.1px;
 	line-height: 1.46em;
 	font-family: $font-sans;
 	-webkit-font-smoothing: antialiased;
@@ -114,7 +114,14 @@ h2{
   		@include maxwidth(xs){
   			background-color: $cs-darkblue;
   		}
-  	}
+		}
+		a {
+			color: $dark-pearl;
+	
+		}
+		sub a {
+					text-decoration: underline;
+		}
 }
 .full-page-container{
 
@@ -483,10 +490,10 @@ $colors_light: (
 
 
 /*------------------------------------*\
-	#SINGLE-RELEASE 
+	#SINGLE-PAGE (release/artist) 
 \*------------------------------------*/
 
-.single-release{
+.single-page{
 	max-width: 750px;
 }
 
@@ -495,7 +502,7 @@ $colors_light: (
   font-size: 1.12rem;
   line-height: 1.475;
 }
-.page-header.page-header__release {
+.page-header.page-header__page {
 	h1 {
 		font-size: 2em;
 		font-weight: 300;
@@ -504,7 +511,29 @@ $colors_light: (
 		margin: 0;
 	}
 }
-.release-cover__container{
+.social-links__page {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1em;
+	margin-top: 1rem;
+	> .social-link {
+		font-size: 0.9rem;
+		color: lighten($dark-blue, 15%);
+		margin-bottom: 0.5rem;
+		transition: all 250ms ease;
+		> svg {
+			fill: $dark-blue;
+			padding-right: 0.5rem;
+		}
+		&:hover {
+			color: $cs-darkblue;
+			> svg {
+				fill: $cs-darkblue;
+			}
+		}
+	}
+}
+.page-cover__container{
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -637,6 +666,7 @@ $button-horizontal-padding: 0.75em;
 	@include minwidth(s) {
   	margin-right: calc(var(--menu-offset) * 1px);
 	}
+	flex: 1;
   margin-top: 0;
   padding-left: $padding-default;
   padding-top: 7.5rem;
