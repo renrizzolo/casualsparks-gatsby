@@ -88,6 +88,7 @@ const ReleaseItem = ({
             {soundcloudUrl && (
               <ItemButton
                 small
+                className="button-soundcloud"
                 label="SoundCloud"
                 href={soundcloudUrl}
                 iconName="soundcloud"
