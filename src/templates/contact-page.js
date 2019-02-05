@@ -5,11 +5,12 @@ import Layout from '../components/Layout'
 import SocialLink from '../components/SocialLink'
 import CircleLayout from '../components/CircleLayout'
 import { Fade } from '../animations/'
+import { HTMLContent } from '../components/Content'
 import ContactForm from '../components/ContactForm'
 import ToggleClass from '../components/ToggleClass'
 import PageLayout from '../components/PageLayout'
 
-export const ContactPageTemplate = ({ title, links }) => {
+export const ContactPageTemplate = ({ title, links, html }) => {
   return (
     <Fade>
       {style => (
@@ -37,6 +38,9 @@ export const ContactPageTemplate = ({ title, links }) => {
                 <button class="button dark-blue" onClick={toggle}>
                   {!toggled ? 'email →' : '←'}
                 </button>
+                <footer>
+                  <HTMLContent content={html} />
+                </footer>
               </div>
             )}
           </ToggleClass>
@@ -47,6 +51,7 @@ export const ContactPageTemplate = ({ title, links }) => {
 }
 
 ContactPageTemplate.propTypes = {
+  html: PropTypes.object,
   title: PropTypes.string.isRequired,
   links: PropTypes.shape({
     label: PropTypes.string,
@@ -60,6 +65,7 @@ const ContactPage = ({ data }) => {
 
   return (
     <ContactPageTemplate
+      html={post.html}
       title={post.frontmatter.title}
       links={post.frontmatter.links}
     />
