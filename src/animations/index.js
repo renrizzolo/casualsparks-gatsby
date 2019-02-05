@@ -94,14 +94,12 @@ export const MenuTranslate = ({ children, show, ...rest }) => {
       from={{
         opacity: show ? 1 : 0,
         transform: show
-          ? 'perspective(0) translate3d(0, 0, 0)'
-          : 'perspective(200px) translate3d(- 50px, 10px, 20px)',
+          ? 'translate3d(0px, 0px, 0px)' : 'translate3d(-10px, 10px, 20px)',
       }}
       to={{
         opacity: !show ? 1 : 0,
         transform: !show
-          ? 'perspective(0) translate3d(0, 0, 0)'
-          : 'perspective(200px) translate3d(- 50px, 10px, 20px)',
+          ? 'translate3d(0px, 0px, 0px)' : 'translate3d(-10px, 10px, 20px)',
       }}
       config={config.gentle}
       {...rest}
