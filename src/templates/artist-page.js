@@ -26,11 +26,11 @@ export const ArtistPageTemplate = ({
   return (
     <PageLayout
       header={
-        <div className="page-header flex-container">
+        <div className="page-header page-header__page flex-container">
           <div className="flex-1">
             <h2>{name}</h2>
           </div>
-          <div className="flex-1 release-cover__container">
+          <div className="flex-1 page-cover__container">
             <PreviewCompatibleImage imageInfo={profileImage} />
           </div>
         </div>
@@ -39,11 +39,13 @@ export const ArtistPageTemplate = ({
     >
       {helmet || ''}
       <section className="flex-container__column">
+      <div className="social-links__page">
         {links &&
           links.map((link, i) => (
             <SocialLink title={link.label} url={link.url} icon={link.icon} />
           ))}
-        <div className="single-artist">
+        </div>
+        <div className="single-page">
           <PostContent content={about} />
           {content && (
             <div>
