@@ -1,20 +1,21 @@
-import React from 'react'
-import ToggleClass from '../components/ToggleClass'
-import WatchConnection from '../components/WatchConnection'
-import OfflineError from '../components/OfflineError'
-import { InFromBottom } from '../animations'
-import { animated } from 'react-spring'
-import { Link } from 'gatsby'
-import { kebabCase } from 'lodash'
-import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
-import PlayButton from './PlayButton'
-import { Icon } from '../img/icons'
-import { SoundcloudPlayerLite } from '../components/SoundcloudPlayer'
+import React from "react";
+import ToggleClass from "../components/ToggleClass";
+import WatchConnection from "../components/WatchConnection";
+import OfflineError from "../components/OfflineError";
+import { InFromBottom } from "../animations";
+import { animated } from "react-spring";
+import { Link } from "gatsby";
+import { kebabCase } from "lodash";
+import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
+import PlayButton from "./PlayButton";
+import { Icon } from "../img/icons";
+import ItemButton from "../components/ItemButton";
+import { SoundcloudPlayerLite } from "../components/SoundcloudPlayer";
 
 const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
-  const now = new Date()
-  const releaseDate = new Date(data.datenum)
-  const forthcoming = releaseDate > now
+  const now = new Date();
+  const releaseDate = new Date(data.datenum);
+  const forthcoming = releaseDate > now;
 
   return (
     <div className="item-outer flex-container flex-container__column">
@@ -22,7 +23,10 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
         {forthcoming && <span className="item-forthcoming">forthcoming </span>}
         {data.date && <div className="item-date">{data.date}</div>}
       </div>
-      <animated.div style={style} className={`item background-${backgroundColor}`}>
+      <animated.div
+        style={style}
+        className={`item background-${backgroundColor}`}
+      >
         {/* <SoundcloudPlayerLite 
         className="item-grid__player" 
         soundcloudUrl={data.soundcloudUrl}
@@ -49,36 +53,24 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
             <div className="link-container">
               {data.links &&
                 data.links.map(link => (
-                  <a
-                    key={link.label}
-                    target="_blank"
-                    rel="noopener"
-                    className="item-button item-button__small light-blue shop-link"
-                    href={link.url}
-                  >
-                    <Icon
-                      style={{ marginRight: 6 }}
-                      size={16}
-                      name={link.label.toLowerCase()}
-                    />
-                    {link.label}
-                  </a>
+                <ItemButton
+                  small
+                  key={link.label}
+                  label={link.label}
+                  href={link.url}
+                  iconName={link.label.toLowerCase()}
+                />
+       
                 ))}
-                {data.soundcloudUrl && 
-                <a
-                  target="_blank"
-                  rel="noopener"
-                  className="item-button item-button__small light-blue shop-link"
+              {data.soundcloudUrl && (
+                <ItemButton
+                  small
+                  label="SoundCloud"
                   href={data.soundcloudUrl}
-                >
-                  <Icon
-                    style={{ fill: '#f50', marginRight: 6}}
-                    size={16}
-                    name="soundcloud"
-                  />
-                  SoundCloud
-                </a>
-                }
+                  iconName="soundcloud"
+                  iconStyle={{ fill: "#f50", marginRight: 6 }}
+                />
+              )}
             </div>
           </div>
         </header>
@@ -94,8 +86,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
       /> */}
         <div className="item-image flex-1">
           <Link to={slug}>
-
-          <PreviewCompatibleImage imageInfo={data.image} />
+            <PreviewCompatibleImage imageInfo={data.image} />
           </Link>
           {/*       {data.trackList &&
         <aside>
@@ -120,12 +111,12 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
         </div>
       </animated.div>
     </div>
-  )
-}
+  );
+};
 
 ReleaseItem.defaultProps = {
-  backgroundColor: 'pearl',
-  description: false,
-}
+  backgroundColor: "pearl",
+  description: false
+};
 
-export default ReleaseItem
+export default ReleaseItem;
