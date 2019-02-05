@@ -209,7 +209,7 @@ $column-count-small: 1;
 		.item-button {
 			display: flex;
 			align-items: center;
-			color: $cs-darkblue;
+ 			color: $cs-darkblue;
 			background-color: $dark-pearl;
 			margin-right: 0.25rem;
 			margin-bottom: 0.25rem;
@@ -236,8 +236,8 @@ $column-count-small: 1;
 			&.item-button__small {
 				margin-right: 0.25rem;
 				margin-bottom: 0.25rem;
-				padding: 0.05rem 0.5rem;
-				font-size: 0.75em;
+				padding: 0.05rem 0.4rem;
+				font-size: 0.65em;
 			}
 		}
 		.item-grid__header {
