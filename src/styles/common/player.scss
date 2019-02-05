@@ -9,7 +9,7 @@ $item-text: $dark-blue;
 
 .sc-player { 
   z-index: 2;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   @include minwidth(s) {

@@ -16,14 +16,11 @@ class TemplateWrapper extends Component {
   }
 
   componentDidMount = () => {
-    const scrollEl = document.getElementById('scroll-width')
-    const scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth
-    const root = document.documentElement
-    const originalOffset = getComputedStyle(root).getPropertyValue(
-      '--menu-offset'
-    )
 
-    root.style.setProperty('--menu-offset', originalOffset - scrollbarWidth)
+    // don't need to do this anymore
+    // because I fixed the css
+    // that caused the problem :)
+     // this.setScrollBarWidth();
 
     setTimeout(() => {
       this.setState({
@@ -31,7 +28,15 @@ class TemplateWrapper extends Component {
       })
     }, 1000)
   }
-
+  setScrollBarWidth = () => {
+    const scrollEl = document.getElementById('scroll-width')
+    const scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth
+    const root = document.documentElement
+    const originalOffset = getComputedStyle(root).getPropertyValue(
+      '--menu-offset'
+    )
+    root.style.setProperty('--menu-offset', originalOffset - scrollbarWidth)
+  }
   // componentWillReceiveProps(nextProps) {
   //   if (nextProps.pageContext.layout === 'circle' && this.props.pageContext.layout === 'square') {
   //     console.log('didupdate', this.props.pageContext);
