@@ -509,7 +509,7 @@ $colors_light: (
   align-items: flex-end;
   justify-content: flex-end;
 	margin-right: 12rem;
-	max-width: 300px;
+	max-width: 500px;
   @include maxwidth(s) {
   	margin-right: 0rem;
   }
