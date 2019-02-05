@@ -4,6 +4,7 @@ templateKey: release-post
 title: Casual Sparks vinyl mix vol. I
 date: 2014-03-02T04:07:00.000Z
 image: /img/Casual-Sparks-light-blue-600.png
+soundcloudUrl: https://soundcloud.com/casualsparks/ren-riz-x-casual-sparks-vinyl
 trackList:
   - ''
 previewHTML: >-
@@ -13,4 +14,3 @@ description: The first edition in the Casual Sparks vinyl mix series.
 releaseType: mix
 links: []
 ---
-

@@ -4,6 +4,7 @@ templateKey: release-post
 title: Casual Sparks vinyl mix vol. II
 date: 2014-07-14T06:11:00.000Z
 image: /img/artworks-000085115977-6q8y4y-t500x500.jpg
+soundcloudUrl: https://soundcloud.com/renriz/casual-sparks-vinyl-mix-vol-ii
 trackList:
   - 'Leon Vynehall - Inside The Deku Tree [3024]'
   - 'Creative Swing Alliance - In My Arms [Wolf Music]'
