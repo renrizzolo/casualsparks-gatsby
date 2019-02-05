@@ -23,39 +23,34 @@ export const ArtistPageTemplate = ({
   const PostContent = contentComponent || Content
   console.log(about)
 
-  return (
-    <PageLayout
-      header={
-        <div className="page-header page-header__page flex-container">
-          <div className="flex-1">
+  return <PageLayout header={<div className="page-header page-header__page flex-container">
+          <div className="flex-container flex-container__column flex-1 flex-1 justify-end">
             <h2>{name}</h2>
+            <div className="social-links__page">
+              {links &&
+                links.map((link, i) => (
+                  <SocialLink
+                    title={link.label}
+                    url={link.url}
+                    icon={link.icon}
+                  />
+                ))}
+            </div>
           </div>
           <div className="flex-1 page-cover__container">
             <PreviewCompatibleImage imageInfo={profileImage} />
           </div>
-        </div>
-      }
-      backgroundColor="pearl"
-    >
-      {helmet || ''}
+        </div>} backgroundColor="pearl">
+      {helmet || ""}
       <section className="flex-container__column">
-      <div className="social-links__page">
-        {links &&
-          links.map((link, i) => (
-            <SocialLink title={link.label} url={link.url} icon={link.icon} />
-          ))}
-        </div>
         <div className="single-page">
           <PostContent content={about} />
-          {content && (
-            <div>
+          {content && <div>
               <h2 className="heading heading-dark">About</h2>
-            </div>
-          )}
+            </div>}
         </div>
       </section>
-    </PageLayout>
-  )
+    </PageLayout>;
 }
 
 ArtistPageTemplate.propTypes = {
