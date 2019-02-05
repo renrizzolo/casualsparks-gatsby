@@ -65,6 +65,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
               {data.soundcloudUrl && (
                 <ItemButton
                   small
+                  className="button-soundcloud"
                   label="SoundCloud"
                   href={data.soundcloudUrl}
                   iconName="soundcloud"
