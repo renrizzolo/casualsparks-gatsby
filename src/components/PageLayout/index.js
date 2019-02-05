@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const PageLayout = ({ title, header, backgroundColor, children }) => {
   return (
-    <div className={`flex-container flex-container__column background-cover background-${backgroundColor}`}>
+    <div className={`flex-container flex-container__column background-${backgroundColor}`}>
       {title && (
         <div className="page-header">
           <h1 className="jumbo-heading">{title}</h1>
