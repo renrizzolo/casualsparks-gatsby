@@ -14,7 +14,11 @@ const Navbar = class extends React.Component {
       showMenu: !state.showMenu,
     }))
   }
-
+  hideMenu = () => {
+    this.setState({
+      showMenu: false
+    })
+  }
   stripSlash = path => {
     return path.replace(/\//g, '')
   }
@@ -23,6 +27,8 @@ const Navbar = class extends React.Component {
     return (
       <Location>
         {({ navigate, location: { pathname } }) => (
+            <MenuTranslate key="nav" show={!this.state.showMenu}>
+            {style => (
           <React.Fragment>
             <span
               className={
@@ -35,19 +41,18 @@ const Navbar = class extends React.Component {
                 {this.state.showMenu ? 'close' : 'menu'}
               </a>
             </span>
-            <MenuTranslate key="nav" show={!this.state.showMenu}>
-              {style => (
                 <Menu
                   style={style}
+                  onClick={this.hideMenu}
                   className={`mobile ${
                     this.state.showMenu ? 'open' : 'closed'
                   } ${this.stripSlash(pathname)}`}
                 />
-              )}
-            </MenuTranslate>
 
             <Menu className={`desktop ${this.stripSlash(pathname)}`} />
           </React.Fragment>
+              )}
+            </MenuTranslate>
         )}
       </Location>
     )
@@ -55,36 +60,29 @@ const Navbar = class extends React.Component {
 }
 
 const Menu = props => {
-  return (
-    <ul
-      style={props.style}
-      role="navigation"
-      aria-label="Primary"
-      className={`nav ${props.className}`}
-    >
+  return <ul style={props.style} role="navigation" aria-label="Primary" className={`nav ${props.className}`}>
       <LogoSmall />
       <li>
-        <Link to="/" activeClassName="active">
+        <Link to="/" onClick={props.onClick} activeClassName="active">
           Home
         </Link>
       </li>
       <li>
-        <Link to="/music" activeClassName="active">
+        <Link to="/music" onClick={props.onClick} activeClassName="active">
           Music
         </Link>
       </li>
       <li>
-        <Link to="/about" activeClassName="active">
+        <Link to="/about" onClick={props.onClick} activeClassName="active">
           About
         </Link>
       </li>
       <li>
-        <Link to="/contact" activeClassName="active">
+        <Link to="/contact" onClick={props.onClick} activeClassName="active">
           Contact
         </Link>
       </li>
-    </ul>
-  )
+    </ul>;
 }
 
 export default Navbar
