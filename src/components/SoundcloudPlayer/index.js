@@ -60,7 +60,6 @@ export default class SoundcloudPlayerProvider extends Component {
   }
 
   handleKeys = e => {
-    console.log(e.code)
 
     const { playing, playlistIndex, url, show } = this.state
     if (url) {
