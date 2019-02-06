@@ -31,6 +31,9 @@ export const ContactPageTemplate = ({ title, links, html }) => {
                         />
                       ))}
                     </div>
+                    <footer>
+                      <HTMLContent content={html} />
+                    </footer>
                   </div>
                 ) : (
                   <ContactForm />
@@ -38,9 +41,7 @@ export const ContactPageTemplate = ({ title, links, html }) => {
                 <button class="button dark-blue" onClick={toggle}>
                   {!toggled ? 'email →' : '←'}
                 </button>
-                <footer>
-                  <HTMLContent content={html} />
-                </footer>
+               
               </div>
             )}
           </ToggleClass>
