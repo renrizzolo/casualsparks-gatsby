@@ -116,28 +116,30 @@ h2 {
 .circle-text {
   position: absolute;
   margin: 0;
-  @media screen and (max-height: 415px) {
-    // padding: 0 80px;
-		font-size: 0.75em;
-		h1 {
-			font-size: 1.5rem;
-			margin-bottom: 0;
-			border-bottom-width: 2px;
-		}
-		a {
-			margin-bottom: 0;
-			    line-height: 1;
-    font-size: 0.85em;
-		}
+  padding: 0 80px;
+  .heading {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    font-size: 3em;
   }
-  padding: 0 30px;
-  color: white;
-  z-index: 1;
-  &.circle-text__home {
-    @include maxwidth(xs) {
-      background-color: $cs-darkblue;
+  @media screen and (max-height: 415px) {
+    font-size: 0.75em;
+    padding: 0 30px;
+
+    .heading {
+      font-size: 1.5rem;
+      margin-bottom: 0;
+      border-bottom-width: 2px;
+    }
+    a {
+      margin-bottom: 0;
+      line-height: 1;
+      font-size: 0.85em;
     }
   }
+  color: white;
+  z-index: 1;
+
   a {
     color: $dark-pearl;
   }
@@ -333,9 +335,8 @@ h2 {
       display: none;
     }
     @media screen and (max-height: 415px) {
-			flex-direction: row;
-			display: flex;
-
+      flex-direction: row;
+      display: flex;
     }
   }
 
@@ -401,8 +402,8 @@ h2 {
       }
     }
   }
-	@media screen and (max-height: 415px) {
-		width: 100vw;
+  @media screen and (max-height: 415px) {
+    width: 100vw;
     height: 100vh;
     flex-direction: column;
     align-items: flex-end;
@@ -410,9 +411,9 @@ h2 {
     background-color: $cs-lightblue;
     li {
       a {
-				@media screen and (max-width: 700px) {
-					font-size: 1.25em;
-				}
+        @media screen and (max-width: 700px) {
+          font-size: 1.25em;
+        }
         color: $lightpearl;
         &.active {
           border-bottom-color: $lightpearl;
@@ -421,7 +422,7 @@ h2 {
         }
       }
     }
-	}
+  }
   @include maxwidth(s) {
     width: 100vw;
     height: 100vh;
@@ -999,9 +1000,9 @@ $button-horizontal-padding: 0.75em;
 
 .logo-small {
   fill: $cs-lightblue;
-	margin-top: 3rem;
-	margin-bottom: auto;
-	justify-self: flex-start;
+  margin-top: 3rem;
+  margin-bottom: auto;
+  justify-self: flex-start;
   z-index: 2;
   display: flex;
   align-self: center;
@@ -1010,11 +1011,10 @@ $button-horizontal-padding: 0.75em;
     width: 100px;
   }
   @include maxwidth(m) {
-		    width: 75px;
+    width: 75px;
 
     fill: $cs-darkblue;
-	}
-
+  }
 }
 .social {
   margin-bottom: 2rem;
@@ -1039,7 +1039,15 @@ $button-horizontal-padding: 0.75em;
     padding-right: 0.75em;
   }
 }
-
+@media screen and (max-width: 1400px) {
+  .viewport-half {
+    width: 55vw;
+    margin-left: 10vw;
+  }
+  .logo__svg {
+    width: 55vw;
+  }
+}
 @media screen and(max-width: 991px) and (min-height: 601px) {
   .viewport-half {
     width: 80vw;
@@ -1056,7 +1064,7 @@ $button-horizontal-padding: 0.75em;
 // 	}
 // }
 
-@include maxwidth(xs) {
+@include maxwidth(s) {
   .viewport-half {
     width: 100vw;
     margin-left: 0vw;
@@ -1065,6 +1073,9 @@ $button-horizontal-padding: 0.75em;
   .cs-circle {
     border-radius: 0;
   }
+			.circle-text__home {
+				background-color: $cs-darkblue;
+			}
 
   .logo__svg {
     width: 100vw;
@@ -1073,6 +1084,7 @@ $button-horizontal-padding: 0.75em;
     fill: $cs-darkblue;
   }
 }
+
 .scroll-width {
   width: 100px;
   height: 100px;
