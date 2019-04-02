@@ -88,14 +88,18 @@ class TemplateWrapper extends Component {
                 pageContext.title.toLowerCase()}`}
             >
               <SoundcloudPlayerProvider clientId="a7c99e975fa37c393cb1a6d89d5c1e0b">
-                {pageContext && pageContext.layout === 'square' ? (
-                  <Fade show={this.state.mounted}>
-                    {(style) => <div style={style}>{children}</div>}
-                  </Fade>
-                ) : (
-                  <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
-                    {children}
-                  </CircleLayout>
+                {pageContext && pageContext.layout && (
+                  <div>
+                    {pageContext && pageContext.layout === 'square' ? (
+                      <Fade show={this.state.mounted}>
+                        {(style) => <div style={style}>{children}</div>}
+                      </Fade>
+                    ) : (
+                      <CircleLayout show={!this.state.mounted} zoom={this.state.zoom}>
+                        {children}
+                      </CircleLayout>
+                    )}
+                  </div>
                 )}
                 <SoundcloudPlayerUI />
               </SoundcloudPlayerProvider>
