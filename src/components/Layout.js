@@ -49,7 +49,7 @@ class TemplateWrapper extends Component {
 
   render() {
     const { children, pageContext } = this.props;
-    console.log('context', pageContext.title);
+    console.log('context', pageContext);
     return (
       <StaticQuery
         query={graphql`
