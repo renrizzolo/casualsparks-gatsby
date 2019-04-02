@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React from 'react';
+import { Link } from 'gatsby';
 export const SvgLogo = () => {
   return (
     <svg
@@ -63,12 +63,12 @@ export const SvgLogo = () => {
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
 export const LogoSmall = () => {
   return (
-    <a href="/" className="logo-small">
+    <Link to="/" className="logo-small">
       <div>
         <svg
           id="cs-logo-small"
@@ -164,6 +164,6 @@ export const LogoSmall = () => {
           </g>
         </svg>
       </div>
-    </a>
-  )
-}
+    </Link>
+  );
+};
