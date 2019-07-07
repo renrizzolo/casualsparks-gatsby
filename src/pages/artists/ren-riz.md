@@ -1,5 +1,6 @@
 ---
 templateKey: artist-page
+title: Ren Riz
 name: Ren Riz
 about: >-
   Ren Riz is a Melbourne based producer with hip-hop production roots. 
