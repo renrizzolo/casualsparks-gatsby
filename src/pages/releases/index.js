@@ -1,20 +1,20 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link, graphql } from 'gatsby'
-import PageLayout from '../../components/PageLayout'
-import ReleaseItem from '../../components/ReleaseItem'
+import React from "react";
+import PropTypes from "prop-types";
+import { Link, graphql } from "gatsby";
+import PageLayout from "../../components/PageLayout";
+import ReleaseItem from "../../components/ReleaseItem";
 
 const ReleasePageTemplate = ({ title, sections, children }) => {
   return (
-    <PageLayout title={'Latest Releases'} backgroundColor="pearl">
+    <PageLayout title={"Latest Releases"} backgroundColor="pearl">
       <div className="item-grid">{children}</div>
     </PageLayout>
-  )
-}
+  );
+};
 export default class IndexPage extends React.Component {
   render() {
-    const { data } = this.props
-    const { edges: posts } = data.allMarkdownRemark
+    const { data } = this.props;
+    const { edges: posts } = data.allMarkdownRemark;
 
     return (
       <ReleasePageTemplate backgroundColor="pearl">
@@ -26,17 +26,17 @@ export default class IndexPage extends React.Component {
           />
         ))}
       </ReleasePageTemplate>
-    )
+    );
   }
 }
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
     allMarkdownRemark: PropTypes.shape({
-      edges: PropTypes.array,
-    }),
-  }),
-}
+      edges: PropTypes.array
+    })
+  })
+};
 
 export const releaseFrontmatterFragment = graphql`
   fragment ReleaseFrontmatter on MarkdownRemark {
@@ -64,7 +64,7 @@ export const releaseFrontmatterFragment = graphql`
       }
     }
   }
-`
+`;
 
 export const pageQuery = graphql`
   query IndexQuery {
@@ -84,4 +84,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

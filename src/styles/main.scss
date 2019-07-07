@@ -1098,3 +1098,15 @@ $button-horizontal-padding: 0.75em;
     fill: #ff5500;
   }
 }
+
+
+.pos-abs {
+  position: absolute;
+}
+.logo-small--top-right {
+  top: 0; 
+  right: 2rem;
+}
+.container-full {
+  min-height: 100vh;
+}

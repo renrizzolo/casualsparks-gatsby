@@ -1,0 +1,21 @@
+.marmalade-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/img/marmalade-bkg.jpg');
+  // background-size: cover;
+  background-position: center center;
+  filter: blur(30px);
+
+}
+
+  .marmalade-cover {
+    max-height: 100vh;
+    img {
+
+      max-height: 100vh;
+      object-fit: contain!important;
+    }
+  }
