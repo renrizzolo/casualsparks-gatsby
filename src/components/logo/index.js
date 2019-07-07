@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'gatsby';
-export const SvgLogo = () => {
+import React from "react";
+import { Link } from "gatsby";
+export const SvgLogo = ({ className }) => {
   return (
     <svg
       id="cs-svg"
-      className="logo__svg"
+      className={`logo__svg ${className}`}
       data-name="cs-svg"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1417.5 1417.43"
@@ -66,9 +66,9 @@ export const SvgLogo = () => {
   );
 };
 
-export const LogoSmall = () => {
+export const LogoSmall = ({ className }) => {
   return (
-    <Link to="/" className="logo-small">
+    <Link to="/" className={`logo-small ${className}`}>
       <div>
         <svg
           id="cs-logo-small"
