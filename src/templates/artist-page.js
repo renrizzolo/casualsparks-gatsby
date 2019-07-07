@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { kebabCase } from 'lodash'
-import Helmet from 'react-helmet'
-import { graphql, Link } from 'gatsby'
-import Content, { HTMLContent, MarkdownContent } from '../components/Content'
-import SocialLink from '../components/SocialLink'
-import PageLayout from '../components/PageLayout'
-import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
-import WatchConnection from '../components/WatchConnection'
-import OfflineError from '../components/OfflineError'
-import ToggleClass from '../components/ToggleClass'
+import React from "react";
+import PropTypes from "prop-types";
+import { kebabCase } from "lodash";
+import Helmet from "react-helmet";
+import { graphql, Link } from "gatsby";
+import Content, { HTMLContent, MarkdownContent } from "../components/Content";
+import SocialLink from "../components/SocialLink";
+import PageLayout from "../components/PageLayout";
+import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
+import WatchConnection from "../components/WatchConnection";
+import OfflineError from "../components/OfflineError";
+import ToggleClass from "../components/ToggleClass";
 
 export const ArtistPageTemplate = ({
   contentComponent,
@@ -18,12 +18,15 @@ export const ArtistPageTemplate = ({
   about,
   links,
   helmet,
-  profileImage,
+  profileImage
 }) => {
-  const PostContent = contentComponent || Content
-  console.log(about)
+  const PostContent = contentComponent || Content;
+  console.log(about);
 
-  return <PageLayout header={<div className="page-header page-header__page flex-container">
+  return (
+    <PageLayout
+      header={
+        <div className="page-header page-header__page flex-container">
           <div className="flex-container flex-container__column flex-1 flex-1 justify-end">
             <h2>{name}</h2>
             <div className="social-links__page">
@@ -40,18 +43,24 @@ export const ArtistPageTemplate = ({
           <div className="flex-1 page-cover__container">
             <PreviewCompatibleImage imageInfo={profileImage} />
           </div>
-        </div>} backgroundColor="pearl">
+        </div>
+      }
+      backgroundColor="pearl"
+    >
       {helmet || ""}
       <section className="flex-container__column">
         <div className="single-page">
           <PostContent content={about} />
-          {content && <div>
+          {content && (
+            <div>
               <h2 className="heading heading-dark">About</h2>
-            </div>}
+            </div>
+          )}
         </div>
       </section>
-    </PageLayout>;
-}
+    </PageLayout>
+  );
+};
 
 ArtistPageTemplate.propTypes = {
   content: PropTypes.node.isRequired,
@@ -59,11 +68,11 @@ ArtistPageTemplate.propTypes = {
   title: PropTypes.string,
   links: PropTypes.array,
   name: PropTypes.string,
-  helmet: PropTypes.object,
-}
+  helmet: PropTypes.object
+};
 
 const ArtistPage = ({ data }) => {
-  const { markdownRemark: post } = data
+  const { markdownRemark: post } = data;
 
   return (
     <ArtistPageTemplate
@@ -74,16 +83,16 @@ const ArtistPage = ({ data }) => {
       links={post.frontmatter.links}
       about={post.frontmatter.about}
     />
-  )
-}
+  );
+};
 
 ArtistPage.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
-}
+    markdownRemark: PropTypes.object
+  })
+};
 
-export default ArtistPage
+export default ArtistPage;
 
 export const pageQuery = graphql`
   query ArtistPageByID($id: String!) {
@@ -108,4 +117,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
