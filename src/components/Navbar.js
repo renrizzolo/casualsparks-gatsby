@@ -1,66 +1,74 @@
-import React from 'react'
-import { Link } from 'gatsby'
-import { Location } from '@reach/router'
-import { SvgLogo, LogoSmall } from './logo'
+import React from "react";
+import { Link } from "gatsby";
+import { Location } from "@reach/router";
+import { SvgLogo, LogoSmall } from "./logo";
 
-import { Zoom, FadeZoom, MenuTranslate } from '../animations'
+import { Zoom, FadeZoom, MenuTranslate } from "../animations";
 
 const Navbar = class extends React.Component {
   state = {
-    showMenu: false,
-  }
+    showMenu: false
+  };
   handleMenu = () => {
     this.setState(state => ({
-      showMenu: !state.showMenu,
-    }))
-  }
+      showMenu: !state.showMenu
+    }));
+  };
   hideMenu = () => {
     this.setState({
       showMenu: false
-    })
-  }
+    });
+  };
   stripSlash = path => {
-    return path.replace(/\//g, '')
-  }
+    return path.replace(/\//g, "");
+  };
 
   render() {
     return (
       <Location>
-        {({ navigate, location: { pathname } }) => (
+        {({ navigate, location: { pathname } }) =>
+          pathname === "/marmalade" ? null : (
             <MenuTranslate key="nav" show={!this.state.showMenu}>
-            {style => (
-          <React.Fragment>
-            <span
-              className={
-                this.state.showMenu
-                  ? `menu-button open ${this.stripSlash(pathname)}`
-                  : `menu-button ${this.stripSlash(pathname)}`
-              }
-            >
-              <a onClick={this.handleMenu}>
-                {this.state.showMenu ? 'close' : 'menu'}
-              </a>
-            </span>
-                <Menu
-                  style={style}
-                  onClick={this.hideMenu}
-                  className={`mobile ${
-                    this.state.showMenu ? 'open' : 'closed'
-                  } ${this.stripSlash(pathname)}`}
-                />
+              {style => (
+                <React.Fragment>
+                  <span
+                    className={
+                      this.state.showMenu
+                        ? `menu-button open ${this.stripSlash(pathname)}`
+                        : `menu-button ${this.stripSlash(pathname)}`
+                    }
+                  >
+                    <a onClick={this.handleMenu}>
+                      {this.state.showMenu ? "close" : "menu"}
+                    </a>
+                  </span>
+                  <Menu
+                    style={style}
+                    onClick={this.hideMenu}
+                    className={`mobile ${
+                      this.state.showMenu ? "open" : "closed"
+                    } ${this.stripSlash(pathname)}`}
+                  />
 
-            <Menu className={`desktop ${this.stripSlash(pathname)}`} />
-          </React.Fragment>
+                  <Menu className={`desktop ${this.stripSlash(pathname)}`} />
+                </React.Fragment>
               )}
             </MenuTranslate>
-        )}
+          )
+        }
       </Location>
-    )
+    );
   }
-}
+};
 
 const Menu = props => {
-  return <ul style={props.style} role="navigation" aria-label="Primary" className={`nav ${props.className}`}>
+  return (
+    <ul
+      style={props.style}
+      role="navigation"
+      aria-label="Primary"
+      className={`nav ${props.className}`}
+    >
       <LogoSmall />
       <li>
         <Link to="/" onClick={props.onClick} activeClassName="active">
@@ -82,7 +90,8 @@ const Menu = props => {
           Contact
         </Link>
       </li>
-    </ul>;
-}
+    </ul>
+  );
+};
 
-export default Navbar
+export default Navbar;
