@@ -1,21 +1,91 @@
+@import "variables";
+
 .marmalade-background {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: -1;
   background-image: url('/img/marmalade-bkg.jpg');
   // background-size: cover;
   background-position: center center;
   filter: blur(30px);
-
 }
-
-  .marmalade-cover {
-    max-height: 100vh;
-    img {
-
-      max-height: 100vh;
-      object-fit: contain!important;
+.marmalade-container {
+  overflow: hidden;
+  position: relative;
+  
+  .logo-small .logo-small__svg{
+    transition: transform 400ms ease;
+    width: 70px;
+    &:hover {
+      transform: scale(1.2);
     }
   }
+
+  .sc-player__button, .button {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+  .button {
+    background-color: $lightpearl;
+    color: $cs-darkblue;
+    bottom: 4rem;
+    top: unset;
+   }
+  .sc-player__icon {
+    fill: white;
+    &:hover {
+      fill: cornsilk;
+    }
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.rotate {
+  // animation: rotate 1.81818181818s linear infinite forwards;
+    animation: rotate 5s linear infinite forwards;
+
+} 
+.rotate-end {
+    animation: rotate 1.81818181818s linear infinite forwards;
+
+  animation-play-state: paused;
+} 
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(359deg)
+  }
+}
+
+@keyframes rotate-end {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(1deg)
+  }
+}
+.marmalade-cover {
+  z-index: -1;
+  border-radius: 100%;
+  transition: transform 1s ease;
+  max-height: 90vh;
+  border: 4px solid white;
+  max-width: 90vh;
+  width: 90vw!important;
+  img {
+    max-height: 100vh;
+    object-fit: contain!important;
+  }
+}
