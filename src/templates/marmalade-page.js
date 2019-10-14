@@ -7,7 +7,6 @@ import Content, { HTMLContent } from "../components/Content";
 import CircleLayout from "../components/CircleLayout";
 import { Fade } from "../animations";
 import PageLayout from "../components/PageLayout";
-import { LogoSmall } from "../components/logo";
 import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
 import { PlayBtn } from "../components/SoundcloudPlayer/components/Controls";
 import "../styles/marmalade.scss";
@@ -574,7 +573,6 @@ export class MarmaladePageTemplate extends React.Component {
       <Fade>
         {style => (
           <div className="marmalade-container" style={style}>
-            <LogoSmall className="logo pos-abs logo-small--top-right" />
             <audio src={marmaladeWav} type="audio/wav" />
 
             <div className="flex-container flex-center container-full">
