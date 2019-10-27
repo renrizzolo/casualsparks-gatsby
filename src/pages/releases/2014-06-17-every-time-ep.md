@@ -18,5 +18,18 @@ soundcloudUrl: 'https://soundcloud.com/renriz/sets/ren-riz-every-time-ep'
 links:
   - label: Bandcamp
     url: 'http://renriz.bandcamp.com/album/every-time-ep'
+  - icon: apple
+    label: iTunes
+    url: 'https://itunes.apple.com/au/album/every-time-ep/id892096132'
+  - icon: spotify
+    label: Spotify
+    url: 'https://open.spotify.com/album/2UlNv3QKvo5xSHwCxtiuPj'
+  - icon: beatport
+    label: beatport
+    url: 'https://www.beatport.com/release/every-time-ep/1331503'
+  - label: Bandcamp
+    url: 'http://renriz.bandcamp.com/album/every-time-ep'
 ---
+_Every Time_ is the brand new EP from Melbourne electronic producer Ren Riz, the follow up to his highly praised 2012 Daydream EP, and the first to come from his own recently founded label, Casual Sparks.
 
+The EP’s four-tracks see Ren pairing contemporary live instrumentation with sassy 90s R&B vocal samples, delivering an assembly of smooth soulful hooks that are laced with hints of sublime nu-disco feels, and set against a stimulating backdrop of classic house beats.
