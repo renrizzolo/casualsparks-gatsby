@@ -1,16 +1,15 @@
 ---
-templateKey: 'contact-page'
-path: contact
+templateKey: contact-page
 title: Contact
 links:
-  - label: /casualsparks
-    icon: facebook
-    url: https://facebook.com/casualsparks
-  - label: '@casualsparks'
-    icon: twitter
-    url: https://twitter.com/casualsparks
-  - label: '/casualsparks'
-    icon: soundcloud
-    url: https://soundcloud.com/casualsparks
+  - icon: facebook
+    label: /casualsparks
+    url: 'https://facebook.com/casualsparks'
+  - icon: twitter
+    label: '@casualsparks'
+    url: 'https://twitter.com/casualsparks'
+  - icon: soundcloud
+    label: /casualsparks
+    url: 'https://soundcloud.com/casualsparks'
 ---
-<sub>Website designed & developed by [Ren Rizzolo](https://github.com/renrizzolo) ([Source](https://github.com/renrizzolo/casualsparks-gatsby))</sub>
+<sub>Website designed & developed by [Ren Rizzolo](https://renrizzolo.com) ([Source](https://github.com/renrizzolo/casualsparks-gatsby))</sub>
