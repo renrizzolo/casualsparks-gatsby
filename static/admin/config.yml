@@ -55,20 +55,27 @@ collections:
       - file: "src/pages/home/index.md"
         label: "Home"
         name: "home"
+        path: "home"
         fields:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "home-page"}
+          - {label: "Layout", name: "layoutType",  widget: "select",  options: [{ label: "Circle", value: "circle" }, { label: "Square", value: "square" }, { label: "Freebie", value: "freebie" },]}
       - file: "src/pages/about/index.md"
         label: "About"
-        name: "about"
+        path: "about"
         fields:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "about-page"}
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Body", name: "body", widget: "markdown"}
+          - {label: "Layout", name: "layoutType",  widget: "select",  options: [{ label: "Circle", value: "circle" }, { label: "Square", value: "square" }, { label: "Freebie", value: "freebie" },]}
       - file: "src/pages/contact/index.md"
         label: "Contact"
         name: "contact"
+        path: "contact"
+
         fields:
+          
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "contact-page"}
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Body", name: "body", widget: "markdown"}
           - {label: Links, name: links, widget: object, fields: [{label: Label, name: label, widget: string}, {label: Url, name: url, widget: string}, {label: Icon, name: icon, widget: string},]}
+          - {label: "Layout", name: "layoutType",  widget: "select",  options: [{ label: "Circle", value: "circle" }, { label: "Square", value: "square" }, { label: "Freebie", value: "freebie" },]}
