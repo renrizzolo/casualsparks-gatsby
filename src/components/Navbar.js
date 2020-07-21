@@ -1,25 +1,25 @@
 import React from "react";
 import { Link } from "gatsby";
 import { Location } from "@reach/router";
-import { SvgLogo, LogoSmall } from "./logo";
+import { LogoSmall } from "./logo";
 
-import { Zoom, FadeZoom, MenuTranslate } from "../animations";
+import { MenuTranslate } from "../animations";
 
 const Navbar = class extends React.Component {
   state = {
-    showMenu: false
+    showMenu: false,
   };
   handleMenu = () => {
-    this.setState(state => ({
-      showMenu: !state.showMenu
+    this.setState((state) => ({
+      showMenu: !state.showMenu,
     }));
   };
   hideMenu = () => {
     this.setState({
-      showMenu: false
+      showMenu: false,
     });
   };
-  stripSlash = path => {
+  stripSlash = (path) => {
     return path.replace(/\//g, "");
   };
 
@@ -29,7 +29,7 @@ const Navbar = class extends React.Component {
         {({ navigate, location: { pathname } }) =>
           pathname === "/marmalade" ? null : (
             <MenuTranslate key="nav" show={!this.state.showMenu}>
-              {style => (
+              {(style) => (
                 <React.Fragment>
                   <span
                     className={
@@ -38,9 +38,12 @@ const Navbar = class extends React.Component {
                         : `menu-button ${this.stripSlash(pathname)}`
                     }
                   >
-                    <a onClick={this.handleMenu}>
+                    <div
+                      className={"menu-button__toggle"}
+                      onClick={this.handleMenu}
+                    >
                       {this.state.showMenu ? "close" : "menu"}
-                    </a>
+                    </div>
                   </span>
                   <Menu
                     style={style}
@@ -61,7 +64,7 @@ const Navbar = class extends React.Component {
   }
 };
 
-const Menu = props => {
+const Menu = (props) => {
   return (
     <ul
       style={props.style}

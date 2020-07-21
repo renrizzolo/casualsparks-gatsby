@@ -1,19 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
-import Layout from '../components/Layout'
-import SocialLink from '../components/SocialLink'
-import CircleLayout from '../components/CircleLayout'
-import { Fade } from '../animations/'
-import { HTMLContent } from '../components/Content'
-import ContactForm from '../components/ContactForm'
-import ToggleClass from '../components/ToggleClass'
-import PageLayout from '../components/PageLayout'
+import React from "react";
+import PropTypes from "prop-types";
+import { graphql } from "gatsby";
+import SocialLink from "../components/SocialLink";
+import { Fade } from "../animations/";
+import { HTMLContent } from "../components/Content";
+import ContactForm from "../components/ContactForm";
+import ToggleClass from "../components/ToggleClass";
 
 export const ContactPageTemplate = ({ title, links, html }) => {
   return (
     <Fade>
-      {style => (
+      {(style) => (
         <div style={style} className="circle-text flex-container__column">
           <ToggleClass>
             {(toggle, toggled) => (
@@ -39,17 +36,16 @@ export const ContactPageTemplate = ({ title, links, html }) => {
                   <ContactForm />
                 )}
                 <button class="button dark-blue" onClick={toggle}>
-                  {!toggled ? 'email →' : '←'}
+                  {!toggled ? "email →" : "←"}
                 </button>
-               
               </div>
             )}
           </ToggleClass>
         </div>
       )}
     </Fade>
-  )
-}
+  );
+};
 
 ContactPageTemplate.propTypes = {
   html: PropTypes.object,
@@ -59,10 +55,10 @@ ContactPageTemplate.propTypes = {
     icon: PropTypes.string,
     url: PropTypes.string,
   }),
-}
+};
 
 const ContactPage = ({ data }) => {
-  const { markdownRemark: post } = data
+  const { markdownRemark: post } = data;
 
   return (
     <ContactPageTemplate
@@ -70,14 +66,14 @@ const ContactPage = ({ data }) => {
       title={post.frontmatter.title}
       links={post.frontmatter.links}
     />
-  )
-}
+  );
+};
 
 ContactPage.propTypes = {
   data: PropTypes.object.isRequired,
-}
+};
 
-export default ContactPage
+export default ContactPage;
 
 export const contactPageQuery = graphql`
   query ContactPage($id: String!) {
@@ -94,4 +90,4 @@ export const contactPageQuery = graphql`
       }
     }
   }
-`
+`;

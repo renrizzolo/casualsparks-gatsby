@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { kebabCase } from "lodash";
-import Helmet from "react-helmet";
-import { graphql, Link } from "gatsby";
-import Content, { HTMLContent, MarkdownContent } from "../components/Content";
+import { graphql } from "gatsby";
+import Content, { MarkdownContent } from "../components/Content";
 import SocialLink from "../components/SocialLink";
 import PageLayout from "../components/PageLayout";
 import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
-import WatchConnection from "../components/WatchConnection";
-import OfflineError from "../components/OfflineError";
-import ToggleClass from "../components/ToggleClass";
 
 export const ArtistPageTemplate = ({
   contentComponent,
@@ -18,7 +13,7 @@ export const ArtistPageTemplate = ({
   about,
   links,
   helmet,
-  profileImage
+  profileImage,
 }) => {
   const PostContent = contentComponent || Content;
   console.log(about);
@@ -68,7 +63,7 @@ ArtistPageTemplate.propTypes = {
   title: PropTypes.string,
   links: PropTypes.array,
   name: PropTypes.string,
-  helmet: PropTypes.object
+  helmet: PropTypes.object,
 };
 
 const ArtistPage = ({ data }) => {
@@ -88,8 +83,8 @@ const ArtistPage = ({ data }) => {
 
 ArtistPage.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.object
-  })
+    markdownRemark: PropTypes.object,
+  }),
 };
 
 export default ArtistPage;

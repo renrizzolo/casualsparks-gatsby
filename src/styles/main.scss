@@ -230,7 +230,7 @@ h2 {
     height: 100%;
     z-index: 2;
     animation: mob-menu-in 500ms forwards;
-    a {
+   .menu-button__toggle {
       color: $lightpearl;
       width: 100%;
       text-align: right;
@@ -242,13 +242,13 @@ h2 {
       );
     }
   }
-  &.music a {
+  &.music .menu-button__toggle {
     color: $lightpearl;
   }
-  &.music:not(.open) a {
+  &.music:not(.open) .menu-button__toggle {
     background-color: $dark-blue;
   }
-  a {
+  .menu-button__toggle {
     line-height: 2em;
     padding: 0.33rem 2rem;
     margin: 0;
@@ -265,7 +265,7 @@ h2 {
     position: fixed;
     right: 0;
     top: 0;
-    a {
+    .menu-button__toggle {
       padding: 0.5rem 1rem;
       line-height: 1.5rem;
     }
@@ -277,7 +277,7 @@ h2 {
     position: absolute;
     right: 0;
     top: 0;
-    a {
+   .menu-button__toggle {
       padding: 0.5rem 1rem;
       line-height: 1.5rem;
     }

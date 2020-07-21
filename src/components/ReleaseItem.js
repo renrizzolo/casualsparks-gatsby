@@ -1,16 +1,10 @@
 import React from "react";
-import ToggleClass from "../components/ToggleClass";
-import WatchConnection from "../components/WatchConnection";
-import OfflineError from "../components/OfflineError";
-import { InFromBottom } from "../animations";
 import { animated } from "react-spring";
 import { Link } from "gatsby";
 import { kebabCase } from "lodash";
 import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
 import PlayButton from "./PlayButton";
-import { Icon } from "../img/icons";
 import ItemButton from "../components/ItemButton";
-import { SoundcloudPlayerLite } from "../components/SoundcloudPlayer";
 
 const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
   const now = new Date();
@@ -52,15 +46,14 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
             </div>
             <div className="link-container">
               {data.links &&
-                data.links.map(link => (
-                <ItemButton
-                  small
-                  key={link.label}
-                  label={link.label}
-                  href={link.url}
-                  iconName={link.label.toLowerCase()}
-                />
-       
+                data.links.map((link) => (
+                  <ItemButton
+                    small
+                    key={link.label}
+                    label={link.label}
+                    href={link.url}
+                    iconName={link.label.toLowerCase()}
+                  />
                 ))}
               {data.soundcloudUrl && (
                 <ItemButton
@@ -117,7 +110,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
 
 ReleaseItem.defaultProps = {
   backgroundColor: "pearl",
-  description: false
+  description: false,
 };
 
 export default ReleaseItem;

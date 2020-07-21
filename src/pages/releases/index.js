@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import PageLayout from "../../components/PageLayout";
 import ReleaseItem from "../../components/ReleaseItem";
 
@@ -33,9 +33,9 @@ export default class IndexPage extends React.Component {
 IndexPage.propTypes = {
   data: PropTypes.shape({
     allMarkdownRemark: PropTypes.shape({
-      edges: PropTypes.array
-    })
-  })
+      edges: PropTypes.array,
+    }),
+  }),
 };
 
 export const releaseFrontmatterFragment = graphql`

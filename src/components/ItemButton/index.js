@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from '../../img/icons'
+import { Icon } from "../../img/icons";
 
 const ItemButton = ({
   small,
@@ -8,14 +8,14 @@ const ItemButton = ({
   href,
   iconStyle,
   iconName,
-  iconSize
+  iconSize,
 }) => {
   return (
     <a
       target="_blank"
-      rel="noopener"
-      className={`item-button ${small ? "item-button__small" : ''} ${
-        className ? className : ''
+      rel="noopener noreferrer"
+      className={`item-button ${small ? "item-button__small" : ""} ${
+        className ? className : ""
       }`}
       href={href}
     >
@@ -28,6 +28,6 @@ const ItemButton = ({
 ItemButton.defaultProps = {
   iconSize: 16,
   iconStyle: { marginRight: 6 },
-  small: false
+  small: false,
 };
 export default ItemButton;

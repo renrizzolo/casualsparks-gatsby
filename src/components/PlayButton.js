@@ -1,7 +1,7 @@
-import React from 'react'
-import { SC } from './SoundcloudPlayer'
-import { Icon } from '../img/icons'
-import '../styles/common/play-button.scss'
+import React from "react";
+import { SC } from "./SoundcloudPlayer";
+import { Icon } from "../img/icons";
+import "../styles/common/play-button.scss";
 const PlayButton = ({ soundcloudUrl, full }) => {
   return soundcloudUrl ? (
     <SC.Consumer>
@@ -15,22 +15,22 @@ const PlayButton = ({ soundcloudUrl, full }) => {
         const isPlaying =
           (soundcloudUrl === currentTrack.permalink_url && playing) ||
           (currentPlaylistUrl &&
-            currentPlaylistUrl.split('://')[1] ===
-              soundcloudUrl.split('://')[1] &&
-            playing)
+            currentPlaylistUrl.split("://")[1] ===
+              soundcloudUrl.split("://")[1] &&
+            playing);
         return (
-          <a
-            className={`flex-container flex-center play-button ${
-              full ? ' full' : ''
+          <button
+            className={`sc-player__button flex-container flex-center play-button ${
+              full ? " full" : ""
             }`}
             onClick={() => (isPlaying ? stop() : updateTrack(soundcloudUrl))}
           >
-            <Icon size={32} name={isPlaying ? 'stop' : 'play_arrow'} />
-          </a>
-        )
+            <Icon size={32} name={isPlaying ? "stop" : "play_arrow"} />
+          </button>
+        );
       }}
     </SC.Consumer>
-  ) : null
-}
+  ) : null;
+};
 
-export default PlayButton
+export default PlayButton;

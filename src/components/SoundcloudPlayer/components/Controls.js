@@ -1,6 +1,6 @@
-import React from 'react'
-import { ControlButton } from './'
-import { Icon } from '../../../img/icons'
+import React from "react";
+import { ControlButton } from "./";
+import { Icon } from "../../../img/icons";
 
 const Controls = ({
   showPlay,
@@ -17,10 +17,10 @@ const Controls = ({
     {showPlay && <PlayBtn playing={playing} stop={stop} play={play} />}
     {isPlaylist && <ControlButton className="next" icon="next" fn={next} />}
   </React.Fragment>
-)
+);
 Controls.defaultProps = {
   showPlay: true,
-}
+};
 
 export const PlayBtn = ({
   update,
@@ -31,19 +31,19 @@ export const PlayBtn = ({
   play,
 }) => {
   return update ? (
-    <a
+    <button
       className={`flex-container flex-center play-button`}
       onClick={() => updateTrack(soundcloudUrl)}
     >
-      <Icon size={32} name={'play_arrow'} />
-    </a>
+      <Icon size={32} name={"play_arrow"} />
+    </button>
   ) : (
     <ControlButton
       className="stop"
-      icon={playing ? 'stop' : 'play'}
+      icon={playing ? "stop" : "play"}
       fn={playing ? stop : play}
     />
-  )
-}
+  );
+};
 
-export default Controls
+export default Controls;

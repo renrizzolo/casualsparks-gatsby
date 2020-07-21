@@ -1,11 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { StaticQuery, graphql } from 'gatsby'
-import ReleaseItem from './ReleaseItem'
-import { Trail, config } from 'react-spring'
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
+import ReleaseItem from "./ReleaseItem";
+import { Trail, config } from "react-spring";
 
 const Releases = ({ section }) => {
-  console.log(section)
+  console.log(section);
 
   return (
     <StaticQuery
@@ -29,10 +28,10 @@ const Releases = ({ section }) => {
         }
       `}
     >
-      {data =>
+      {(data) =>
         data && data.allMarkdownRemark && data.allMarkdownRemark.edges ? (
           <Trail
-          native
+            native
             items={data.allMarkdownRemark.edges.filter(
               ({ node: post }) => post.frontmatter.releaseType === section.type
             )}
@@ -41,7 +40,7 @@ const Releases = ({ section }) => {
             to={{ opacity: 1 }}
             config={config.gentle}
           >
-            {({ node: post }) => props => (
+            {({ node: post }) => (props) => (
               <ReleaseItem
                 style={props}
                 slug={post.fields.slug}
@@ -54,9 +53,9 @@ const Releases = ({ section }) => {
         )
       }
     </StaticQuery>
-  )
-}
+  );
+};
 
-Releases.propTypes = {}
+Releases.propTypes = {};
 
-export default Releases
+export default Releases;

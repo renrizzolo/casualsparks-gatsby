@@ -1,16 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { kebabCase } from 'lodash'
-import Helmet from 'react-helmet'
-import { graphql, Link } from 'gatsby'
-import Content, { HTMLContent } from '../components/Content'
-import {Icon} from '../img/icons'
-import PageLayout from '../components/PageLayout'
-import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
-import WatchConnection from '../components/WatchConnection'
-import OfflineError from '../components/OfflineError'
-import ToggleClass from '../components/ToggleClass'
-import PlayButton from '../components/PlayButton'
+import React from "react";
+import PropTypes from "prop-types";
+import Helmet from "react-helmet";
+import { graphql } from "gatsby";
+import Content, { HTMLContent } from "../components/Content";
+import PageLayout from "../components/PageLayout";
+import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
+import PlayButton from "../components/PlayButton";
 import ItemButton from "../components/ItemButton";
 
 export const ReleasePostTemplate = ({
@@ -42,7 +37,7 @@ export const ReleasePostTemplate = ({
       }
       backgroundColor="pearl"
     >
-      {helmet || ''}
+      {helmet || ""}
       <section className="flex-container__column">
         <div className="single-page">
           <ReleaseItem
@@ -56,8 +51,8 @@ export const ReleasePostTemplate = ({
         </div>
       </section>
     </PageLayout>
-  )
-}
+  );
+};
 
 const ReleaseItem = ({
   content,
@@ -67,7 +62,7 @@ const ReleaseItem = ({
   previewHTML,
   soundcloudUrl,
 }) => {
-  const PostContent = contentComponent || Content
+  const PostContent = contentComponent || Content;
 
   return (
     <div className="item">
@@ -75,7 +70,7 @@ const ReleaseItem = ({
         <div className="item-info">
           <div className="link-container">
             {links &&
-              links.map(link => (
+              links.map((link) => (
                 <ItemButton
                   small
                   key={link.label}
@@ -83,7 +78,6 @@ const ReleaseItem = ({
                   href={link.url}
                   iconName={link.label.toLowerCase()}
                 />
-
               ))}
             {soundcloudUrl && (
               <ItemButton
@@ -123,8 +117,8 @@ const ReleaseItem = ({
         </aside>
       ) */}
     </div>
-  )
-}
+  );
+};
 
 ReleasePostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
@@ -137,12 +131,11 @@ ReleasePostTemplate.propTypes = {
   links: PropTypes.array,
   trackList: PropTypes.array,
   previewHTM: PropTypes.string,
-  soundcloudUrl: PropTypes.string,
-}
+};
 
 const ReleasePost = ({ data }) => {
-  const { markdownRemark: post } = data
-  console.log(post)
+  const { markdownRemark: post } = data;
+  console.log(post);
 
   return (
     <ReleasePostTemplate
@@ -164,18 +157,17 @@ const ReleasePost = ({ data }) => {
       links={post.frontmatter.links}
       trackList={post.frontmatter.trackList}
       previewHTML={post.frontmatter.previewHTML}
-      soundcloudUrl={post.frontmatter.soundcloudUrl}
     />
-  )
-}
+  );
+};
 
 ReleasePost.propTypes = {
   data: PropTypes.shape({
     markdownRemark: PropTypes.object,
   }),
-}
+};
 
-export default ReleasePost
+export default ReleasePost;
 
 export const pageQuery = graphql`
   query ReleasePostByID($id: String!) {
@@ -185,4 +177,4 @@ export const pageQuery = graphql`
       ...ReleaseFrontmatter
     }
   }
-`
+`;
