@@ -1,6 +1,7 @@
 ---
 templateKey: contact-page
 title: Contact
+path: contact
 links:
   - icon: facebook
     label: /casualsparks
