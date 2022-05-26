@@ -1,5 +1,5 @@
-import React from "react";
-import { Icon } from "../../../img/icons";
+import React from 'react';
+import { Icon } from '../../../img/icons';
 
 const ControlButton = ({ disabled, className, fn, icon, size }) => (
   <button

@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { graphql } from "gatsby";
-import * as echarts from "echarts";
-import { HTMLContent } from "../components/Content";
-import { Fade } from "../animations";
-import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
-import { PlayBtn } from "../components/SoundcloudPlayer/components/Controls";
-import "../styles/marmalade.scss";
-import marmaladeWav from "../pages/marmalade/marmalade-snippet.mp3";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
+import * as echarts from 'echarts';
+import { HTMLContent } from '../components/Content';
+import { Fade } from '../animations';
+import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
+import { PlayBtn } from '../components/SoundcloudPlayer/components/Controls';
+import '../styles/marmalade.scss';
+import marmaladeWav from '../pages/marmalade/marmalade-snippet.mp3';
 
 class CircularAudioWave {
   constructor(elem, opts = {}) {
@@ -20,10 +20,10 @@ class CircularAudioWave {
     this.lineColorOffset = 0;
     this.tick = 0;
 
-    let bgColor = "#2E2733";
+    let bgColor = '#2E2733';
     this.defaultChartOption = {
       angleAxis: {
-        type: "value",
+        type: 'value',
         clockwise: false,
         axisLine: {
           show: false,
@@ -55,61 +55,61 @@ class CircularAudioWave {
         },
       },
       polar: {
-        radius: "100%",
+        radius: '100%',
       },
       series: [
         {
-          coordinateSystem: "polar",
-          name: "line",
-          type: "line",
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
           showSymbol: false,
           lineStyle: {
             color: {
               colorStops: [
                 {
                   offset: 0.7,
-                  color: "#ffffff",
+                  color: '#ffffff',
                 },
                 {
                   offset: 0.3,
-                  color: "#ffffff",
+                  color: '#ffffff',
                 },
               ],
             },
-            shadowColor: "#ffb87d",
+            shadowColor: '#ffb87d',
             shadowBlur: 10,
           },
           zlevel: 2,
           data: Array.apply(null, {
             length: 361,
-          }).map(Function.call, (i) => {
+          }).map(Function.call, i => {
             return [this.minChartValue, i];
           }),
           silent: true,
           hoverAnimation: false,
         },
         {
-          coordinateSystem: "polar",
-          name: "maxbar",
-          type: "line",
+          coordinateSystem: 'polar',
+          name: 'maxbar',
+          type: 'line',
           showSymbol: false,
           lineStyle: {
-            color: "#ffb87d",
-            shadowColor: "#ffb87d",
+            color: '#ffb87d',
+            shadowColor: '#ffb87d',
             shadowBlur: 30,
           },
           data: Array.apply(null, {
             length: 361,
-          }).map(Function.call, (i) => {
+          }).map(Function.call, i => {
             return [this.minChartValue, i];
           }),
           silent: true,
           hoverAnimation: false,
         },
         {
-          coordinateSystem: "polar",
-          name: "interior",
-          type: "effectScatter",
+          coordinateSystem: 'polar',
+          name: 'interior',
+          type: 'effectScatter',
           showSymbol: false,
           data: [0],
           symbolSize: 100,
@@ -119,15 +119,15 @@ class CircularAudioWave {
           },
           itemStyle: {
             color: {
-              type: "radial",
+              type: 'radial',
               colorStops: [
                 {
                   offset: 0,
-                  color: "#ffb87d04",
+                  color: '#ffb87d04',
                 },
                 {
                   offset: 1,
-                  color: "white",
+                  color: 'white',
                 },
               ],
             },
@@ -144,7 +144,7 @@ class CircularAudioWave {
       window.OfflineAudioContext || window.webkitOfflineAudioContext;
 
     if (!window.AudioContext) {
-      alert("Your browser does not support Web Audio API");
+      alert('Your browser does not support Web Audio API');
     } else {
       this.context = new AudioContext();
       this.offlineContext = new OfflineAudioContext(2, 30 * 44100, 44100);
@@ -154,8 +154,8 @@ class CircularAudioWave {
       this.analyser = this.context.createAnalyser();
     }
 
-    if (this.opts.mode === "sunburst") {
-      let colors = ["#FFAE57", "#FF7853", "#EA5151", "#CC3F57", "#9A2555"];
+    if (this.opts.mode === 'sunburst') {
+      let colors = ['#FFAE57', '#FF7853', '#EA5151', '#CC3F57', '#9A2555'];
 
       let data = [
         {
@@ -175,27 +175,27 @@ class CircularAudioWave {
       ];
       for (let i = 0; i < 5; i++) {
         data[0].children[0].children.push({
-          name: "-",
+          name: '-',
           children: [
             {
-              name: "",
+              name: '',
             },
           ],
         });
         data[1].children[0].children.push({
-          name: "-",
+          name: '-',
           children: [
             {
-              name: "",
+              name: '',
             },
           ],
         });
       }
 
       // loop to the bottom children
-      data.forEach((level0) => {
-        level0.children.forEach((level1) => {
-          level1.children.forEach((item) => {
+      data.forEach(level0 => {
+        level0.children.forEach(level1 => {
+          level1.children.forEach(item => {
             item.children[0].value = 1;
           });
         });
@@ -206,8 +206,8 @@ class CircularAudioWave {
         color: colors,
         series: [
           {
-            type: "sunburst",
-            center: ["50%", "48%"],
+            type: 'sunburst',
+            center: ['50%', '48%'],
             data: data,
             nodeClick: false,
             sort: function(a, b) {
@@ -237,10 +237,10 @@ class CircularAudioWave {
                 itemStyle: {
                   shadowBlur: 2,
                   shadowColor: colors[2],
-                  color: "transparent",
+                  color: 'transparent',
                 },
                 label: {
-                  rotate: "tangential",
+                  rotate: 'tangential',
                   fontSize: 10,
                   color: colors[0],
                 },
@@ -254,9 +254,9 @@ class CircularAudioWave {
                   color: colors[0],
                 },
                 label: {
-                  position: "outside",
+                  position: 'outside',
                   textShadowBlur: 5,
-                  textShadowColor: "#333",
+                  textShadowColor: '#333',
                   backgroundColor: colors[0],
                 },
               },
@@ -273,20 +273,20 @@ class CircularAudioWave {
     this._setupAudioNodes();
     this._setupOfflineContext();
     var request = new XMLHttpRequest();
-    request.open("GET", filePath, true);
-    request.responseType = "arraybuffer";
+    request.open('GET', filePath, true);
+    request.responseType = 'arraybuffer';
     request.send();
     return new Promise((resolve, reject) => {
       request.onload = () => {
         // Preprocess buffer for bpm
-        this.offlineContext.decodeAudioData(request.response, (buffer) => {
+        this.offlineContext.decodeAudioData(request.response, buffer => {
           this.sourceNode.buffer = buffer;
           this.offlineSource.buffer = buffer;
           this.offlineSource.start(0);
           this.offlineContext.startRendering();
         });
 
-        this.offlineContext.oncomplete = (e) => {
+        this.offlineContext.oncomplete = e => {
           let buffer = e.renderedBuffer;
           this.bpm = this._getBPM([
             buffer.getChannelData(0),
@@ -304,7 +304,7 @@ class CircularAudioWave {
     this._debouncedDraw = this._debounce(this._drawAnimation.bind(this), 25);
   }
   presetOption() {
-    if (this.opts.mode !== "sunburst") {
+    if (this.opts.mode !== 'sunburst') {
       this.chartOption.series[0].animation = false;
       this.chartOption.series[2].rippleEffect.period = 150 / this.bpm;
     }
@@ -319,7 +319,7 @@ class CircularAudioWave {
       this._debouncedDraw();
     } else {
       // alert("Audio is not ready");
-      console.error("audio not ready!");
+      console.error('audio not ready!');
     }
   }
   // TODO
@@ -364,7 +364,7 @@ class CircularAudioWave {
   _setupOfflineContext() {
     // Beats generally occur around the 100 to 150 hz range.
     let lowpass = this.offlineContext.createBiquadFilter();
-    lowpass.type = "lowpass";
+    lowpass.type = 'lowpass';
     // lowpass.settar;
     lowpass.frequency.setValueAtTime(150, 0);
     lowpass.Q.setValueAtTime(1, 0);
@@ -372,7 +372,7 @@ class CircularAudioWave {
     this.offlineSource.connect(lowpass);
 
     let highpass = this.offlineContext.createBiquadFilter();
-    highpass.type = "highpass";
+    highpass.type = 'highpass';
     highpass.frequency.setValueAtTime(100, 0);
     highpass.Q.setValueAtTime(1, 0);
     lowpass.connect(highpass);
@@ -399,11 +399,11 @@ class CircularAudioWave {
         this.lastMaxR = this.minChartValue;
       }
 
-      if (this.opts.mode !== "sunburst") {
+      if (this.opts.mode !== 'sunburst') {
         // maxbar
         this.chartOption.series[1].data = Array.apply(null, {
           length: 361,
-        }).map(Function.call, (i) => {
+        }).map(Function.call, i => {
           return [this.lastMaxR, i];
         });
       }
@@ -414,7 +414,7 @@ class CircularAudioWave {
   _generateWaveData(data) {
     let waveData = [];
     let maxR = 0;
-    if (this.opts.mode !== "sunburst") {
+    if (this.opts.mode !== 'sunburst') {
       for (let i = 0; i <= 360; i++) {
         // (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
         let freq = data[i];
@@ -430,19 +430,19 @@ class CircularAudioWave {
     } else {
       waveData = JSON.parse(JSON.stringify(this.chartOption.series[0].data));
       let index = 0;
-      waveData.forEach((level0) => {
-        level0.children.forEach((level1) => {
-          level1.children.forEach((item) => {
+      waveData.forEach(level0 => {
+        level0.children.forEach(level1 => {
+          level1.children.forEach(item => {
             let freq = data[index];
             var r = ((freq - 0) * (40 - 0)) / (255 - 0) + 0;
 
             item.children[0].name = Array.apply(null, {
               length: r,
             })
-              .map(Function.call, (i) => {
-                return "";
+              .map(Function.call, i => {
+                return '';
               })
-              .join(" ");
+              .join(' ');
             index++;
           });
         });
@@ -500,7 +500,7 @@ class CircularAudioWave {
         group.bpm = Math.round(group.bpm);
 
         if (
-          !groups.some((interval) => {
+          !groups.some(interval => {
             return interval.bpm === group.bpm ? interval.count++ : 0;
           })
         ) {
@@ -538,7 +538,7 @@ export class MarmaladePageTemplate extends React.Component {
   };
   componentDidMount() {
     this.wave = new CircularAudioWave(
-      document.getElementById("chart-container")
+      document.getElementById('chart-container')
     );
     this.wave.loadAudio(marmaladeWav);
     // wave.play();
@@ -566,7 +566,7 @@ export class MarmaladePageTemplate extends React.Component {
     const { playing } = this.state;
     return (
       <Fade>
-        {(style) => (
+        {style => (
           <div className="marmalade-container" style={style}>
             <audio src={marmaladeWav} type="audio/wav" />
 
@@ -579,18 +579,18 @@ export class MarmaladePageTemplate extends React.Component {
               <BasicButton href="https://shite-music.lnk.to/CSM002" />
               <div className="marmalade-background" />
               <div
-                className={`${playing ? "rotate" : "rotate-end"}`}
+                className={`${playing ? 'rotate' : 'rotate-end'}`}
                 id="chart-container"
                 style={{
-                  minWidth: "100%",
-                  height: "70vh",
-                  position: "absolute",
+                  minWidth: '100%',
+                  height: '70vh',
+                  position: 'absolute',
                 }}
               />
 
               <PreviewCompatibleImage
                 className={`marmalade-cover ${
-                  playing ? "rotate-end" : "rotate-end"
+                  playing ? 'rotate-end' : 'rotate-end'
                 }`}
                 imageInfo={image}
               />

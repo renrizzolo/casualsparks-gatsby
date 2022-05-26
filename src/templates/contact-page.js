@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { graphql } from "gatsby";
-import SocialLink from "../components/SocialLink";
-import { Fade } from "../animations/";
-import { HTMLContent } from "../components/Content";
-import ContactForm from "../components/ContactForm";
-import ToggleClass from "../components/ToggleClass";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
+import SocialLink from '../components/SocialLink';
+import { Fade } from '../animations/';
+import { HTMLContent } from '../components/Content';
+import ContactForm from '../components/ContactForm';
+import ToggleClass from '../components/ToggleClass';
 
 export const ContactPageTemplate = ({ title, links, html }) => {
   return (
     <Fade>
-      {(style) => (
+      {style => (
         <div style={style} className="circle-text flex-container__column">
           <ToggleClass>
             {(toggle, toggled) => (
@@ -36,7 +36,7 @@ export const ContactPageTemplate = ({ title, links, html }) => {
                   <ContactForm />
                 )}
                 <button class="button dark-blue" onClick={toggle}>
-                  {!toggled ? "email →" : "←"}
+                  {!toggled ? 'email →' : '←'}
                 </button>
               </div>
             )}

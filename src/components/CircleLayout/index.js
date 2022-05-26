@@ -1,5 +1,5 @@
-import React from 'react'
-import { Zoom, Fade, FadeZoom } from '../../animations'
+import React from 'react';
+import { Zoom, Fade, FadeZoom } from '../../animations';
 
 const items = [
   {
@@ -14,7 +14,7 @@ const items = [
     key: 'cs-circle-3',
     className: 'cs-circle cs-circle__outer-3',
   },
-]
+];
 
 const CircleLayout = ({ children, show, zoom }) => (
   <Fade show={true}>
@@ -39,5 +39,5 @@ const CircleLayout = ({ children, show, zoom }) => (
       </div>
     )}
   </Fade>
-)
-export default CircleLayout
+);
+export default CircleLayout;

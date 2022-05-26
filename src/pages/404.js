@@ -1,6 +1,6 @@
-import React from 'react'
-import Layout from '../components/Layout'
-import CircleLayout from '../components/CircleLayout'
+import React from 'react';
+import Layout from '../components/Layout';
+import CircleLayout from '../components/CircleLayout';
 const NotFoundPage = () => (
   <Layout>
     <CircleLayout>
@@ -9,6 +9,6 @@ const NotFoundPage = () => (
       </div>
     </CircleLayout>
   </Layout>
-)
+);
 
-export default NotFoundPage
+export default NotFoundPage;

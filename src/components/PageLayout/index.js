@@ -1,9 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const PageLayout = ({ title, header, backgroundColor, children }) => {
   return (
-    <div className={`flex-container flex-container__column background-${backgroundColor}`}>
+    <div
+      className={`flex-container flex-container__column background-${backgroundColor}`}
+    >
       {title && (
         <div className="page-header">
           <h1 className="jumbo-heading">{title}</h1>
@@ -14,15 +16,15 @@ const PageLayout = ({ title, header, backgroundColor, children }) => {
         {children}
       </main>
     </div>
-  )
-}
+  );
+};
 
 PageLayout.propTypes = {
   title: PropTypes.string,
   header: PropTypes.object,
   backgroundColor: PropTypes.string,
-}
+};
 PageLayout.defaultProps = {
   backgroundColor: 'blue',
-}
-export default PageLayout
+};
+export default PageLayout;

@@ -1,6 +1,6 @@
-const nodePath = require("path");
-const { createFilePath } = require("gatsby-source-filesystem");
-const { fmImagesToRelative } = require("gatsby-remark-relative-images");
+const nodePath = require('path');
+const { createFilePath } = require('gatsby-source-filesystem');
+const { fmImagesToRelative } = require('gatsby-remark-relative-images');
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
@@ -23,22 +23,22 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then((result) => {
+  `).then(result => {
     if (result.errors) {
-      result.errors.forEach((e) => console.error(e.toString()));
+      result.errors.forEach(e => console.error(e.toString()));
       return Promise.reject(result.errors);
     }
 
     const posts = result.data.allMarkdownRemark.edges;
-    const circlePaths = ["contact", "about", "home"];
+    const circlePaths = ['contact', 'about', 'home'];
     posts.forEach(({ node }) => {
       const { id, frontmatter } = node;
       const { path, templateKey, title } = frontmatter;
       // console.log(node);
       console.log(
         path,
-        "context",
-        path && circlePaths.includes(path) ? "circle" : "square"
+        'context',
+        path && circlePaths.includes(path) ? 'circle' : 'square'
       );
 
       createPage({
@@ -48,7 +48,7 @@ exports.createPages = ({ actions, graphql }) => {
         context: {
           id,
           title,
-          layout: path && circlePaths.includes(path) ? "circle" : "square",
+          layout: path && circlePaths.includes(path) ? 'circle' : 'square',
         },
       });
     });

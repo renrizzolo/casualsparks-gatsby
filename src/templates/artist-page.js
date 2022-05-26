@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { graphql } from "gatsby";
-import Content, { MarkdownContent } from "../components/Content";
-import SocialLink from "../components/SocialLink";
-import PageLayout from "../components/PageLayout";
-import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
+import Content, { MarkdownContent } from '../components/Content';
+import SocialLink from '../components/SocialLink';
+import PageLayout from '../components/PageLayout';
+import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
 
 export const ArtistPageTemplate = ({
   contentComponent,
@@ -41,7 +41,7 @@ export const ArtistPageTemplate = ({
       }
       backgroundColor="pearl"
     >
-      {helmet || ""}
+      {helmet || ''}
       <section className="flex-container__column">
         <div className="single-page">
           <PostContent content={about} />

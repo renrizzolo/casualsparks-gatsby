@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Trail, Spring, animated } from "react-spring";
-import { TrackItem, PlayerToggle, Waveform, Controls } from "./components";
-import { API_BASE, getToken, fetchWrapper } from "./utils";
-import "../../styles/common/player.scss";
+import React, { Component } from 'react';
+import { Trail, Spring, animated } from 'react-spring';
+import { TrackItem, PlayerToggle, Waveform, Controls } from './components';
+import { API_BASE, getToken, fetchWrapper } from './utils';
+import '../../styles/common/player.scss';
 
 export const SC = React.createContext();
 
@@ -26,7 +26,7 @@ export default class SoundcloudPlayerProvider extends Component {
   playStarted = false;
 
   componentDidMount = () => {
-    this.audio = document.createElement("audio");
+    this.audio = document.createElement('audio');
     this.setState({
       updateTrack: this.updateTrack,
       togglePlayer: this.togglePlayer,
@@ -40,22 +40,22 @@ export default class SoundcloudPlayerProvider extends Component {
       },
     });
     // this.scPlayer = new SoundCloudAudio('a7c99e975fa37c393cb1a6d89d5c1e0b');
-    this.audio.addEventListener("timeupdate", this.updateCurrentTime);
-    this.audio.addEventListener("ended", this.handleEnd);
-    document.addEventListener("keydown", this.handleKeys);
+    this.audio.addEventListener('timeupdate', this.updateCurrentTime);
+    this.audio.addEventListener('ended', this.handleEnd);
+    document.addEventListener('keydown', this.handleKeys);
   };
 
   componentWillUnmount = () => {
-    this.audio.removeEventListener("timeupdate", this.updateCurrentTime);
-    this.audio.removeEventListener("ended", this.handleEnd);
-    document.removeEventListener("keydown", this.handleKeys);
+    this.audio.removeEventListener('timeupdate', this.updateCurrentTime);
+    this.audio.removeEventListener('ended', this.handleEnd);
+    document.removeEventListener('keydown', this.handleKeys);
   };
 
-  handleKeys = (e) => {
+  handleKeys = e => {
     const { playing, playlistIndex, url, show } = this.state;
     if (url) {
-      if (e.code.toLowerCase() === "space") {
-        console.log("playing", playing, playlistIndex);
+      if (e.code.toLowerCase() === 'space') {
+        console.log('playing', playing, playlistIndex);
         if (playing) {
           this.pause();
         } else {
@@ -64,7 +64,7 @@ export default class SoundcloudPlayerProvider extends Component {
         }
       }
 
-      if (e.code.toLowerCase() === "escape") {
+      if (e.code.toLowerCase() === 'escape') {
         show && this.togglePlayer();
       }
     }
@@ -79,11 +79,11 @@ export default class SoundcloudPlayerProvider extends Component {
     this.stop();
     this.playlist && this.next();
   };
-  start = (url) => {
+  start = url => {
     if (url) {
       this.stop();
-      this.resolve(url, (track) => {
-        console.log("track obj", track);
+      this.resolve(url, track => {
+        console.log('track obj', track);
         this.setState({
           currentTrack: track,
           tracks: track.tracks || [],
@@ -111,7 +111,7 @@ export default class SoundcloudPlayerProvider extends Component {
       error: null,
     });
     if (!clientId) {
-      console.warn("No client id present. Please supply the cilentId prop");
+      console.warn('No client id present. Please supply the cilentId prop');
       return;
     }
 
@@ -120,21 +120,21 @@ export default class SoundcloudPlayerProvider extends Component {
     const res = await fetchWrapper(
       `${API_BASE}/resolve-url`,
       {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({
           url,
-          access_token: localStorage.getItem("access_token"),
+          access_token: localStorage.getItem('access_token'),
         }),
       },
       () =>
         this.setState({
-          error: "Soundcloud Server error, probably.",
+          error: 'Soundcloud Server error, probably.',
         })
     );
 
     if (!res || !res.data) {
       this.setState({
-        error: "Soundcloud Server error, probably.",
+        error: 'Soundcloud Server error, probably.',
       });
       return;
     }
@@ -170,8 +170,8 @@ export default class SoundcloudPlayerProvider extends Component {
     callback(data);
   };
 
-  updateTrack = (url) => {
-    console.log("this.updateTrack", url);
+  updateTrack = url => {
+    console.log('this.updateTrack', url);
 
     this.setState({
       url,
@@ -183,19 +183,19 @@ export default class SoundcloudPlayerProvider extends Component {
 
   playTrack = async (options = null) => {
     if (this.playStarted) {
-      console.log("play started, returning");
+      console.log('play started, returning');
 
       return;
     }
-    console.log("play started");
+    console.log('play started');
 
     this.playStarted = true;
 
     return this.play(options)
       .then(() => {
-        console.log("playing:", this.playing);
+        console.log('playing:', this.playing);
         this.playStarted = false;
-        console.log("play finished");
+        console.log('play finished');
 
         this.setState({
           reallyPlaying: true,
@@ -208,23 +208,23 @@ export default class SoundcloudPlayerProvider extends Component {
             currentTrack: this.playlist.tracks[options.playlistIndex],
           });
       })
-      .catch((err) => {
-        console.log("err", err);
-        console.log("play errorerd");
+      .catch(err => {
+        console.log('err', err);
+        console.log('play errorerd');
         // silent fail - most likely my fault
         this.playStarted = false;
       });
   };
 
-  play = async (options) => {
+  play = async options => {
     options = options || {};
     let src;
     this.setState({
       error: null,
     });
-    console.log("stuff", options, this.playlist, this.track);
+    console.log('stuff', options, this.playlist, this.track);
     if (options.streamUrl) {
-      console.log("streamUrl", options.streamUrl);
+      console.log('streamUrl', options.streamUrl);
 
       // this won't really work
       // (it'll play the track but there won't be any track
@@ -232,25 +232,25 @@ export default class SoundcloudPlayerProvider extends Component {
       src = options.streamUrl;
     } else if (this.playlist) {
       src = await this.getPlaylistSrc(options);
-      console.log("playlist", options);
+      console.log('playlist', options);
 
       this.setState({
         currentPlaylistUrl: this.playlist.permalink_url,
         currentTrack: this.playlist.tracks[this.state.playlistIndex],
       });
-      console.log("awatied", src);
+      console.log('awatied', src);
     } else if (this.track) {
-      console.log("this.track", this.track);
+      console.log('this.track', this.track);
 
       this.setState({
         currentPlaylistUrl: null,
         currentTrack: this.track,
       });
       const streamSrc = await fetchWrapper(`${API_BASE}/stream`, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({
           url: this.track.stream_url,
-          access_token: localStorage.getItem("access_token"),
+          access_token: localStorage.getItem('access_token'),
         }),
       });
       src = streamSrc.url;
@@ -258,9 +258,9 @@ export default class SoundcloudPlayerProvider extends Component {
 
     if (!src) {
       this.setState({
-        error: "no track source supplied",
+        error: 'no track source supplied',
       });
-      console.error("No track source.");
+      console.error('No track source.');
       return;
     }
 
@@ -277,11 +277,11 @@ export default class SoundcloudPlayerProvider extends Component {
     return audio;
   };
 
-  getPlaylistSrc = async (options) => {
+  getPlaylistSrc = async options => {
     const length = this.playlist.tracks.length;
     const { playlistIndex } = this.state;
     if (length) {
-      console.log("length", options);
+      console.log('length', options);
 
       let src;
       if (options.playlistIndex === undefined) {
@@ -290,33 +290,33 @@ export default class SoundcloudPlayerProvider extends Component {
           playlistIndex: index,
         });
         src = this.playlist.tracks[index].stream_url;
-        console.log("src", src);
+        console.log('src', src);
       } else {
-        console.log("set to", options.playlistIndex);
+        console.log('set to', options.playlistIndex);
 
         this.setState({
           playlistIndex: options.playlistIndex,
         });
         src = this.playlist.tracks[options.playlistIndex].stream_url;
-        console.log("sr", src);
+        console.log('sr', src);
       }
 
       // be silent if index is out of range
       if (playlistIndex >= length || playlistIndex < 0) {
-        console.log("out of range");
+        console.log('out of range');
 
         this.setState({
           playlistIndex: 0,
         });
         return;
       }
-      if (!localStorage.getItem("access_token")) return;
+      if (!localStorage.getItem('access_token')) return;
 
       const streamSrc = await fetchWrapper(`${API_BASE}/stream`, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({
           url: src,
-          access_token: localStorage.getItem("access_token"),
+          access_token: localStorage.getItem('access_token'),
         }),
       });
 
@@ -339,15 +339,15 @@ export default class SoundcloudPlayerProvider extends Component {
       // not sure about this
       // currentTrack: [],
     });
-    console.log("stopped playback");
+    console.log('stopped playback');
   };
 
-  next = (options) => {
+  next = options => {
     const { playlistIndex } = this.state;
     options = options || {};
     const tracksLength = this.playlist.tracks.length;
     if (this.skipping) {
-      console.log("play started, returning");
+      console.log('play started, returning');
       return;
     }
 
@@ -365,11 +365,11 @@ export default class SoundcloudPlayerProvider extends Component {
       this.skipping = true;
 
       this.setState(
-        (state) => ({
+        state => ({
           playlistIndex: state.playlistIndex + 1,
         }),
         () => {
-          console.log("playing next", this.state.playlistIndex);
+          console.log('playing next', this.state.playlistIndex);
 
           this.playTrack({ playlistIndex: this.state.playlistIndex })
             .then(() => {
@@ -389,17 +389,17 @@ export default class SoundcloudPlayerProvider extends Component {
       return;
     }
     if (this.skipping) {
-      console.log("play started, returning");
+      console.log('play started, returning');
       return;
     }
     if (this.playlist && this.playlist.tracks.length) {
       this.skipping = true;
       this.setState(
-        (state) => ({
+        state => ({
           playlistIndex: state.playlistIndex - 1,
         }),
         () => {
-          console.log("playing prev", this.state.playlistIndex);
+          console.log('playing prev', this.state.playlistIndex);
 
           this.playTrack({ playlistIndex: this.state.playlistIndex })
             .then(() => {
@@ -413,7 +413,7 @@ export default class SoundcloudPlayerProvider extends Component {
     }
   };
 
-  seek = (e) => {
+  seek = e => {
     if (!this.audio.readyState) {
       return false;
     }
@@ -440,7 +440,7 @@ export default class SoundcloudPlayerProvider extends Component {
   //   })
   // }
 
-  setVolume = (volumePercentage) => {
+  setVolume = volumePercentage => {
     if (!this.audio.readyState) {
       return;
     }
@@ -448,7 +448,7 @@ export default class SoundcloudPlayerProvider extends Component {
     this.audio.volume = volumePercentage;
   };
 
-  setTime = (seconds) => {
+  setTime = seconds => {
     if (!this.audio.readyState) {
       return;
     }
@@ -483,11 +483,11 @@ export const SoundcloudPlayerLite = ({ soundcloudUrl, className }) => {
       }) => {
         return (soundcloudUrl === currentTrack.permalink_url && playing) ||
           (currentPlaylistUrl &&
-            currentPlaylistUrl.split("://")[1] ===
-              soundcloudUrl.split("://")[1] &&
+            currentPlaylistUrl.split('://')[1] ===
+              soundcloudUrl.split('://')[1] &&
             playing) ? (
           <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
-            {(props) => (
+            {props => (
               <animated.div
                 style={props}
                 className={`sc-player__item lite ${className}`}
@@ -543,7 +543,7 @@ export const SoundcloudPlayerUI = ({ soundcloudUrl, lite }) => {
 
         return soundcloudUrl === currentTrack.permalink_url && lite ? (
           <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
-            {(props) => (
+            {props => (
               <animated.div style={props}>
                 <TrackItem
                   error={error}
@@ -568,19 +568,19 @@ export const SoundcloudPlayerUI = ({ soundcloudUrl, lite }) => {
           <div>
             <Spring
               native
-              from={{ transform: show ? "translateY(100%)" : "translateY(0)" }}
+              from={{ transform: show ? 'translateY(100%)' : 'translateY(0)' }}
               to={{
                 transform:
-                  show && reallyPlaying ? "translateY(0)" : "translateY(100%)",
+                  show && reallyPlaying ? 'translateY(0)' : 'translateY(100%)',
               }}
               config={{ tension: 105, friction: 12 }}
             >
-              {(props) => (
+              {props => (
                 <animated.div className="sc-player" style={props}>
                   <div className="track">
                     <div
                       className="sc-player__items flex-1"
-                      style={{ height: "100%" }}
+                      style={{ height: '100%' }}
                     >
                       <PlayerToggle
                         loading={loading}
@@ -593,14 +593,14 @@ export const SoundcloudPlayerUI = ({ soundcloudUrl, lite }) => {
                           <div>
                             <Trail
                               items={tracks}
-                              keys={(item) => item.id}
+                              keys={item => item.id}
                               from={{ opacity: 0 }}
                               to={{ opacity: 1 }}
                             >
-                              {(track, i) => (props) => (
+                              {(track, i) => props => (
                                 <TrackItem
                                   key={i}
-                                  style={{ ...props, cursor: "pointer" }}
+                                  style={{ ...props, cursor: 'pointer' }}
                                   playing={playing}
                                   controls={controls}
                                   currentTrack={currentTrack}
@@ -614,7 +614,7 @@ export const SoundcloudPlayerUI = ({ soundcloudUrl, lite }) => {
                         )}
                       </div>
                       <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
-                        {(props) => (
+                        {props => (
                           <animated.div style={props}>
                             <TrackItem
                               error={error}

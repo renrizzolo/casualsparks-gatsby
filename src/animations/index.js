@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import { Transition, Spring, Trail, config } from 'react-spring'
+import { Transition, Spring, Trail, config } from 'react-spring';
 
 export const FadeZoom = ({ items, children, ...rest }) => {
   return (
@@ -17,8 +17,8 @@ export const FadeZoom = ({ items, children, ...rest }) => {
       } */}
       {item => props => <div style={props} className={item.className} />}
     </Transition>
-  )
-}
+  );
+};
 
 export const TrailIn = ({ items, component: Component }) => (
   <Trail
@@ -37,7 +37,7 @@ export const TrailIn = ({ items, component: Component }) => (
       </div>
     )}
   </Trail>
-)
+);
 
 export const InFromTop = ({ children, style, className, show, ...rest }) => (
   <Spring
@@ -51,7 +51,7 @@ export const InFromTop = ({ children, style, className, show, ...rest }) => (
       </div>
     )}
   </Spring>
-)
+);
 
 export const InFromBottom = ({ children, style, className, show, ...rest }) => (
   <Spring
@@ -65,7 +65,7 @@ export const InFromBottom = ({ children, style, className, show, ...rest }) => (
       </div>
     )}
   </Spring>
-)
+);
 
 export const Zoom = ({ children, style, show, zoom, ...rest }) => (
   <Spring
@@ -79,32 +79,34 @@ export const Zoom = ({ children, style, show, zoom, ...rest }) => (
       </div>
     )}
   </Spring>
-)
+);
 
 export const Fade = ({ children, show, ...rest }) => {
   return (
     <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} {...rest}>
       {props => children(props)}
     </Spring>
-  )
-}
+  );
+};
 export const MenuTranslate = ({ children, show, ...rest }) => {
   return (
     <Spring
       from={{
         opacity: show ? 1 : 0,
         transform: show
-          ? 'translate3d(0px, 0px, 0px)' : 'translate3d(-10px, 10px, 20px)',
+          ? 'translate3d(0px, 0px, 0px)'
+          : 'translate3d(-10px, 10px, 20px)',
       }}
       to={{
         opacity: !show ? 1 : 0,
         transform: !show
-          ? 'translate3d(0px, 0px, 0px)' : 'translate3d(-10px, 10px, 20px)',
+          ? 'translate3d(0px, 0px, 0px)'
+          : 'translate3d(-10px, 10px, 20px)',
       }}
       config={config.gentle}
       {...rest}
     >
       {props => children(props)}
     </Spring>
-  )
-}
+  );
+};

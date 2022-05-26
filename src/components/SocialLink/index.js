@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Icon } from '../../img/icons'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Icon } from '../../img/icons';
 
 const SocialLink = ({ url, title, icon }) => {
   return url ? (
@@ -10,13 +10,13 @@ const SocialLink = ({ url, title, icon }) => {
     </a>
   ) : (
     <p>{title}</p>
-  )
-}
+  );
+};
 
 SocialLink.propTypes = {
   url: PropTypes.string,
   title: PropTypes.string.isRequired,
   icon: PropTypes.string,
-}
+};
 
-export default SocialLink
+export default SocialLink;

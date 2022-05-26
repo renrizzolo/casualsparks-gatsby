@@ -1,16 +1,16 @@
-import React from "react";
-import { Link } from "gatsby";
-import { Location } from "@reach/router";
-import { LogoSmall } from "./logo";
+import React from 'react';
+import { Link } from 'gatsby';
+import { Location } from '@reach/router';
+import { LogoSmall } from './logo';
 
-import { MenuTranslate } from "../animations";
+import { MenuTranslate } from '../animations';
 
 const Navbar = class extends React.Component {
   state = {
     showMenu: false,
   };
   handleMenu = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       showMenu: !state.showMenu,
     }));
   };
@@ -19,17 +19,17 @@ const Navbar = class extends React.Component {
       showMenu: false,
     });
   };
-  stripSlash = (path) => {
-    return path.replace(/\//g, "");
+  stripSlash = path => {
+    return path.replace(/\//g, '');
   };
 
   render() {
     return (
       <Location>
         {({ navigate, location: { pathname } }) =>
-          pathname === "/marmalade" ? null : (
+          pathname === '/marmalade' ? null : (
             <MenuTranslate key="nav" show={!this.state.showMenu}>
-              {(style) => (
+              {style => (
                 <React.Fragment>
                   <span
                     className={
@@ -39,17 +39,17 @@ const Navbar = class extends React.Component {
                     }
                   >
                     <div
-                      className={"menu-button__toggle"}
+                      className={'menu-button__toggle'}
                       onClick={this.handleMenu}
                     >
-                      {this.state.showMenu ? "close" : "menu"}
+                      {this.state.showMenu ? 'close' : 'menu'}
                     </div>
                   </span>
                   <Menu
                     style={style}
                     onClick={this.hideMenu}
                     className={`mobile ${
-                      this.state.showMenu ? "open" : "closed"
+                      this.state.showMenu ? 'open' : 'closed'
                     } ${this.stripSlash(pathname)}`}
                   />
 
@@ -64,7 +64,7 @@ const Navbar = class extends React.Component {
   }
 };
 
-const Menu = (props) => {
+const Menu = props => {
   return (
     <ul
       style={props.style}

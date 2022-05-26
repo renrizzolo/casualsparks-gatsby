@@ -1,7 +1,7 @@
-import React from "react";
-import { StaticQuery, graphql } from "gatsby";
-import ReleaseItem from "./ReleaseItem";
-import { Trail, config } from "react-spring";
+import React from 'react';
+import { StaticQuery, graphql } from 'gatsby';
+import ReleaseItem from './ReleaseItem';
+import { Trail, config } from 'react-spring';
 
 const Releases = ({ section }) => {
   return (
@@ -26,7 +26,7 @@ const Releases = ({ section }) => {
         }
       `}
     >
-      {(data) =>
+      {data =>
         data && data.allMarkdownRemark && data.allMarkdownRemark.edges ? (
           <Trail
             native
@@ -38,7 +38,7 @@ const Releases = ({ section }) => {
             to={{ opacity: 1 }}
             config={config.gentle}
           >
-            {({ node: post }) => (props) => (
+            {({ node: post }) => props => (
               <ReleaseItem
                 style={props}
                 slug={post.fields.slug}

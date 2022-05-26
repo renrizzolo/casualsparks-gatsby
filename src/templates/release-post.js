@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Helmet from "react-helmet";
-import { graphql } from "gatsby";
-import Content, { HTMLContent } from "../components/Content";
-import PageLayout from "../components/PageLayout";
-import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
-import PlayButton from "../components/PlayButton";
-import ItemButton from "../components/ItemButton";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import { graphql } from 'gatsby';
+import Content, { HTMLContent } from '../components/Content';
+import PageLayout from '../components/PageLayout';
+import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
+import PlayButton from '../components/PlayButton';
+import ItemButton from '../components/ItemButton';
 
 export const ReleasePostTemplate = ({
   contentComponent,
@@ -37,7 +37,7 @@ export const ReleasePostTemplate = ({
       }
       backgroundColor="pearl"
     >
-      {helmet || ""}
+      {helmet || ''}
       <section className="flex-container__column">
         <div className="single-page">
           <ReleaseItem
@@ -70,7 +70,7 @@ const ReleaseItem = ({
         <div className="item-info">
           <div className="link-container">
             {links &&
-              links.map((link) => (
+              links.map(link => (
                 <ItemButton
                   small
                   key={link.label}
@@ -86,7 +86,7 @@ const ReleaseItem = ({
                 label="SoundCloud"
                 href={soundcloudUrl}
                 iconName="soundcloud"
-                iconStyle={{ fill: "#f50", marginRight: 6 }}
+                iconStyle={{ fill: '#f50', marginRight: 6 }}
               />
             )}
           </div>

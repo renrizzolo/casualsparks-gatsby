@@ -1,6 +1,6 @@
-import React from "react";
-import { Icon } from "../../../img/icons";
-import { ControlButton, Waveform } from "./";
+import React from 'react';
+import { Icon } from '../../../img/icons';
+import { ControlButton, Waveform } from './';
 
 const TrackItem = ({
   controls: { play, pause, previous, next, stop, seek },
@@ -27,9 +27,9 @@ const TrackItem = ({
       style={style}
       key={track.id}
       className={`sc-player__item
-      ${lite ? " lite" : ""} 
-      ${hero ? " hero" : ""} 
-      ${isPlaying && !hero ? " highlighted" : ""}
+      ${lite ? ' lite' : ''} 
+      ${hero ? ' hero' : ''} 
+      ${isPlaying && !hero ? ' highlighted' : ''}
       `}
       onClick={() =>
         !hero ? (isPlaying ? pause() : play(playlistIndex)) : null
@@ -44,7 +44,7 @@ const TrackItem = ({
               )}
               <ControlButton
                 className="stop"
-                icon={playing ? "stop" : "play"}
+                icon={playing ? 'stop' : 'play'}
                 fn={playing ? stop : play}
               />
               {isPlaylist && (
@@ -75,7 +75,7 @@ const TrackItem = ({
               </a>
             ) : (
               <span>
-                {track && track.user && track.user.username} -{" "}
+                {track && track.user && track.user.username} -{' '}
                 {track && track.title}
               </span>
             )}

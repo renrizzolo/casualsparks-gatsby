@@ -1,5 +1,5 @@
-import React from "react";
-import { Icon } from "../../img/icons";
+import React from 'react';
+import { Icon } from '../../img/icons';
 
 const ItemButton = ({
   small,
@@ -14,8 +14,8 @@ const ItemButton = ({
     <a
       target="_blank"
       rel="noopener noreferrer"
-      className={`item-button ${small ? "item-button__small" : ""} ${
-        className ? className : ""
+      className={`item-button ${small ? 'item-button__small' : ''} ${
+        className ? className : ''
       }`}
       href={href}
     >

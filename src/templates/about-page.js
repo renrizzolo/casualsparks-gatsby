@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { graphql } from "gatsby";
-import Content, { HTMLContent } from "../components/Content";
-import { Fade } from "../animations/";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
+import Content, { HTMLContent } from '../components/Content';
+import { Fade } from '../animations/';
 
 export const AboutPageTemplate = ({ title, content, contentComponent }) => {
   const PageContent = contentComponent || Content;
 
   return (
     <Fade>
-      {(style) => (
+      {style => (
         <div style={style} className="circle-text flex-container__column">
           <h1 className="heading">{title}</h1>
           <div>

@@ -1,7 +1,7 @@
-import React from "react";
-import { SC } from "./SoundcloudPlayer";
-import { Icon } from "../img/icons";
-import "../styles/common/play-button.scss";
+import React from 'react';
+import { SC } from './SoundcloudPlayer';
+import { Icon } from '../img/icons';
+import '../styles/common/play-button.scss';
 const PlayButton = ({ soundcloudUrl, full }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const {
@@ -16,7 +16,7 @@ const PlayButton = ({ soundcloudUrl, full }) => {
   const isPlaying =
     (soundcloudUrl === currentTrack.permalink_url && playing) ||
     (currentPlaylistUrl &&
-      currentPlaylistUrl.split("://")[1] === soundcloudUrl.split("://")[1] &&
+      currentPlaylistUrl.split('://')[1] === soundcloudUrl.split('://')[1] &&
       playing);
   console.log({ error });
   React.useEffect(() => {
@@ -26,8 +26,8 @@ const PlayButton = ({ soundcloudUrl, full }) => {
   return soundcloudUrl ? (
     <button
       className={`sc-player__button flex-container flex-center play-button ${
-        full ? " full" : ""
-      } ${isLoading ? "loading" : ""}`}
+        full ? ' full' : ''
+      } ${isLoading ? 'loading' : ''}`}
       onClick={() => {
         if (isPlaying) {
           return stop();
@@ -38,7 +38,7 @@ const PlayButton = ({ soundcloudUrl, full }) => {
     >
       <Icon
         size={32}
-        name={isLoading ? "album" : isPlaying ? "stop" : "play_arrow"}
+        name={isLoading ? 'album' : isPlaying ? 'stop' : 'play_arrow'}
       />
     </button>
   ) : null;

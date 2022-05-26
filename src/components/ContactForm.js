@@ -1,28 +1,28 @@
-import React from "react";
+import React from 'react';
 
 function encode(data) {
   return Object.keys(data)
-    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
 }
 
 export default class Contact extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      email: "",
-      message: "",
+      name: '',
+      email: '',
+      message: '',
       success: false,
       error: false,
     };
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     this.setState({
       success: false,
       error: false,
@@ -37,23 +37,23 @@ export default class Contact extends React.Component {
       });
       return;
     }
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({
-        "form-name": form.getAttribute("name"),
+        'form-name': form.getAttribute('name'),
         ...this.state,
       }),
     })
       .then(() => {
         this.setState({
-          email: "",
-          name: "",
-          message: "",
+          email: '',
+          name: '',
+          message: '',
           success: true,
         });
       })
-      .catch((error) => alert(error));
+      .catch(error => alert(error));
   };
 
   render() {
@@ -71,7 +71,7 @@ export default class Contact extends React.Component {
           <input type="hidden" name="form-name" value="contact" />
           <p hidden>
             <label>
-              Don’t fill this out:{" "}
+              Don’t fill this out:{' '}
               <input name="wtp" onChange={this.handleChange} />
             </label>
           </p>

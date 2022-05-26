@@ -1,10 +1,10 @@
-import React from "react";
-import { animated } from "react-spring";
-import { Link } from "gatsby";
-import kebabCase from "lodash.kebabcase";
-import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
-import PlayButton from "./PlayButton";
-import ItemButton from "../components/ItemButton";
+import React from 'react';
+import { animated } from 'react-spring';
+import { Link } from 'gatsby';
+import kebabCase from 'lodash.kebabcase';
+import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
+import PlayButton from './PlayButton';
+import ItemButton from '../components/ItemButton';
 
 const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
   const now = new Date();
@@ -46,7 +46,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
             </div>
             <div className="link-container">
               {data.links &&
-                data.links.map((link) => (
+                data.links.map(link => (
                   <ItemButton
                     small
                     key={link.label}
@@ -62,7 +62,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
                   label="SoundCloud"
                   href={data.soundcloudUrl}
                   iconName="soundcloud"
-                  iconStyle={{ fill: "#f50", marginRight: 6 }}
+                  iconStyle={{ fill: '#f50', marginRight: 6 }}
                 />
               )}
             </div>
@@ -109,7 +109,7 @@ const ReleaseItem = ({ style, data, slug, backgroundColor }) => {
 };
 
 ReleaseItem.defaultProps = {
-  backgroundColor: "pearl",
+  backgroundColor: 'pearl',
   description: false,
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class WatchConnection extends React.Component {
   state = {
@@ -7,15 +7,15 @@ class WatchConnection extends React.Component {
 
   componentDidMount() {
     this.setState({ online: window.navigator.onLine });
-    window.addEventListener("online", this.watchConnection);
-    window.addEventListener("offline", this.watchConnection);
+    window.addEventListener('online', this.watchConnection);
+    window.addEventListener('offline', this.watchConnection);
   }
   componentWillUnmount() {
-    window.removeEventListener("online", this.watchConnection);
-    window.removeEventListener("offline", this.watchConnection);
+    window.removeEventListener('online', this.watchConnection);
+    window.removeEventListener('offline', this.watchConnection);
   }
-  watchConnection = (e) => {
-    this.setState({ online: e.type === "online" });
+  watchConnection = e => {
+    this.setState({ online: e.type === 'online' });
   };
 
   render() {

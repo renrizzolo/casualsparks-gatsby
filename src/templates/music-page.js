@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { graphql } from "gatsby";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 
-import "../styles/common/item-grid.scss";
-import PageLayout from "../components/PageLayout";
-import Releases from "../components/Releases";
+import '../styles/common/item-grid.scss';
+import PageLayout from '../components/PageLayout';
+import Releases from '../components/Releases';
 const MusicPageTemplate = ({ title, sections }) => {
   return (
     <PageLayout title={title} backgroundColor="blue">
@@ -14,7 +14,7 @@ const MusicPageTemplate = ({ title, sections }) => {
 };
 
 const Grid = ({ sections }) => {
-  return sections.map((section) => (
+  return sections.map(section => (
     <section key={section.title} className="item-grid">
       <h1 className="heading item-grid__heading">
         <span className="dark-blue-bkg">{section.title}</span>

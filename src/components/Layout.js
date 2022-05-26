@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import Helmet from "react-helmet";
-import { StaticQuery, graphql } from "gatsby";
-import CircleLayout from "./CircleLayout";
-import { Fade } from "../animations";
-import Navbar from "./Navbar";
-import "../styles/index.scss";
+import React, { Component } from 'react';
+import Helmet from 'react-helmet';
+import { StaticQuery, graphql } from 'gatsby';
+import CircleLayout from './CircleLayout';
+import { Fade } from '../animations';
+import Navbar from './Navbar';
+import '../styles/index.scss';
 import SoundcloudPlayerProvider, {
   SoundcloudPlayerUI,
-} from "./SoundcloudPlayer";
+} from './SoundcloudPlayer';
 
 class TemplateWrapper extends Component {
   state = {
@@ -28,13 +28,13 @@ class TemplateWrapper extends Component {
     }, 1000);
   };
   setScrollBarWidth = () => {
-    const scrollEl = document.getElementById("scroll-width");
+    const scrollEl = document.getElementById('scroll-width');
     const scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth;
     const root = document.documentElement;
     const originalOffset = getComputedStyle(root).getPropertyValue(
-      "--menu-offset"
+      '--menu-offset'
     );
-    root.style.setProperty("--menu-offset", originalOffset - scrollbarWidth);
+    root.style.setProperty('--menu-offset', originalOffset - scrollbarWidth);
   };
 
   // componentWillReceiveProps(nextProps) {
@@ -65,13 +65,11 @@ class TemplateWrapper extends Component {
             }
           }
         `}
-        render={(data) => (
+        render={data => (
           <div>
             <Helmet>
               <html lang="en" />
-              <title>{`${data.site.siteMetadata.title} - ${
-                pageContext.title
-              }`}</title>
+              <title>{`${data.site.siteMetadata.title} - ${pageContext.title}`}</title>
               <meta
                 name="description"
                 content={data.site.siteMetadata.description}
@@ -87,7 +85,7 @@ class TemplateWrapper extends Component {
               <meta
                 property="og:title"
                 content={`${data.site.siteMetadata.title}${pageContext.title &&
-                  "-" + pageContext.title}`}
+                  '-' + pageContext.title}`}
               />
               <meta property="og:url" content="/" />
               <meta
@@ -105,9 +103,9 @@ class TemplateWrapper extends Component {
               <SoundcloudPlayerProvider clientId="a7c99e975fa37c393cb1a6d89d5c1e0b">
                 {pageContext && pageContext.layout && (
                   <div>
-                    {pageContext && pageContext.layout === "square" ? (
+                    {pageContext && pageContext.layout === 'square' ? (
                       <Fade show={this.state.mounted}>
-                        {(style) => <div style={style}>{children}</div>}
+                        {style => <div style={style}>{children}</div>}
                       </Fade>
                     ) : (
                       <CircleLayout
