@@ -39,7 +39,7 @@ class TemplateWrapper extends Component {
 
   // componentWillReceiveProps(nextProps) {
   //   if (nextProps.pageContext.layout === 'circle' && this.props.pageContext.layout === 'square') {
-  //     console.log('didupdate', this.props.pageContext);
+  //      
   //     this.setState({
   //       zoom: true,
   //     });
