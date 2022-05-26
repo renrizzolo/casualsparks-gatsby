@@ -1,12 +1,13 @@
 export const API_BASE = "/.netlify/functions";
 
-export const fetchWrapper = async (url, params) => {
+export const fetchWrapper = async (url, params, onError) => {
   try {
     const data = await fetch(url, params);
     const res = await data.json();
     return res;
   } catch (err) {
     console.error(err);
+    onError && onError();
   }
 };
 

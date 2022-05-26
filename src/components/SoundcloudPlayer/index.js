@@ -117,21 +117,26 @@ export default class SoundcloudPlayerProvider extends Component {
 
     await getToken();
 
-    const res = await fetchWrapper(`${API_BASE}/resolve-url`, {
-      method: "POST",
-      body: JSON.stringify({
-        url,
-        access_token: localStorage.getItem("access_token"),
-      }),
-    });
-
-    if (!res || !res.data) {
-      if (res.errors) {
+    const res = await fetchWrapper(
+      `${API_BASE}/resolve-url`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          url,
+          access_token: localStorage.getItem("access_token"),
+        }),
+      },
+      () =>
         this.setState({
           error: "Soundcloud Server error, probably.",
-        });
-        return;
-      }
+        })
+    );
+
+    if (!res || !res.data) {
+      this.setState({
+        error: "Soundcloud Server error, probably.",
+      });
+      return;
     }
 
     if (res.errors) {
@@ -306,7 +311,7 @@ export default class SoundcloudPlayerProvider extends Component {
         return;
       }
       if (!localStorage.getItem("access_token")) return;
-      console.log("should hit stream?", src);
+
       const streamSrc = await fetchWrapper(`${API_BASE}/stream`, {
         method: "POST",
         body: JSON.stringify({
@@ -314,7 +319,6 @@ export default class SoundcloudPlayerProvider extends Component {
           access_token: localStorage.getItem("access_token"),
         }),
       });
-      console.log("uhh", streamSrc);
 
       return streamSrc.url;
     }
