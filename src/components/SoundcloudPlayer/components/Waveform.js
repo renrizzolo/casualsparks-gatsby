@@ -10,7 +10,6 @@ class Waveform extends PureComponent {
     this.setState({
       prospectiveSeek: percent * duration,
     });
-    console.log(percent, duration, this.state.prospectiveSeek);
   };
   resetProspectiveSeek = () => {
     this.setState({

@@ -1,51 +1,35 @@
-export const appendQueryParam = (url, param, value) => {
-  console.log(url, param, value)
+export const API_BASE = "/.netlify/functions";
 
-  const U = parseURL(url)
-  const regex = /\?(?:.*)$/
-  const chr = regex.test(U.search) ? '&' : '?'
-  const result =
-    U.protocol +
-    '//' +
-    U.host +
-    U.port +
-    U.pathname +
-    U.search +
-    chr +
-    param +
-    '=' +
-    value +
-    U.hash
-
-  return result
-}
-let anchor
-export const parseURL = url => {
-  const keys = 'protocol hostname host pathname port search hash href'.split(
-    ' '
-  )
-  if (!anchor) {
-    anchor = document.createElement('a')
-  }
-
-  let result = {}
-
-  anchor.href = url || ''
-
-  for (let i = 0, len = keys.length; i < len; i++) {
-    let key = keys[i]
-    result[key] = anchor[key]
-  }
-
-  return result
-}
-
-export const fetchUrl = async url => {
+export const fetchWrapper = async (url, params) => {
   try {
-    const data = await fetch(url)
-    const res = await data.json()
-    return res
+    const data = await fetch(url, params);
+    const res = await data.json();
+    return res;
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-}
+};
+
+export const getToken = async () => {
+  const existingToken = localStorage.getItem("access_token");
+  const expiry = localStorage.getItem("token_expiry");
+  if (existingToken && expiry && expiry > Date.now()) return existingToken;
+
+  const res = await fetchWrapper(`${API_BASE}/token`);
+  if (!res) return;
+
+  const { data } = res;
+
+  const { access_token, expires_in, refresh_token, error } = data;
+
+  console.log(access_token, expires_in, refresh_token);
+  if (!access_token || error) {
+    this.setState({
+      error: error ?? "Could not authenticate with SoundCloud.",
+    });
+    return;
+  }
+
+  localStorage.setItem("access_token", access_token);
+  localStorage.setItem("token_expiry", Date.now() + expires_in * 1000);
+};

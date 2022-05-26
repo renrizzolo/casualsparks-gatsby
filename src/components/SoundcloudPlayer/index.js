@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Trail, Spring, animated } from "react-spring";
-import "../../styles/common/player.scss";
 import { TrackItem, PlayerToggle, Waveform, Controls } from "./components";
-import { appendQueryParam, fetchUrl, parseURL } from "./utils";
-
-const SOUNDCLOUD_API_BASE_URL = "https://api.soundcloud.com";
+import { API_BASE, getToken, fetchWrapper } from "./utils";
+import "../../styles/common/player.scss";
 
 export const SC = React.createContext();
 
@@ -92,8 +90,6 @@ export default class SoundcloudPlayerProvider extends Component {
         });
         // once track is loaded it can be played
         this.playTrack();
-        // .then(res => console.log(res))
-        // .catch(err => console.log(err))
       });
     }
   };
@@ -102,7 +98,6 @@ export default class SoundcloudPlayerProvider extends Component {
     this.setState({
       show: !this.state.show,
     });
-    console.log(!this.state.show);
   };
 
   resetData = () => {
@@ -119,46 +114,55 @@ export default class SoundcloudPlayerProvider extends Component {
       console.warn("No client id present. Please supply the cilentId prop");
       return;
     }
-    const resolveUrl = `${SOUNDCLOUD_API_BASE_URL}/resolve.json?url=${encodeURIComponent(
-      url
-    )}&client_id=${clientId}`;
 
-    let res = await fetchUrl(resolveUrl);
-    if (!res) {
+    await getToken();
+
+    const res = await fetchWrapper(`${API_BASE}/resolve-url`, {
+      method: "POST",
+      body: JSON.stringify({
+        url,
+        access_token: localStorage.getItem("access_token"),
+      }),
+    });
+
+    if (!res || !res.data) {
       if (res.errors) {
         this.setState({
-          error: "Soundcloud Server errror, probably.",
+          error: "Soundcloud Server error, probably.",
         });
         return;
       }
     }
+
     if (res.errors) {
       this.setState({
-        error: res.errors[0].error_message,
+        error: res.errors[0]?.error_message ?? res.message,
       });
       return;
     }
+
+    const { data } = res;
+
     this.resetData();
+    // ??
+    // if (Array.isArray(res)) {
+    //   res = { tracks: data };
+    // }
 
-    if (Array.isArray(res)) {
-      res = { tracks: res };
-    }
-
-    if (res.tracks) {
-      this.playlist = res;
+    if (data.tracks) {
+      this.playlist = data;
     } else {
-      this.track = res;
-
+      this.track = data;
       // save timings
-      const U = parseURL(url);
-      this.track.stream_url += U.hash;
+      // ??
+      // this.track.stream_url += url.split("#")?.[1];
     }
 
     this.duration =
-      res.duration && !isNaN(res.duration)
-        ? res.duration / 1000 // convert to seconds
+      data.duration && !isNaN(data.duration)
+        ? data.duration / 1000 // convert to seconds
         : 0; // no duration is zero
-    callback(res);
+    callback(data);
   };
 
   updateTrack = (url) => {
@@ -210,32 +214,42 @@ export default class SoundcloudPlayerProvider extends Component {
   play = async (options) => {
     options = options || {};
     let src;
-    const { playlistIndex } = this.state;
     this.setState({
       error: null,
     });
+    console.log("stuff", options, this.playlist, this.track);
     if (options.streamUrl) {
+      console.log("streamUrl", options.streamUrl);
+
       // this won't really work
       // (it'll play the track but there won't be any track
       // data to show the UI)
       src = options.streamUrl;
     } else if (this.playlist) {
       src = await this.getPlaylistSrc(options);
+      console.log("playlist", options);
+
       this.setState({
         currentPlaylistUrl: this.playlist.permalink_url,
         currentTrack: this.playlist.tracks[this.state.playlistIndex],
       });
       console.log("awatied", src);
     } else if (this.track) {
+      console.log("this.track", this.track);
+
       this.setState({
         currentPlaylistUrl: null,
-
         currentTrack: this.track,
       });
-      src = this.track.stream_url;
+      const streamSrc = await fetchWrapper(`${API_BASE}/stream`, {
+        method: "POST",
+        body: JSON.stringify({
+          url: this.track.stream_url,
+          access_token: localStorage.getItem("access_token"),
+        }),
+      });
+      src = streamSrc.url;
     }
-
-    console.log(src);
 
     if (!src) {
       this.setState({
@@ -245,18 +259,11 @@ export default class SoundcloudPlayerProvider extends Component {
       return;
     }
 
-    if (this.props.clientId) {
-      console.log("before app", src);
-
-      src = appendQueryParam(src, "client_id", this.props.clientId);
-    }
-
     if (src !== this.audio.src) {
       this.audio.src = src;
     }
 
     this.playing = src;
-    console.log(src, playlistIndex);
 
     const audio = await this.audio.play();
     this.setState({
@@ -265,7 +272,7 @@ export default class SoundcloudPlayerProvider extends Component {
     return audio;
   };
 
-  getPlaylistSrc = (options) => {
+  getPlaylistSrc = async (options) => {
     const length = this.playlist.tracks.length;
     const { playlistIndex } = this.state;
     if (length) {
@@ -298,7 +305,18 @@ export default class SoundcloudPlayerProvider extends Component {
         });
         return;
       }
-      return src;
+      if (!localStorage.getItem("access_token")) return;
+      console.log("should hit stream?", src);
+      const streamSrc = await fetchWrapper(`${API_BASE}/stream`, {
+        method: "POST",
+        body: JSON.stringify({
+          url: src,
+          access_token: localStorage.getItem("access_token"),
+        }),
+      });
+      console.log("uhh", streamSrc);
+
+      return streamSrc.url;
     }
   };
 
@@ -395,13 +413,8 @@ export default class SoundcloudPlayerProvider extends Component {
     if (!this.audio.readyState) {
       return false;
     }
-    const { target } = e;
-    console.log(target.offsetWidth, e.nativeEvent.offsetX);
 
     const percent = e.nativeEvent.offsetX / e.target.offsetWidth;
-    console.log(percent);
-
-    console.log(percent * (this.audio.duration || 0));
 
     this.audio.currentTime = percent * (this.audio.duration || 0);
 
@@ -464,7 +477,6 @@ export const SoundcloudPlayerLite = ({ soundcloudUrl, className }) => {
         prospectiveSeek,
         events,
       }) => {
-        console.log("pliayin", currentPlaylistUrl);
         return (soundcloudUrl === currentTrack.permalink_url && playing) ||
           (currentPlaylistUrl &&
             currentPlaylistUrl.split("://")[1] ===
