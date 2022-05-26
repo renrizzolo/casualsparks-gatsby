@@ -55,7 +55,6 @@ export default class SoundcloudPlayerProvider extends Component {
     const { playing, playlistIndex, url, show } = this.state;
     if (url) {
       if (e.code.toLowerCase() === 'space') {
-        console.log('playing', playing, playlistIndex);
         if (playing) {
           this.pause();
         } else {
@@ -83,7 +82,6 @@ export default class SoundcloudPlayerProvider extends Component {
     if (url) {
       this.stop();
       this.resolve(url, track => {
-        console.log('track obj', track);
         this.setState({
           currentTrack: track,
           tracks: track.tracks || [],
@@ -171,7 +169,7 @@ export default class SoundcloudPlayerProvider extends Component {
   };
 
   updateTrack = url => {
-    console.log('this.updateTrack', url);
+     
 
     this.setState({
       url,
@@ -183,19 +181,19 @@ export default class SoundcloudPlayerProvider extends Component {
 
   playTrack = async (options = null) => {
     if (this.playStarted) {
-      console.log('play started, returning');
+       
 
       return;
     }
-    console.log('play started');
+     
 
     this.playStarted = true;
 
     return this.play(options)
       .then(() => {
-        console.log('playing:', this.playing);
+         
         this.playStarted = false;
-        console.log('play finished');
+         
 
         this.setState({
           reallyPlaying: true,
@@ -209,8 +207,8 @@ export default class SoundcloudPlayerProvider extends Component {
           });
       })
       .catch(err => {
-        console.log('err', err);
-        console.log('play errorerd');
+         
+         
         // silent fail - most likely my fault
         this.playStarted = false;
       });
@@ -222,9 +220,9 @@ export default class SoundcloudPlayerProvider extends Component {
     this.setState({
       error: null,
     });
-    console.log('stuff', options, this.playlist, this.track);
+     
     if (options.streamUrl) {
-      console.log('streamUrl', options.streamUrl);
+       
 
       // this won't really work
       // (it'll play the track but there won't be any track
@@ -232,15 +230,15 @@ export default class SoundcloudPlayerProvider extends Component {
       src = options.streamUrl;
     } else if (this.playlist) {
       src = await this.getPlaylistSrc(options);
-      console.log('playlist', options);
+       
 
       this.setState({
         currentPlaylistUrl: this.playlist.permalink_url,
         currentTrack: this.playlist.tracks[this.state.playlistIndex],
       });
-      console.log('awatied', src);
+       
     } else if (this.track) {
-      console.log('this.track', this.track);
+       
 
       this.setState({
         currentPlaylistUrl: null,
@@ -281,7 +279,7 @@ export default class SoundcloudPlayerProvider extends Component {
     const length = this.playlist.tracks.length;
     const { playlistIndex } = this.state;
     if (length) {
-      console.log('length', options);
+       
 
       let src;
       if (options.playlistIndex === undefined) {
@@ -290,20 +288,20 @@ export default class SoundcloudPlayerProvider extends Component {
           playlistIndex: index,
         });
         src = this.playlist.tracks[index].stream_url;
-        console.log('src', src);
+         
       } else {
-        console.log('set to', options.playlistIndex);
+         
 
         this.setState({
           playlistIndex: options.playlistIndex,
         });
         src = this.playlist.tracks[options.playlistIndex].stream_url;
-        console.log('sr', src);
+         
       }
 
       // be silent if index is out of range
       if (playlistIndex >= length || playlistIndex < 0) {
-        console.log('out of range');
+         
 
         this.setState({
           playlistIndex: 0,
@@ -339,7 +337,7 @@ export default class SoundcloudPlayerProvider extends Component {
       // not sure about this
       // currentTrack: [],
     });
-    console.log('stopped playback');
+     
   };
 
   next = options => {
@@ -347,7 +345,7 @@ export default class SoundcloudPlayerProvider extends Component {
     options = options || {};
     const tracksLength = this.playlist.tracks.length;
     if (this.skipping) {
-      console.log('play started, returning');
+       
       return;
     }
 
@@ -369,7 +367,7 @@ export default class SoundcloudPlayerProvider extends Component {
           playlistIndex: state.playlistIndex + 1,
         }),
         () => {
-          console.log('playing next', this.state.playlistIndex);
+           
 
           this.playTrack({ playlistIndex: this.state.playlistIndex })
             .then(() => {
@@ -389,7 +387,7 @@ export default class SoundcloudPlayerProvider extends Component {
       return;
     }
     if (this.skipping) {
-      console.log('play started, returning');
+       
       return;
     }
     if (this.playlist && this.playlist.tracks.length) {
@@ -399,7 +397,7 @@ export default class SoundcloudPlayerProvider extends Component {
           playlistIndex: state.playlistIndex - 1,
         }),
         () => {
-          console.log('playing prev', this.state.playlistIndex);
+           
 
           this.playTrack({ playlistIndex: this.state.playlistIndex })
             .then(() => {

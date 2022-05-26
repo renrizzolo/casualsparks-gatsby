@@ -23,7 +23,7 @@ export const getToken = async () => {
 
   const { access_token, expires_in, refresh_token, error } = data;
 
-  console.log(access_token, expires_in, refresh_token);
+   
   if (!access_token || error) {
     this.setState({
       error: error ?? 'Could not authenticate with SoundCloud.',

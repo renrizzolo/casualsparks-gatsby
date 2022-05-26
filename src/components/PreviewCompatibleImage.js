@@ -1,22 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Img from 'gatsby-image';
+import React from "react";
+import PropTypes from "prop-types";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 const PreviewCompatibleImage = ({ imageInfo, className }) => {
   const imageStyle = {
-    width: '100%',
-    height: 'auto',
+    width: "100%",
+    height: "auto",
     // maxWidth: 500,
   };
 
-  const { alt = '', childImageSharp, image } = imageInfo;
+  const img = getImage(imageInfo.childImageSharp);
+
+  const { alt = "", childImageSharp, image } = imageInfo;
 
   if (!!image && !!image.childImageSharp) {
     return (
-      <Img
+      <GatsbyImage
         className={className}
         style={imageStyle}
-        fluid={image.childImageSharp.fluid}
+        // fluid={image.childImageSharp.fluid}
+        image={img}
         alt={alt}
       />
     );
@@ -24,16 +27,17 @@ const PreviewCompatibleImage = ({ imageInfo, className }) => {
 
   if (!!childImageSharp) {
     return (
-      <Img
+      <GatsbyImage
         className={className}
         style={imageStyle}
-        fluid={childImageSharp.fluid}
+        image={img}
+        // fluid={childImageSharp.fluid}
         alt={alt}
       />
     );
   }
 
-  if (!!image && typeof image === 'string')
+  if (!!image && typeof image === "string")
     return (
       <img className={className} style={imageStyle} src={image} alt={alt} />
     );
