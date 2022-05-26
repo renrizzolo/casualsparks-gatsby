@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
-import PageLayout from '../../components/PageLayout';
-import ReleaseItem from '../../components/ReleaseItem';
+import React from "react";
+import PropTypes from "prop-types";
+import { graphql } from "gatsby";
+import PageLayout from "../../components/PageLayout";
+import ReleaseItem from "../../components/ReleaseItem";
 
 const ReleasePageTemplate = ({ title, sections, children }) => {
   return (
-    <PageLayout title={'Latest Releases'} backgroundColor="pearl">
+    <PageLayout title={"Latest Releases"} backgroundColor="pearl">
       <div className="item-grid">{children}</div>
     </PageLayout>
   );
@@ -57,9 +57,7 @@ export const releaseFrontmatterFragment = graphql`
       releaseType
       image {
         childImageSharp {
-          fluid(maxWidth: 1000, quality: 80) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(width: 600, quality: 75)
         }
       }
     }

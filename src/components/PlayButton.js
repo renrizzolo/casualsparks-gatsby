@@ -18,7 +18,7 @@ const PlayButton = ({ soundcloudUrl, full }) => {
     (currentPlaylistUrl &&
       currentPlaylistUrl.split('://')[1] === soundcloudUrl.split('://')[1] &&
       playing);
-  console.log({ error });
+
   React.useEffect(() => {
     (isPlaying || error) && isLoading && setIsLoading(false);
   }, [isPlaying, error, isLoading]);
