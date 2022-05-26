@@ -30,7 +30,6 @@ export default class Contact extends React.Component {
     const { name, email, message } = this.state;
     e.preventDefault();
     const form = e.target;
-    console.log(name, email, message);
 
     if (!name || !email || !message) {
       this.setState({

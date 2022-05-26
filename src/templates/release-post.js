@@ -135,7 +135,6 @@ ReleasePostTemplate.propTypes = {
 
 const ReleasePost = ({ data }) => {
   const { markdownRemark: post } = data;
-  console.log(post);
 
   return (
     <ReleasePostTemplate

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
-import echarts from "echarts";
+import * as echarts from "echarts";
 import { HTMLContent } from "../components/Content";
 import { Fade } from "../animations";
 import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
@@ -269,7 +269,6 @@ class CircularAudioWave {
     this.chartOption = JSON.parse(JSON.stringify(this.defaultChartOption));
   }
   loadAudio(filePath) {
-    console.log(filePath);
     this.filePath = filePath;
     this._setupAudioNodes();
     this._setupOfflineContext();
@@ -513,7 +512,6 @@ class CircularAudioWave {
     let bpm = groups.sort((intA, intB) => {
       return intB.count - intA.count;
     })[0].bpm;
-    console.log("bpm:", bpm);
 
     return bpm;
   }

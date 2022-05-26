@@ -4,8 +4,6 @@ import ReleaseItem from "./ReleaseItem";
 import { Trail, config } from "react-spring";
 
 const Releases = ({ section }) => {
-  console.log(section);
-
   return (
     <StaticQuery
       query={graphql`

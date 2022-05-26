@@ -1,7 +1,7 @@
 import React from "react";
 import { animated } from "react-spring";
 import { Link } from "gatsby";
-import { kebabCase } from "lodash";
+import kebabCase from "lodash.kebabcase";
 import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
 import PlayButton from "./PlayButton";
 import ItemButton from "../components/ItemButton";

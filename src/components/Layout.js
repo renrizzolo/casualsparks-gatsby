@@ -6,13 +6,13 @@ import { Fade } from "../animations";
 import Navbar from "./Navbar";
 import "../styles/index.scss";
 import SoundcloudPlayerProvider, {
-  SoundcloudPlayerUI
+  SoundcloudPlayerUI,
 } from "./SoundcloudPlayer";
 
 class TemplateWrapper extends Component {
   state = {
     mounted: false,
-    zoom: false
+    zoom: false,
   };
 
   componentDidMount = () => {
@@ -23,7 +23,7 @@ class TemplateWrapper extends Component {
 
     setTimeout(() => {
       this.setState({
-        mounted: true
+        mounted: true,
       });
     }, 1000);
   };
@@ -53,7 +53,6 @@ class TemplateWrapper extends Component {
 
   render() {
     const { children, pageContext } = this.props;
-    console.log("context", pageContext);
     return (
       <StaticQuery
         query={graphql`
@@ -66,7 +65,7 @@ class TemplateWrapper extends Component {
             }
           }
         `}
-        render={data => (
+        render={(data) => (
           <div>
             <Helmet>
               <html lang="en" />
@@ -108,7 +107,7 @@ class TemplateWrapper extends Component {
                   <div>
                     {pageContext && pageContext.layout === "square" ? (
                       <Fade show={this.state.mounted}>
-                        {style => <div style={style}>{children}</div>}
+                        {(style) => <div style={style}>{children}</div>}
                       </Fade>
                     ) : (
                       <CircleLayout

@@ -16,7 +16,6 @@ export const ArtistPageTemplate = ({
   profileImage,
 }) => {
   const PostContent = contentComponent || Content;
-  console.log(about);
 
   return (
     <PageLayout
