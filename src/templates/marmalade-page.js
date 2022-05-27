@@ -8,6 +8,7 @@ import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
 import { PlayBtn } from "../components/SoundcloudPlayer/components/Controls";
 import "../styles/marmalade.scss";
 import marmaladeWav from "../pages/marmalade/marmalade-snippet.mp3";
+import Head from "../components/Head";
 
 class CircularAudioWave {
   constructor(elem, opts = {}) {
@@ -210,7 +211,7 @@ class CircularAudioWave {
             center: ["50%", "48%"],
             data: data,
             nodeClick: false,
-            sort: function(a, b) {
+            sort: function (a, b) {
               if (a.depth === 1) {
                 return b.getValue() - a.getValue();
               } else {
@@ -518,10 +519,10 @@ class CircularAudioWave {
 
   _debounce(func, wait, immediate) {
     var timeout;
-    return function() {
+    return function () {
       var context = this,
         args = arguments;
-      var later = function() {
+      var later = function () {
         timeout = null;
         if (!immediate) func.apply(context, args);
       };
@@ -589,9 +590,8 @@ export class MarmaladePageTemplate extends React.Component {
               />
 
               <PreviewCompatibleImage
-                className={`marmalade-cover ${
-                  playing ? "rotate-end" : "rotate-end"
-                }`}
+                className={`marmalade-cover ${playing ? "rotate-end" : "rotate-end"
+                  }`}
                 imageInfo={image}
               />
             </div>
@@ -617,12 +617,18 @@ const MarmaladePage = ({ data }) => {
   const { markdownRemark: post } = data;
 
   return (
-    <MarmaladePageTemplate
-      contentComponent={HTMLContent}
-      title={post.frontmatter.title}
-      content={post.html}
-      image={post.frontmatter.image}
-    />
+    <>
+      <Head
+        image={post.frontmatter.image}
+        title={post.frontmatter.title}
+      />
+      <MarmaladePageTemplate
+        contentComponent={HTMLContent}
+        title={post.frontmatter.title}
+        content={post.html}
+        image={post.frontmatter.image}
+      />
+    </>
   );
 };
 

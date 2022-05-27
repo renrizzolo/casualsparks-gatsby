@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { SvgLogo } from '../components/logo';
 import { Fade } from '../animations/';
+import Head from '../components/Head';
 
 export const HomePageTemplate = ({ title, content, contentComponent }) => {
   return (
@@ -26,7 +27,14 @@ HomePageTemplate.propTypes = {
 };
 
 const HomePage = ({ data }) => {
-  return <HomePageTemplate />;
+  return (
+    <>
+      <Head
+        title={'Home'}
+      />
+      <HomePageTemplate />
+    </>
+  )
 };
 
 HomePage.propTypes = {

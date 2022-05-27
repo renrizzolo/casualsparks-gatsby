@@ -6,6 +6,7 @@ import { Fade } from '../animations/';
 import { HTMLContent } from '../components/Content';
 import ContactForm from '../components/ContactForm';
 import ToggleClass from '../components/ToggleClass';
+import Head from '../components/Head';
 
 export const ContactPageTemplate = ({ title, links, html }) => {
   return (
@@ -61,11 +62,16 @@ const ContactPage = ({ data }) => {
   const { markdownRemark: post } = data;
 
   return (
-    <ContactPageTemplate
-      html={post.html}
-      title={post.frontmatter.title}
-      links={post.frontmatter.links}
-    />
+    <>
+      <Head
+        title={post.frontmatter.title}
+      />
+      <ContactPageTemplate
+        html={post.html}
+        title={post.frontmatter.title}
+        links={post.frontmatter.links}
+      />
+    </>
   );
 };
 

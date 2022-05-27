@@ -5,6 +5,7 @@ import { graphql } from 'gatsby';
 import '../styles/common/item-grid.scss';
 import PageLayout from '../components/PageLayout';
 import Releases from '../components/Releases';
+import Head from '../components/Head';
 const MusicPageTemplate = ({ title, sections }) => {
   return (
     <PageLayout title={title} backgroundColor="blue">
@@ -52,10 +53,13 @@ const MusicPage = ({ data }) => {
   const { frontmatter } = data.markdownRemark;
 
   return (
-    <MusicPageTemplate
-      title={frontmatter.title}
-      sections={frontmatter.sections}
-    />
+    <>
+      <Head title={frontmatter.title} />
+      <MusicPageTemplate
+        title={frontmatter.title}
+        sections={frontmatter.sections}
+      />
+    </>
   );
 };
 MusicPage.propTypes = {

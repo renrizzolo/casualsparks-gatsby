@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Content, { HTMLContent } from '../components/Content';
 import PageLayout from '../components/PageLayout';
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
 import PlayButton from '../components/PlayButton';
 import ItemButton from '../components/ItemButton';
+import Head from '../components/Head';
+import { getImage } from 'gatsby-plugin-image';
 
 export const ReleasePostTemplate = ({
   contentComponent,
@@ -19,7 +20,6 @@ export const ReleasePostTemplate = ({
   previewHTML,
   releaseType,
   soundcloudUrl,
-  helmet,
 }) => {
   return (
     <PageLayout
@@ -37,7 +37,6 @@ export const ReleasePostTemplate = ({
       }
       backgroundColor="pearl"
     >
-      {helmet || ''}
       <section className="flex-container__column">
         <div className="single-page">
           <ReleaseItem
@@ -123,7 +122,6 @@ const ReleaseItem = ({
 ReleasePostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
   contentComponent: PropTypes.func,
-  helmet: PropTypes.object,
   title: PropTypes.string,
   artist: PropTypes.string,
   soundcloudUrl: PropTypes.string,
@@ -135,28 +133,29 @@ ReleasePostTemplate.propTypes = {
 
 const ReleasePost = ({ data }) => {
   const { markdownRemark: post } = data;
+  console.log(post.frontmatter)
 
   return (
-    <ReleasePostTemplate
-      contentComponent={HTMLContent}
-      content={post.html}
-      helmet={
-        <Helmet titleTemplate="%s | Release">
-          <title>{`${post.frontmatter.title}`}</title>
-          <meta
-            name="description"
-            content={`${post.frontmatter.artist} - ${post.frontmatter.title}`}
-          />
-        </Helmet>
-      }
-      title={post.frontmatter.title}
-      artist={post.frontmatter.artist}
-      soundcloudUrl={post.frontmatter.soundcloudUrl}
-      image={post.frontmatter.image}
-      links={post.frontmatter.links}
-      trackList={post.frontmatter.trackList}
-      previewHTML={post.frontmatter.previewHTML}
-    />
+    <>
+      <Head
+        article
+        titleTemplate="%s | Release"
+        image={post.frontmatter.image}
+        title={`${post.frontmatter.artist} - ${post.frontmatter.title}`}
+        description={`${post.frontmatter.artist} - ${post.frontmatter.title}`}
+      />
+      <ReleasePostTemplate
+        contentComponent={HTMLContent}
+        content={post.html}
+        title={post.frontmatter.title}
+        artist={post.frontmatter.artist}
+        soundcloudUrl={post.frontmatter.soundcloudUrl}
+        image={post.frontmatter.image}
+        links={post.frontmatter.links}
+        trackList={post.frontmatter.trackList}
+        previewHTML={post.frontmatter.previewHTML}
+      />
+    </>
   );
 };
 

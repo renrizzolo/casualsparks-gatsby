@@ -5,6 +5,7 @@ import Content, { MarkdownContent } from "../components/Content";
 import SocialLink from "../components/SocialLink";
 import PageLayout from "../components/PageLayout";
 import PreviewCompatibleImage from "../components/PreviewCompatibleImage";
+import Head from "../components/Head";
 
 export const ArtistPageTemplate = ({
   contentComponent,
@@ -12,7 +13,6 @@ export const ArtistPageTemplate = ({
   name,
   about,
   links,
-  helmet,
   profileImage,
 }) => {
   const PostContent = contentComponent || Content;
@@ -41,7 +41,6 @@ export const ArtistPageTemplate = ({
       }
       backgroundColor="pearl"
     >
-      {helmet || ""}
       <section className="flex-container__column">
         <div className="single-page">
           <PostContent content={about} />
@@ -62,21 +61,29 @@ ArtistPageTemplate.propTypes = {
   title: PropTypes.string,
   links: PropTypes.array,
   name: PropTypes.string,
-  helmet: PropTypes.object,
 };
 
 const ArtistPage = ({ data }) => {
   const { markdownRemark: post } = data;
 
   return (
-    <ArtistPageTemplate
-      contentComponent={MarkdownContent}
-      name={post.frontmatter.name}
-      content={post.html}
-      profileImage={post.frontmatter.profileImage}
-      links={post.frontmatter.links}
-      about={post.frontmatter.about}
-    />
+    <>
+      <Head
+        article
+        titleTemplate="%s | Artist"
+        title={post.frontmatter.name}
+        image={post.frontmatter.profileImage}
+        description={`${post.frontmatter.name} artist profile`}
+      />
+      <ArtistPageTemplate
+        contentComponent={MarkdownContent}
+        name={post.frontmatter.name}
+        content={post.html}
+        profileImage={post.frontmatter.profileImage}
+        links={post.frontmatter.links}
+        about={post.frontmatter.about}
+      />
+    </>
   );
 };
 
