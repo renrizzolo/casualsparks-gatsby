@@ -1,7 +1,10 @@
 module.exports = {
   siteMetadata: {
     title: "Casual Sparks",
-    description: "Melbourne based record label.",
+    description: "Melbourne based house & nudisco record label.",
+    url: 'https://casualsparks.com',
+    twitterUsername: 'casualsparks',
+    image: '/img/Casual-Sparks-light-blue-600.png'
   },
   plugins: [
     `gatsby-plugin-image`,
