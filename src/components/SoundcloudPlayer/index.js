@@ -153,9 +153,18 @@ export default class SoundcloudPlayerProvider extends Component {
     // }
 
     if (data.tracks) {
-      this.playlist = data;
+      this.playlist = {
+        ...data,
+        tracks: data.tracks.map((t) => ({
+          ...t,
+          stream_url: `https://api.soundcloud.com/tracks/${t.id}/streams`,
+        })),
+      };
     } else {
-      this.track = data;
+      this.track = {
+        ...data,
+        stream_url: `https://api.soundcloud.com/tracks/${data.id}/streams`,
+      };
       // save timings
       // ??
       // this.track.stream_url += url.split("#")?.[1];
