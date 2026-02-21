@@ -21,9 +21,8 @@ const Controls = ({
 }) => (
   <div
     className={
-      "flex-container gap-xxs flex-center " + isPlaylist
-        ? "flex-column"
-        : "flex-row"
+      "flex-container gap-xxs flex-center " +
+      (isPlaylist ? "flex-column" : "flex-row")
     }
   >
     <div className="flex-container flex-center">
