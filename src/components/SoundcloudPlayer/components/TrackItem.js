@@ -1,6 +1,6 @@
-import React from 'react';
-import { Icon } from '../../../img/icons';
-import { ControlButton, Waveform, Controls } from './';
+import React from "react";
+import { Icon } from "../../../img/icons";
+import { ControlButton, Waveform, Controls } from "./";
 
 const TrackItem = ({
   controls: { play, pause, previous, next, stop, seek },
@@ -28,9 +28,9 @@ const TrackItem = ({
       style={style}
       key={track.id}
       className={`sc-player__item
-      ${lite ? ' lite' : ''} 
-      ${hero ? ' hero' : ''} 
-      ${isPlaying && !hero ? ' highlighted' : ''}
+      ${lite ? " lite" : ""} 
+      ${hero ? " hero" : ""} 
+      ${isPlaying && !hero ? " highlighted" : ""}
       `}
       onClick={() =>
         !hero ? (isPlaying ? pause() : play(playlistIndex)) : null
@@ -45,7 +45,7 @@ const TrackItem = ({
               currentTime={currentTime}
               duration={track.duration / 1000}
               isPlaylist={isPlaylist}
-              showPlay={false}
+              showPlay
             />
             {error && <span className="error notice">{error.toString()}</span>}
           </div>
@@ -69,7 +69,7 @@ const TrackItem = ({
               </a>
             ) : (
               <span>
-                {track && track.user && track.user.username} -{' '}
+                {track && track.user && track.user.username} -{" "}
                 {track && track.title}
               </span>
             )}

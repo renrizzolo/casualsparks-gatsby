@@ -1,4 +1,3 @@
-
 @import "../variables";
 @import "../config";
 
@@ -7,7 +6,7 @@ $item-highlight-bgc: $dark-pearl;
 $item-border: $dark-pearl;
 $item-text: $dark-blue;
 
-.sc-player { 
+.sc-player {
   z-index: 2;
   position: fixed;
   bottom: 0;
@@ -46,31 +45,40 @@ $item-text: $dark-blue;
     white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    flex: 0 1 300px;
     line-height: 1.2;
+
+    &.hero {
+      @include minwidth(s) {
+        max-width: 35%;
+      }
+    }
 
     img {
       max-width: 50px;
     }
+
+    &.hero a {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
   }
-  &:hover, &.highlighted {
+  &:hover,
+  &.highlighted {
     background-color: $item-highlight-bgc;
   }
-    &.lite {
-      background-color: white;
+  &.lite {
+    background-color: white;
 
-      .sc-player__waveform {
-        margin: 0;
-      }
+    .sc-player__waveform {
+      margin: 0;
     }
-    &.item-grid__player {
-      position: absolute;
-      bottom: 0;
-      z-index: 2;
-    }
+  }
+  &.item-grid__player {
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+  }
   &.hero {
     min-height: 78px;
     background-color: #ffffff;
@@ -78,7 +86,9 @@ $item-text: $dark-blue;
     @media screen and (max-width: 600px) {
       > div {
         flex-wrap: wrap;
-        > div, .sc-player__text, .sc-player__waveform {
+        > div,
+        .sc-player__text,
+        .sc-player__waveform {
           width: 100%;
           .sc-player__button {
             &.close {
@@ -107,7 +117,6 @@ $item-text: $dark-blue;
       }
     }
   }
-
 }
 .sc-player__controls {
   margin-right: 0.5rem;
@@ -119,6 +128,7 @@ $item-text: $dark-blue;
   text-align: center;
   margin-top: 0.25rem;
   font-weight: normal;
+  line-height: 1;
 }
 
 .sc-player__thumb {
@@ -152,7 +162,6 @@ $item-text: $dark-blue;
     top: 50%;
     transform: translateY(-50%);
     opacity: 0.5;
-
   }
   .sc-player__prospective-seek {
     transition: all 0ms;
@@ -160,14 +169,13 @@ $item-text: $dark-blue;
   }
 }
 .sc-player__open-container {
-        right: 1.3rem;
+  right: 1.3rem;
 
   @include minwidth(s) {
     right: 0rem;
   }
 }
 .sc-player__button {
-
   background: none;
   margin: 0;
   cursor: pointer;
@@ -181,18 +189,18 @@ $item-text: $dark-blue;
   &:disabled {
     color: $cs-darkblue;
   }
-    &.open {
-      background: #eeebe9;
-      margin-top: 2rem;
-      height: 2rem;
-      border-top-left-radius: 2rem;
-      border-top-right-radius: 2rem;
-      top: -10px;
-      z-index: -1;
-    }
-    &.toggle.open {
-      background: $dark-pearl;
-    }
+  &.open {
+    background: #eeebe9;
+    margin-top: 2rem;
+    height: 2rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    top: -10px;
+    z-index: -1;
+  }
+  &.toggle.open {
+    background: $dark-pearl;
+  }
 }
 .sc-player__icon {
   fill: $cs-darkblue;
@@ -214,44 +222,44 @@ $item-text: $dark-blue;
 
     // fill: $dark-pearl;
     // &.closed {
-      // border-radius: 0%;
-      // padding: 0;
-      // background-color: transparent;
-      // @include maxwidth(xs){
-      //   background-color:$cs-darkblue;
-      // }
+    // border-radius: 0%;
+    // padding: 0;
+    // background-color: transparent;
+    // @include maxwidth(xs){
+    //   background-color:$cs-darkblue;
+    // }
     // }
   }
 }
 .page.music {
-    .sc-player {
-      border-top: 5px solid $lightpearl;
-    }
-    .pulse {
-      svg {
+  .sc-player {
+    border-top: 5px solid $lightpearl;
+  }
+  .pulse {
+    svg {
       animation: pulse-dark-blue 600ms ease-in 250ms infinite alternate-reverse;
-      }
     }
+  }
   .sc-player__button {
     &.toggle.open {
-      background-color:$lightpearl;
+      background-color: $lightpearl;
     }
   }
   .sc-player__icon {
     &.toggle {
-      background-color:$lightpearl;
+      background-color: $lightpearl;
       fill: $cs-darkblue;
     }
   }
 }
 .loading {
-  >svg {
+  > svg {
     animation: scale-loop 350ms ease infinite alternate-reverse;
   }
 }
 .pulse {
   svg {
-  animation: pulse-pearl 600ms ease-in 250ms infinite alternate-reverse;
+    animation: pulse-pearl 600ms ease-in 250ms infinite alternate-reverse;
   }
 }
 @keyframes pulse-pearl {
@@ -259,7 +267,7 @@ $item-text: $dark-blue;
     fill: $dark-pearl;
   }
   to {
-    fill: white
+    fill: white;
   }
 }
 @keyframes pulse-dark-blue {
