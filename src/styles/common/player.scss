@@ -43,9 +43,15 @@ $item-text: $dark-blue;
     width: 100%;
   }
   .sc-player__text {
-    white-space: nowrap;
-    overflow-x: hidden;
+    white-space: normal;
+    overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    flex: 0 1 300px;
+    line-height: 1.2;
+
     img {
       max-width: 50px;
     }
@@ -105,6 +111,14 @@ $item-text: $dark-blue;
 }
 .sc-player__controls {
   margin-right: 0.5rem;
+}
+
+.sc-player__time {
+  font-size: 0.75em;
+  color: $cs-darkblue;
+  text-align: center;
+  margin-top: 0.25rem;
+  font-weight: normal;
 }
 
 .sc-player__thumb {

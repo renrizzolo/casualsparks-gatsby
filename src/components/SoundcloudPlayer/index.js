@@ -456,7 +456,7 @@ export const SoundcloudPlayerLite = ({ soundcloudUrl, className }) => {
         currentTime,
         currentPlaylistUrl,
         currentTrack,
-        currentTrack: { title, user, id },
+        currentTrack: { title, user, id, duration },
         url,
         tracks,
         prospectiveSeek,
@@ -478,6 +478,8 @@ export const SoundcloudPlayerLite = ({ soundcloudUrl, className }) => {
                     <Controls
                       controls={controls}
                       playing={playing}
+                      currentTime={currentTime}
+                      duration={duration / 1000}
                       isPlaylist={Boolean(tracks && tracks.length)}
                       showPlay={false}
                     />

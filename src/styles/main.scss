@@ -167,6 +167,9 @@ h2 {
   flex-direction: column;
   align-items: stretch;
 }
+.flex-column {
+  flex-direction: column;
+}
 .flex-container__row {
   flex-direction: row;
   display: flex;

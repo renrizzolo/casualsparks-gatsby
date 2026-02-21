@@ -2,21 +2,35 @@ import React from 'react';
 import { ControlButton } from './';
 import { Icon } from '../../../img/icons';
 
+const formatTime = (seconds) => {
+  if (!seconds || isNaN(seconds)) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
 const Controls = ({
   showPlay,
   update,
   updateTrack,
   isPlaylist,
   playing,
+  currentTime,
+  duration,
   controls: { previous, next, stop, play },
 }) => (
-  <React.Fragment>
-    {isPlaylist && (
-      <ControlButton className="previous" icon="prev" fn={previous} />
-    )}
-    {showPlay && <PlayBtn playing={playing} stop={stop} play={play} />}
-    {isPlaylist && <ControlButton className="next" icon="next" fn={next} />}
-  </React.Fragment>
+  <div className="flex-container flex-center flex-column">
+    <div className="flex-container flex-center">
+      {isPlaylist && (
+        <ControlButton className="previous" icon="prev" fn={previous} />
+      )}
+      {showPlay && <PlayBtn playing={playing} stop={stop} play={play} />}
+      {isPlaylist && <ControlButton className="next" icon="next" fn={next} />}
+    </div>
+    <div className="sc-player__time">
+      {formatTime(currentTime)} / {formatTime(duration)}
+    </div>
+  </div>
 );
 Controls.defaultProps = {
   showPlay: true,
