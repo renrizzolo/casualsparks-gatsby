@@ -46,23 +46,14 @@ $item-text: $dark-blue;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.2;
-
-    &.hero {
-      @include minwidth(s) {
-        max-width: 35%;
-      }
-    }
+    display: flex;
+    align-items: center;
 
     img {
       max-width: 50px;
     }
-
-    &.hero a {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
   }
+
   &:hover,
   &.highlighted {
     background-color: $item-highlight-bgc;
@@ -82,6 +73,18 @@ $item-text: $dark-blue;
   &.hero {
     min-height: 78px;
     background-color: #ffffff;
+
+    .sc-player__text {
+      @include minwidth(s) {
+        max-width: 35%;
+      }
+
+      a {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
 
     @media screen and (max-width: 600px) {
       > div {
