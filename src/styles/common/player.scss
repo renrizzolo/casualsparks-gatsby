@@ -76,7 +76,7 @@ $item-text: $dark-blue;
     background-color: #ffffff;
 
     .sc-player__text {
-      @include minwidth(s) {
+      @include minwidth(s2) {
         max-width: 35%;
       }
 
@@ -87,7 +87,7 @@ $item-text: $dark-blue;
       }
     }
 
-    @media screen and (max-width: 600px) {
+    @include maxwidth(s2) {
       > div {
         flex-wrap: wrap;
         > div,
