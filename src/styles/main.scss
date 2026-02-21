@@ -162,6 +162,10 @@ h2 {
   align-items: stretch;
 }
 
+.gap-xxs {
+  gap: $padding-xxs;
+}
+
 .flex-container__column {
   display: flex;
   flex-direction: column;
@@ -233,7 +237,7 @@ h2 {
     height: 100%;
     z-index: 2;
     animation: mob-menu-in 500ms forwards;
-   .menu-button__toggle {
+    .menu-button__toggle {
       color: $lightpearl;
       width: 100%;
       text-align: right;
@@ -280,7 +284,7 @@ h2 {
     position: absolute;
     right: 0;
     top: 0;
-   .menu-button__toggle {
+    .menu-button__toggle {
       padding: 0.5rem 1rem;
       line-height: 1.5rem;
     }
@@ -476,12 +480,12 @@ h2 {
 }
 
 $colors_dark: (
-  "blue": $cs-darkblue
+  "blue": $cs-darkblue,
 );
 
 $colors_light: (
   "pearl": $lightpearl,
-  "lightblue": $cs-lightblue
+  "lightblue": $cs-lightblue,
 );
 
 @each $colorName, $color in $colors_dark {
@@ -1076,9 +1080,9 @@ $button-horizontal-padding: 0.75em;
   .cs-circle {
     border-radius: 0;
   }
-			.circle-text__home {
-				background-color: $cs-darkblue;
-			}
+  .circle-text__home {
+    background-color: $cs-darkblue;
+  }
 
   .logo__svg {
     width: 100vw;
@@ -1102,12 +1106,11 @@ $button-horizontal-padding: 0.75em;
   }
 }
 
-
 .pos-abs {
   position: absolute;
 }
 .logo-small--top-right {
-  top: 0; 
+  top: 0;
   right: 2rem;
 }
 .container-full {

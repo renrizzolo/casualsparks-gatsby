@@ -1,5 +1,4 @@
-
-$lightpearl: #EEEBE9;
+$lightpearl: #eeebe9;
 $cs-lightblue: #168dec;
 $cs-darkblue: #0b2a44;
 $dark-blue: lighten($cs-darkblue, 7%);
@@ -9,7 +8,9 @@ $menu-offset: 204px;
 
 $padding-default: 2rem;
 $padding-small: $padding-default / 2;
+$padding-xs: $padding-small / 2;
+$padding-xxs: $padding-xs / 2;
 $circle-width: 40vw;
 $circle-left: 10vw;
 $font-sans: "Muli", "Helvetica Neue", Helvetica, sans-serif;
-$font-serif: 'Rozha One', Georgia, serif;
+$font-serif: "Rozha One", Georgia, serif;
