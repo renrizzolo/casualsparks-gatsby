@@ -1,4 +1,4 @@
-export const API_BASE = '/.netlify/functions';
+export const API_BASE = "/.netlify/functions";
 
 export const fetchWrapper = async (url, params, onError) => {
   try {
@@ -12,8 +12,8 @@ export const fetchWrapper = async (url, params, onError) => {
 };
 
 export const getToken = async () => {
-  const existingToken = localStorage.getItem('access_token');
-  const expiry = localStorage.getItem('token_expiry');
+  const existingToken = localStorage.getItem("access_token");
+  const expiry = localStorage.getItem("token_expiry");
   if (existingToken && expiry && expiry > Date.now()) return existingToken;
 
   const res = await fetchWrapper(`${API_BASE}/token`);
@@ -21,16 +21,17 @@ export const getToken = async () => {
 
   const { data } = res;
 
-  const { access_token, expires_in, refresh_token, error } = data;
-
-   
-  if (!access_token || error) {
-    this.setState({
-      error: error ?? 'Could not authenticate with SoundCloud.',
-    });
+  if (!data || !data.access_token || data.error) {
+    console.error(
+      "Could not authenticate with SoundCloud:",
+      data?.error || "No access token",
+    );
     return;
   }
 
-  localStorage.setItem('access_token', access_token);
-  localStorage.setItem('token_expiry', Date.now() + expires_in * 1000);
+  const { access_token, expires_in } = data;
+
+  localStorage.setItem("access_token", access_token);
+  localStorage.setItem("token_expiry", Date.now() + expires_in * 1000);
+  return access_token;
 };

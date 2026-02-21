@@ -13,7 +13,10 @@ exports.handler = async (event, context) => {
       };
     }
     const res = await fetch(body.url, {
-      headers: { Authorization: `OAuth ${body.access_token}` },
+      headers: { 
+        Accept: "application/json; charset=utf-8",
+        Authorization: `OAuth ${body.access_token}` 
+      },
     });
     if (!res.url) {
       return {
@@ -37,7 +40,7 @@ exports.handler = async (event, context) => {
     console.log(error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Failed fetching stream" }),
+      body: JSON.stringify({ error: "Failed fetching data" }),
     };
   }
 };
