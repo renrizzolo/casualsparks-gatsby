@@ -1,9 +1,10 @@
-import React from 'react';
-import { Icon } from '../../../img/icons';
-import { ControlButton, Waveform } from './';
+import React from "react";
+import { Icon } from "../../../img/icons";
+import { ControlButton, Waveform, Controls } from "./";
 
 const TrackItem = ({
   controls: { play, pause, previous, next, stop, seek },
+  controls,
   hero,
   error,
   playing,
@@ -27,9 +28,9 @@ const TrackItem = ({
       style={style}
       key={track.id}
       className={`sc-player__item
-      ${lite ? ' lite' : ''} 
-      ${hero ? ' hero' : ''} 
-      ${isPlaying && !hero ? ' highlighted' : ''}
+      ${lite ? " lite" : ""} 
+      ${hero ? " hero" : ""} 
+      ${isPlaying && !hero ? " highlighted" : ""}
       `}
       onClick={() =>
         !hero ? (isPlaying ? pause() : play(playlistIndex)) : null
@@ -38,22 +39,15 @@ const TrackItem = ({
       <div className="sc-player__item-content">
         {hero && (
           <div className="sc-player__controls flex-container flex-center">
-            <React.Fragment>
-              {isPlaylist && (
-                <ControlButton className="previous" icon="prev" fn={previous} />
-              )}
-              <ControlButton
-                className="stop"
-                icon={playing ? 'stop' : 'play'}
-                fn={playing ? stop : play}
-              />
-              {isPlaylist && (
-                <ControlButton className="next" icon="next" fn={next} />
-              )}
-              {error && (
-                <span className="error notice">{error.toString()}</span>
-              )}
-            </React.Fragment>
+            <Controls
+              controls={controls}
+              playing={playing}
+              currentTime={currentTime}
+              duration={track.duration / 1000}
+              isPlaylist={isPlaylist}
+              showPlay
+            />
+            {error && <span className="error notice">{error.toString()}</span>}
           </div>
         )}
         {!lite && (
@@ -62,7 +56,7 @@ const TrackItem = ({
               <img
                 alt={`${track.user && track.user.username} - ${track.title}`}
                 className="sc-player__thumb"
-                src={track.artwork_url}
+                src={track.artwork_url || track.user?.avatar_url}
               />
             )}
             {hero && track && track.user ? (
@@ -75,7 +69,7 @@ const TrackItem = ({
               </a>
             ) : (
               <span>
-                {track && track.user && track.user.username} -{' '}
+                {track && track.user && track.user.username} -{" "}
                 {track && track.title}
               </span>
             )}

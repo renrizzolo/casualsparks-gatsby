@@ -12,9 +12,25 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ error: "Invalid url supplied" }),
       };
     }
-    const res = await fetch(body.url, {
-      headers: { Authorization: `OAuth ${body.access_token}` },
+    let res = await fetch(body.url, {
+      headers: { 
+        Accept: "application/json; charset=utf-8",
+        Authorization: `OAuth ${body.access_token}` 
+      },
     });
+
+    if (res.status === 200 && res.headers.get("content-type").includes("application/json")) {
+      const streams = await res.json();
+      const streamUrl = streams.http_mp3_128_url || streams.preview_mp3_128_url;
+      if (streamUrl) {
+        res = await fetch(streamUrl, {
+          headers: { 
+            Authorization: `OAuth ${body.access_token}` 
+          },
+        });
+      }
+    }
+
     if (!res.url) {
       return {
         statusCode: 500,
@@ -37,7 +53,7 @@ exports.handler = async (event, context) => {
     console.log(error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Failed fetching stream" }),
+      body: JSON.stringify({ error: "Failed fetching data" }),
     };
   }
 };

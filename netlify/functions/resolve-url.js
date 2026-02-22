@@ -16,6 +16,7 @@ exports.handler = async (event, context) => {
   try {
     const response = await fetch(`${API_ENDPOINT}?url=${body.url}`, {
       headers: {
+        Accept: "application/json; charset=utf-8",
         Authorization: `OAuth ${body.access_token}`,
       },
     });
