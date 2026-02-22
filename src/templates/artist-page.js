@@ -110,8 +110,8 @@ export const pageQuery = graphql`
         about
         profileImage {
           childImageSharp {
-          gatsbyImageData(width: 600, quality: 75)
-        }
+            gatsbyImageData(width: 600, quality: 75)
+          }
         }
       }
     }

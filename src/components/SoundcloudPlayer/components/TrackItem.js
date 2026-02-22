@@ -56,7 +56,7 @@ const TrackItem = ({
               <img
                 alt={`${track.user && track.user.username} - ${track.title}`}
                 className="sc-player__thumb"
-                src={track.artwork_url}
+                src={track.artwork_url || track.user?.avatar_url}
               />
             )}
             {hero && track && track.user ? (
