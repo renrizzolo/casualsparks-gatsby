@@ -18,6 +18,7 @@ export default class SoundcloudPlayerProvider extends Component {
     updateTrack: () => {},
     controls: {},
     events: {},
+    playlistIndex: 0,
   };
   track = null;
   playlist = null;
@@ -83,8 +84,9 @@ export default class SoundcloudPlayerProvider extends Component {
       this.stop();
       this.resolve(url, (track) => {
         this.setState({
-          currentTrack: track,
+          currentTrack: track.tracks ? track.tracks[0] : track,
           tracks: track.tracks || [],
+          playlistIndex: 0,
         });
         // once track is loaded it can be played
         this.playTrack();
@@ -217,6 +219,8 @@ export default class SoundcloudPlayerProvider extends Component {
   play = async (options) => {
     options = options || {};
     let src;
+    const trackId = this.state.currentTrack.id;
+
     this.setState({
       error: null,
     });
@@ -256,13 +260,20 @@ export default class SoundcloudPlayerProvider extends Component {
       return;
     }
 
-    if (src !== this.audio.src) {
+    // Only set src if nothing has been played, or the loaded track is different from the current played track
+    if (
+      !this.audio.src ||
+      this.lastPlayedTrackId !== this.state.currentTrack.id
+    ) {
+      console.log("setting src", src, this.audio.src, this.audio.currentTime);
       this.audio.src = src;
+      this.lastPlayedTrackId = this.state.currentTrack.id;
     }
 
     this.playing = src;
 
     const audio = await this.audio.play();
+
     this.setState({
       playing: true,
     });
@@ -400,7 +411,8 @@ export default class SoundcloudPlayerProvider extends Component {
     const percent = (e.clientX - rect.left) / rect.width;
 
     if (percent >= 0 && percent <= 1) {
-      this.audio.currentTime = percent * this.audio.duration;
+      this.setTime(percent * this.audio.duration);
+      // this.audio.currentTime = percent * this.audio.duration;
 
       if (!this.state.playing) {
         this.playTrack({ playlistIndex: this.state.playlistIndex });

@@ -144,20 +144,25 @@ $item-text: $dark-blue;
   display: flex;
   align-items: center;
   img {
+    position: absolute;
     animation: fade-in 250ms ease-in forwards;
-    height: 40px;
-    background: #676462;
-    mix-blend-mode: hard-light;
+    height: 41px;
+    background: #000;
+    mix-blend-mode: plus-lighter;
+    &.underlay {
+      background-color: #737373;
+      mix-blend-mode: hard-light;
+    }
   }
   .sc-player__seek {
     transition: all 100ms ease;
     position: absolute;
     left: 0;
     height: 40px;
-    background: #113d63;
+    background: $cs-lightblue;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 0.5;
+    opacity: 0.65;
   }
   .sc-player__prospective-seek {
     transition: all 0ms;
@@ -251,6 +256,11 @@ $item-text: $dark-blue;
 .loading {
   > svg {
     animation: scale-loop 350ms ease infinite alternate-reverse;
+  }
+}
+.playing {
+  > svg {
+    animation: pulse-pearl 350ms ease infinite alternate-reverse;
   }
 }
 .pulse {

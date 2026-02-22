@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 
 class Waveform extends PureComponent {
   state = {
@@ -26,7 +26,7 @@ class Waveform extends PureComponent {
         className="sc-player__waveform"
         onClick={seek}
         onMouseOut={this.resetProspectiveSeek}
-        onMouseMove={e => this.waveFormHover(e, duration)}
+        onMouseMove={(e) => this.waveFormHover(e, duration)}
       >
         <span
           className="sc-player__seek sc-player__prospective-seek"
@@ -46,6 +46,7 @@ class Waveform extends PureComponent {
           }}
         />
         <img src={currentTrack.waveform_url} alt="" />
+        <img src={currentTrack.waveform_url} alt="" className="underlay" />
       </div>
     );
   }
